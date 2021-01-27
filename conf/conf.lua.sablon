@@ -1,0 +1,27 @@
+#!/usr/bin/env lua
+
+local mpsconf={
+	repo_dizin="/sources",
+	sunucu={
+		[1]="http://mls.akdeniz.edu.tr/paketler",
+		--[2]="http://localhost:9999",
+	},
+	talimatdepo={
+		-- git repo adres, ilgili düzeye aktarılacak içerik
+		-- tname düzeylere göre
+		 [1]={["https://mls.akdeniz.edu.tr/git/milislinux/milis19"]="talimatname/1"},
+		 [2]={["https://mls.akdeniz.edu.tr/git/milislinux/milis19"]="talimatname/2"},
+		 -- [3]={
+		 --	["https://mls.akdeniz.edu.tr/git/aliabc/milis"]="2/xorg",
+		 -- ["https://mls.akdeniz.edu.tr/git/velidef/milis"]="2/xfce4",
+		 --},
+		
+	},
+	betikdepo={
+		-- ilgili repodan bin/ ayarlar/ gibi betik içeren dizinlerin alınması
+		bin={["https://mls.akdeniz.edu.tr/git/milislinux/milis19"]="bin"},
+		ayarlar={["https://mls.akdeniz.edu.tr/git/milislinux/milis19"]="ayarlar"},
+	},
+}
+
+return mpsconf
