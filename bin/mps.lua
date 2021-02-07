@@ -1643,7 +1643,11 @@ function islem.sil.handler(input)
 		-- test yoksa bu işlem yapılacak
 		for _,rpaket in ipairs(remlist) do
 			-- todo!!! ters gereklerini kontrol et / silinecek pakete bağlı olan paketler
-			islem.sil.job(rpaket)
+                        if input.db then 
+				islem.sil.only_vt(rpaket)
+			else	
+				islem.sil.job(rpaket)
+			end
 		end
 	end	
 	-- silmesi onaylanmış paket sayı bilgisi
@@ -1933,7 +1937,12 @@ function islem.sil.paket_vt(paket)
 		islem.sil.logger:write(log.."\n")
 	end
 end
-
+function islem.sil.only_vt(paket)
+	islem.sil.set_logger(paket)
+	islem.sil.paket_vt(paket)
+	islem.sil.logger:close()
+	islem.sil.bitis(paket)
+end
 ------------------------------
 
 -- Kur işlemleri
@@ -2788,8 +2797,8 @@ install:option "--tekrar"  :args(0) 		:description "paketin yeniden kurulur"
 local delete = parser:command "sil" 	:description "paket silme işlemi"
 delete:argument "paket" :args("*")      :description "paket girdileri (abc def ghi)"
 delete:option   "-d" "--dosya"	    	:description "dosyadan paketleri siler"
-delete:option   "--kksiz" :args(0) 		:description "kurulu kontrolü yapılmaz"
-
+delete:option   "--kksiz" :args(0)      :description "kurulu kontrolü yapılmaz"
+delete:option   "--db"    :args(0)      :description "sadece vt kaydı silinir."
 local update = parser:command "gun"     :description "güncelleme işlemleri"
 update:option "-M" "--mps"     :args(0) :description "mps i günceller"
 update:option "-G" "--git"     :args(0) :description "git depoları günceller"
