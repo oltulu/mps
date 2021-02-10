@@ -1,0 +1,37 @@
+#!/bin/bash
+cd /usr/milis/mps
+bash derle.sh
+
+chmod +x /usr/milis/mps/bin/mps
+chmod +x /usr/milis/mps/bin/paket 
+chmod +x /usr/milis/bin/service 
+chmod +x /usr/milis/bin/make-ca
+chmod +x /usr/milis/bin/update-ca-trust
+chmod +x /usr/milis/mps/bin/mpsd.lua
+git config --global pull.ff only
+
+cd /usr/milis/ayarlar/servisler
+make install
+make kur-random
+
+update-ca-certificates --fresh 
+mps kur p11-kit 
+make-ca -g 
+update-ca-trust
+
+cd /
+mps gun -GP
+select sistem in xfce cinnamon mate kde openbox 
+do
+echo " $sistem masaüstünü seçtiniz"
+done
+mps kur enaz-kur
+mps kur xorg-kur
+mps kur $sistem-kur
+mps kur ortak-kur
+
+dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
+
+rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
+service fixer 
+exit
