@@ -43,21 +43,21 @@ cat > $ROOTDIR/etc/fstab << "EOF"
 EOF
 
 cat > $ROOTDIR/etc/issue << "EOF"
-Milis Linux \r (\l)
+Aylinux \r (\l)
 EOF
 
 cat > $ROOTDIR/etc/lsb-release << "EOF"
-DISTRIB_ID="Milis Linux"
+DISTRIB_ID="Aylinux"
 DISTRIB_RELEASE="2.0"
 DISTRIB_CODENAME="HAN"
-DISTRIB_DESCRIPTION="Milis Linux Operating System"
+DISTRIB_DESCRIPTION="Aylinux İşletim Sistemi"
 EOF
 
 cat > $ROOTDIR/etc/os-release << "EOF"
-DISTRIB_ID="Milis Linux"
+DISTRIB_ID="Aylinux"
 DISTRIB_RELEASE="2.0"
 DISTRIB_CODENAME="HAN"
-DISTRIB_DESCRIPTION="Milis Linux Operating System"
+DISTRIB_DESCRIPTION="Aylinux İşletim Sistemi"
 EOF
 
 cat > $ROOTDIR/etc/passwd << "EOF"
@@ -289,13 +289,43 @@ EOF
 cat > $ROOTDIR/etc/sysconfig/clock << "EOF"
 # Begin /etc/sysconfig/clock
 
-UTC=2
+UTC=1
+TIMEZONE="Turkey"
 
 # Set this to any options you might need to give to hwclock,
 # such as machine hardware clock type for Alphas.
 CLOCKPARAMS=
 
 # End /etc/sysconfig/clock
+EOF
+
+# klavye ayarları
+cat > $ROOTDIR/etc/sysconfig/rc.site << "EOF"
+# Begin /etc/sysconfig/rc.site
+LOGLEVEL=3
+# Console parameters
+UNICODE=1
+KEYMAP="trq"
+#KEYMAP_CORRECTIONS="euro2"
+FONT="drdos8x16 -m 8859-15"
+#LEGACY_CHARSET=
+
+# End /etc/sysconfig/rc.site
+EOF
+
+# ld dosyası ayarları
+cat > $ROOTDIR/etc/ld.so.conf << "EOF"
+# Begin /etc/ld.so.conf
+/lib
+/lib64
+/usr/lib
+/usr/lib64
+/usr/local/lib
+/usr/local/lib64
+
+# Add an include directory
+include /etc/ld.so.conf.d/*.conf
+# End of  /etc/ld.so.conf
 EOF
 
 # mouse ayarları
@@ -346,7 +376,7 @@ cat > $ROOTDIR/etc/shells << "EOF"
 EOF
 
 
-echo "milis" > $ROOTDIR/etc/hostname
+echo "aylinux" > $ROOTDIR/etc/hostname
 
 touch $ROOTDIR/var/log/{btmp,lastlog,faillog,wtmp}
 chgrp -v utmp $ROOTDIR/var/log/lastlog
