@@ -28,10 +28,10 @@ mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
 mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 
-mps kur enaz-kur
-mps kur xorg-kur
-mps kur $sistem-kur
-mps kur ortak-kur
+#mps kur enaz-kur
+#mps kur xorg-kur
+#mps kur $sistem-kur
+#mps kur ortak-kur
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 
