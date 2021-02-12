@@ -1,4 +1,7 @@
 #!/bin/bash
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
 cd /usr/milis/mps
 bash derle.sh
 
@@ -58,6 +61,7 @@ usermod -a -G pulse-access root
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
-echo "Şimdi yeni ISO dosyası oluşturmak içim   /tmp/isoyap2  yazarak  devam ediniz..."
+echo -e "${GREEN}Önce klavyeden ${RED}ctrl+c ${NONE}${GREEN}tuşlarına basarak mevcut ortamdan şıkış yapın...${NONE}"
+echo -e "${GREEN}Şimdi yeni ISO dosyası oluşturmak için ${RED}/tmp/isoyap2${GREEN} yazarak  devam ediniz...${NONE}"
 exit
 done
