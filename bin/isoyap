@@ -21,10 +21,13 @@ update-ca-trust
 
 cd /
 mps gun -GP
-select sistem in xfce cinnamon mate kde openbox 
+select sistem in xfce4 cinnamon mate kde openbox 
 do
 echo " $sistem masaüstünü seçtiniz"
-done
+mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
+mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
+mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
+
 mps kur enaz-kur
 mps kur xorg-kur
 mps kur $sistem-kur
@@ -34,4 +37,6 @@ dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/init
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
+echo "Şimdi yeni ISO dosyası oluşturmak içim   --isoyap2-- yazarak  devam ediniz..."
 exit
+done
