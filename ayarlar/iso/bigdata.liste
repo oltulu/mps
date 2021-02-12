@@ -1,0 +1,9 @@
+cassandra
+druid
+flink
+hadoop
+hive
+kafka
+luigi-venv
+spark
+zookeeper
