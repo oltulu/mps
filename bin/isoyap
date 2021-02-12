@@ -35,6 +35,26 @@ mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 #mps kur ortak-kur
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
+rm /etc/sysconfig/clock
+# saat ayarları
+cat > $ROOTDIR/etc/sysconfig/clock << "EOF"
+# Begin /etc/sysconfig/clock
+
+UTC=1
+TIMEZONE="Turkey"
+
+# Set this to any options you might need to give to hwclock,
+# such as machine hardware clock type for Alphas.
+CLOCKPARAMS=
+
+# End /etc/sysconfig/clock
+EOF
+
+echo ". /etc/profile" > /root/.bashrc
+echo "LANG=tr_TR.UTF-8" >> /etc/environment
+# aşağıdaki ayarlar X için gerekli
+echo "tr" > /root/.Xkbmap
+usermod -a -G pulse-access root
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
