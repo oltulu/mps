@@ -37,6 +37,6 @@ dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/init
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
-echo "Şimdi yeni ISO dosyası oluşturmak içim   --isoyap2-- yazarak  devam ediniz..."
+echo "Şimdi yeni ISO dosyası oluşturmak içim   /tmp/isoyap2  yazarak  devam ediniz..."
 exit
 done
