@@ -1,0 +1,39 @@
+#!/bin/sh
+
+. /etc/rc.d/functions
+
+BIN_FILE="/usr/bin/crond"
+
+#$LastChangedBy: bdubbs $
+#$Date: 2011-12-05 20:37:16 -0600 (Mon, 05 Dec 2011) $
+
+case "$1" in
+   start)
+      log_info_msg "Crond başlatılıyor..."
+      start_daemon ${BIN_FILE}
+      evaluate_retval
+      ;;
+
+   stop)
+      log_info_msg "Crond durduruluyor..."
+      killproc ${BIN_FILE}
+      evaluate_retval
+      ;;
+
+   restart)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
+   status)
+      statusproc ${BIN_FILE}
+      ;;
+
+   *)
+      echo "Kullanımı: $0 {start|stop|restart|status}"
+      exit 1
+      ;;
+esac
+
+# End /etc/init.d/crond

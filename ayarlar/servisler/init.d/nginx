@@ -1,0 +1,107 @@
+#!/bin/sh
+#
+# Nginx daemon control script.
+# milisarge milisarge@gmail.com>.
+
+. /etc/rc.d/functions
+
+BIN=/usr/bin/nginx
+CONF=/etc/nginx/nginx.conf
+PID=/var/run/nginx.pid
+
+nginx_start() {
+  # Sanity checks.
+  if [ ! -r $CONF ]; then # no config file, exit:
+    log_info_msg "$CONF dosyasi yok.iptal edildi."
+    evaluate_retval
+    exit 1
+  fi
+
+  if [ -s $PID ]; then
+    log_info_msg "Nginx zaten calisiyor?"
+    evaluate_retval
+    exit 1
+  fi
+
+  log_info_msg "Nginx baslatiliyor..."
+  if [ -x $BIN ]; then
+    $BIN -c $CONF
+  fi
+  evaluate_retval
+}
+
+nginx_test_conf() {
+  log_info_msg "Nginx ayarlari kontrol ediliyor..."
+  $BIN -t -c $CONF
+  evaluate_retval
+}
+
+nginx_term() {
+  log_info_msg "Nginx hizlica kapatiliyor..."
+  kill -TERM $(cat $PID)
+  evaluate_retval
+}
+
+nginx_stop() {
+  log_info_msg "Nginx kapatiliyor..."
+  kill -QUIT $(cat $PID)
+  evaluate_retval
+}
+
+nginx_reload() {
+  log_info_msg "Nginx ayarları yeniden yukleniyor..."
+  kill -HUP $(cat $PID)
+  evaluate_retval
+}
+
+nginx_upgrade() {
+  log_info_msg "Nginx ikili dosyası üst sürüme geciriliyor."
+  kill -USR2 $(cat $PID)
+  sleep 3
+  kill -QUIT $(cat $PID.oldbin)
+  evaluate_retval
+}
+
+nginx_rotate() {
+  log_info_msg "Nginx kayitlari ayarlaniyor..."
+  kill -USR1 $(cat $PID)
+  evaluate_retval
+}
+
+nginx_restart() {
+  nginx_stop
+  sleep 3
+  nginx_start
+}
+
+case "$1" in
+  check)
+    nginx_test_conf
+    ;;
+  start)
+    nginx_start
+    ;;
+  term)
+    nginx_term
+    ;;
+  stop)
+    nginx_stop
+    ;;
+  reload)
+    nginx_reload
+    ;;
+  restart)
+    nginx_restart
+    ;;
+  upgrade)
+    nginx_upgrade
+    ;;
+  rotate)
+    nginx_rotate
+    ;;
+  status)
+	statusproc ${BIN}
+	;;
+  *)
+  echo "usage: `basename $0` {check|start|term|stop|reload|restart|upgrade|rotate|status}"
+esac

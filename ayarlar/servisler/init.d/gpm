@@ -1,0 +1,78 @@
+#!/bin/sh
+#######################################################################
+# Begin /etc/init.d/gpm
+#
+# Description : Start GPM Console Mouse Service
+#
+# Author      : DJ Lucas - dj@linuxfromscratch.org
+#
+# Version     : LFS 7.0
+#
+########################################################################
+
+### BEGIN INIT INFO
+# Provides:            gpm
+# Required-Start:      $network $local_fs
+# Should-Start:
+# Required-Stop:       $local_fs $network
+# Should-Stop:
+# Default-Start:       3 4 5
+# Default-Stop:        0 1 2 6
+# Short-Description:   Starts and stops the GPM console mouse service.
+# Description:         Starts and stops the GPM console mouse service.
+# X-LFS-Provided-By:   BLFS / LFS 7.0
+### END INIT INFO
+
+. /etc/rc.d/functions
+
+#$LastChangedBy: bdubbs $
+#$Date: 2012-03-23 21:43:45 -0500 (Fri, 23 Mar 2012) $
+
+pidfile="/run/gpm.pid"
+
+[ -f /etc/sysconfig/mouse ] && source /etc/sysconfig/mouse
+
+case "${1}" in
+   start)
+      log_info_msg "GPM konsolda mouse servisi başlatılıyor..."
+      start_daemon /usr/bin/gpm -m /dev/input/mice -t imps2
+      evaluate_retval
+      ;;
+
+   stop)
+      log_info_msg "GPM konsolda mouse servisi durduruluyor..."
+      killproc /usr/bin/gpm
+      evaluate_retval
+      ;;
+
+   force-reload)
+      # gpm does not honor SIGHUP, restart if running
+      kill -0 `pidofproc -p "${pidfile}" /usr/sbin/gpm` 2>/dev/null
+      if [ "${?}" = "0" ]; then
+         ${0} restart
+      else
+         log_info_msg "GPM console mouse servisi zorla yeniden çalıştırılıyor..."
+         log_info_msg2 "çalışmıyor"
+         log_failure_msg
+      fi
+      ;;
+
+   restart)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
+   status)
+      statusproc /usr/sbin/gpm
+      ;;
+
+   *)
+      echo "Kullanımı: ${0} {start|stop|force-reload|restart|status}"
+      exit 1
+      ;;
+esac
+
+exit 0
+
+# End /etc/init.d/gpm

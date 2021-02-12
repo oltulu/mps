@@ -1,0 +1,37 @@
+#!/bin/sh
+
+. /etc/rc.d/functions
+
+case "$1" in
+   start)
+      log_info_msg "Starting Apache HTTP daemon..."
+      mkdir -p /var/run/httpd
+      start_daemon /usr/bin/httpd -k start
+      evaluate_retval
+      ;;
+
+   stop)
+      log_info_msg "Stopping Apache HTTP daemon..."
+      apachectl -k stop
+      evaluate_retval
+      ;;
+   reload)
+      log_info_msg "Reloading Apache HTTP daemon..."
+      start_daemon apachectl -k graceful
+      evaluate_retval
+      ;;
+   restart)
+      log_info_msg "Restarting Apache HTTP daemon..."
+      apachectl -k restart
+      evaluate_retval
+      ;;
+
+   status)
+      statusproc /usr/bin/httpd
+      ;;
+
+   *)
+      echo "Usage: $0 {start|stop|restart|reload|status}"
+      exit 1
+      ;;
+esac

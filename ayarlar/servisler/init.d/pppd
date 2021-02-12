@@ -1,0 +1,36 @@
+#!/bin/sh
+
+. /etc/rc.d/functions
+
+newgroup=pppusers
+newid=52
+getent group $newgroup > /dev/null || /sbin/groupadd -g $newid $newgroup
+
+case "$1" in
+    start)
+	mknod /dev/ppp c 108 0
+        log_info_msg "PPP Daemon başlatılıyor..."
+        start_daemon -f  /usr/bin/pppd  > /dev/null
+        ;;
+
+    stop)
+        log_info_msg "PPP Daemon durduruluyor..."
+        killproc /usr/bin/pppd
+        ;;
+        
+    restart)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+
+    status)
+        statusproc /usr/bin/pppd
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop|reload|restart|status}"
+        exit 1
+        ;;
+esac
+

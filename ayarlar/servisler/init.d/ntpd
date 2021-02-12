@@ -1,0 +1,51 @@
+#!/bin/sh
+########################################################################
+# Begin ntpd
+#
+# Description : Start Network Time Protocol daemon
+#
+# Author      : milisarge
+#
+# Version     : Milis Linux 2.0
+#
+########################################################################
+
+
+. /etc/rc.d/functions
+. /etc/sysconfig/clock
+
+#$LastChangedBy: igor $
+#$Date: 2013-08-02 15:27:17 -0500 (Fri, 02 Aug 2013) $
+
+case "$1" in
+   start)
+      log_info_msg "Starting ntpd..."
+      [ -z $TIMEZONE ] && ezport TZ="Turkey"
+      TZ=$TIMEZONE start_daemon /usr/bin/ntpd -s
+      evaluate_retval
+      ;;
+
+   stop)
+      log_info_msg "Stopping ntpd..."
+      killproc /usr/bin/ntpd
+      evaluate_retval
+      ;;
+
+   restart)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
+   status)
+      statusproc /usr/bin/ntpd
+      ;;
+
+   *)
+      echo "Usage: $0 {start|stop|restart|status}"
+      exit 1
+      ;;
+esac
+
+# End ntpd
+

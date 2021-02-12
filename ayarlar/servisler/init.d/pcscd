@@ -1,0 +1,30 @@
+#!/bin/sh
+
+. /etc/rc.d/functions
+
+
+case "$1" in
+   start)
+      log_info_msg "Pcsc event daemon başlatılıyor..."
+      nohup /usr/bin/pcscd </dev/null >> /var/log/pcscd.log 2>&1 &
+      # pcscd --foreground --auto-exit
+      ;;
+
+   stop)
+      killall -9 pcscd
+      ;;
+	
+   reload)
+      /usr/bin/pcscd --hotplug
+      ;;
+      
+   restart)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+   *)
+      echo "Kullanımı: $0 {start|stop|restart|status}"
+      exit 1
+      ;;
+esac

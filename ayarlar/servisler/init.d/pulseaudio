@@ -1,0 +1,46 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:          pulseaudio esound
+# Short-Description: Start the PulseAudio sound server
+# Description:       System mode startup script for
+#                    the PulseAudio sound server.
+### END INIT INFO
+
+. /etc/rc.d/functions
+
+pulseaudio_start () {
+	log_info_msg "Starting system PulseAudio Daemon"
+	/usr/bin/pulseaudio --system --daemon --log-target=syslog
+	evaluate_retval
+}
+
+pulseaudio_stop () {
+	log_info_msg "Stopping system PulseAudio Daemon"
+	killproc /usr/bin/pulseaudio
+	evaluate_retval
+}
+
+case "$1" in
+	start|stop)
+		pulseaudio_${1}
+		;;
+	restart|force-reload)
+		pulseaudio_stop
+		pulseaudio_start
+		;;
+	force-stop)
+		pulseaudio_stop
+		killall pulseaudio || true
+		sleep 2
+		killall -9 pulseaudio || true
+		;;
+	status)
+		statusproc /usr/bin/pulseaudio
+		;;
+	*)
+		echo "Usage: /etc/init.d/pulseaudio {start|stop|force-stop|restart|force-reload|status}"
+		exit 1
+		;;
+esac
+
+exit 0

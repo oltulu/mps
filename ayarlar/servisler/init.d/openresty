@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# Openresty-Nginx daemon control script.
+# milisarge milisarge@gmail.com>.
+
+. /etc/rc.d/functions
+
+openresty_start() {
+  log_info_msg "Starting Openresty..."
+  /opt/openresty/nginx/sbin/nginx -g 'pid /run/openresty.pid; daemon on; master_process on;'
+  evaluate_retval
+}
+
+openresty_prestart() {
+  log_info_msg "Pre Starting Openresty..."
+  /opt/openresty/nginx/sbin/nginx -t -q -g 'pid /run/openresty.pid; daemon on; master_process on;'
+  evaluate_retval
+}
+
+openresty_stop() {
+  log_info_msg "Stopping Openrestly..."
+  /opt/openresty/nginx/sbin/nginx -g 'pid /run/openresty.pid;' -s quit
+  evaluate_retval
+}
+
+openresty_reload() {
+  log_info_msg "Reloading Openresty..."
+  /opt/openresty/nginx/sbin/nginx -g 'pid /run/openresty.pid; daemon on; master_process on;' -s reload
+  evaluate_retval
+}
+
+openresty_restart() {
+  openresty_stop
+  sleep 3
+  openresty_start
+}
+
+case "$1" in
+  prestart)
+    openresty_prestart
+    ;;
+  start)
+    openresty_start
+    ;;
+  stop)
+    openresty_stop
+    ;;
+  reload)
+    openresty_reload
+    ;;
+  restart)
+    openresty_restart
+    ;;
+  status)
+    statusproc /opt/openresty/nginx/sbin/nginx
+    ;;
+  *)
+  echo "Usage: $0 {prestart|start|stop|reload|restart|status}"
+  exit 1
+esac

@@ -1,0 +1,32 @@
+#!/bin/sh
+# /etc/rc.d/init.d/connamnd: start/stop connman
+#
+. /etc/rc.d/functions
+BIN_FILE="/usr/bin/connmand"
+BIN2_FILE="/usr/bin/connman-vpnd"
+case $1 in
+	start)
+		log_info_msg "Connman başlatılıyor...."
+		start_daemon $BIN_FILE
+		evaluate_retval
+		;;
+	stop)
+		log_info_msg "Connamn durduruluyor..."
+		killproc $BIN_FILE
+		killproc $BIN2_FILE
+		evaluate_retval
+		;;
+	restart)
+		$0 stop
+		sleep 2
+		$0 start
+		;;
+	status)
+        statusproc ${BIN_FILE}
+        ;;
+	*)
+		echo "Usage: $0 [start|stop|restart|status]"
+		;;
+esac
+
+# End of file

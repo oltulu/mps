@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# ejabberd	XMPP server
+#
+# chkconfig: 	- 70 30
+# description:	Fault-tolerant XMPP server.
+#
+# processname:	so many
+# config: 	/etc/ejabberd/ejabberd.cfg
+# pidfile: 	nope
+
+WITHOUT_RC_COMPAT=1
+
+# Source function library.
+. /etc/rc.d/functions
+
+LOCKFILE=/var/lock/ejabberdctl
+RETVAL=0
+
+start()
+{
+    echo "Starting ejabberd service: "
+	su -s /bin/sh -c '/usr/sbin/ejabberdctl start' -l ejabberd
+    RETVAL=$?
+    [ "$RETVAL" -ne 0 ] || touch "$LOCKFILE"
+    return $RETVAL
+}
+
+stop()
+{
+    echo "Stopping ejabberd service: "
+	su -s /bin/sh -c '/usr/sbin/ejabberdctl stop' -l ejabberd
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] || return
+    sleep 3
+    echo "Stopping erlang portmapper: " 
+    epmd -kill
+    RETVAL=$?
+    [ "$RETVAL" -ne 0 ] || rm -f -- "$LOCKFILE"
+    return $RETVAL
+}
+
+restart()
+{
+    stop
+    sleep 2
+    start
+}
+
+status()
+{
+    ejabberdctl status
+    RETVAL=$?
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+    start
+    ;;
+    stop)
+    stop
+    ;;
+    restart|reload)
+    restart
+    ;;
+    condstop)
+    if [ -e "$LOCKFILE" ]; then
+	stop
+    fi
+    ;;
+    condrestart|condreload)
+    if [ -e "$LOCKFILE" ]; then
+	restart
+    fi
+    ;;
+    status)
+    status
+    ;;
+    *)
+    msg_usage "${0##*/} {start|stop|reload|restart|condstop|condrestart|condreload|status}"
+    RETVAL=1
+    ;;
+esac
+
+exit $RETVAL

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+. /etc/rc.d/functions
+
+case ${1} in
+  start)
+         start_mountvirtfs|| exit 1
+         start_load_modules || exit 1
+         start_localnet || exit 1
+         start_udev || exit 1
+         start_checkfs || exit 1
+         start_mountfs || exit 1
+         start_swap || exit 1
+         oper_clock "start" || exit 1
+         start_cleanfs || exit 1
+         start_udev_retry || exit 1
+         start_console || exit 1
+         start_sysctl || exit 1
+         start_cmdline || exit 1
+         ;;
+   stop)
+         oper_clock "stop"
+         stop_swap
+         stop_mountfs
+         stop_localnet
+         ;;
+   *)
+         echo "Usage: ${0} {start|stop}"
+         exit 1
+         ;;
+esac
+
+exit 0
