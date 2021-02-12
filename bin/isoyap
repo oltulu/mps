@@ -28,7 +28,7 @@ cd /
 mps gun -GP
 mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
 mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
-echo "${RED}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${NONE}"
+echo -e "${RED}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${NONE}"
 select sistem in xfce4 cinnamon mate kde openbox 
 do
 echo " $sistem masaüstünü seçtiniz"
