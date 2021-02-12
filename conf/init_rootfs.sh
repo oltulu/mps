@@ -8,6 +8,7 @@ fi
 [ ! -d $ROOTDIR ] && mkdir -pv $ROOTDIR
 
 mkdir -pv $ROOTDIR/{boot,etc/{opt,sysconfig},home,mnt,opt}
+mkdir -pv $ROOTDIR/{boot/{grub}
 mkdir -pv $ROOTDIR/{media/{floppy,cdrom},srv,var}
 install -dv -m 0750 $ROOTDIR/root
 install -dv -m 1777 $ROOTDIR/tmp $ROOTDIR/var/tmp
