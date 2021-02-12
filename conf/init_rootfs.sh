@@ -26,7 +26,7 @@ ln -sf /usr/lib $ROOTDIR/usr/lib64
 
 mkdir -pv $ROOTDIR/var/{log,mail,spool}
 ln -sv /run $ROOTDIR/var/run
-ln -sv /run/lock $ROOTDIR/var/lock
+#ln -sv /run/lock $ROOTDIR/var/lock
 mkdir -pv $ROOTDIR/var/{opt,cache,lib/{color,misc,locate},local}
 
 install -vdm755 $ROOTDIR/usr/lib/pkgconfig
@@ -289,8 +289,8 @@ EOF
 cat > $ROOTDIR/etc/sysconfig/clock << "EOF"
 # Begin /etc/sysconfig/clock
 
-UTC=1
-TIMEZONE="Turkey"
+UTC=2
+#TIMEZONE="Turkey"
 
 # Set this to any options you might need to give to hwclock,
 # such as machine hardware clock type for Alphas.
