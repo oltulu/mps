@@ -24,13 +24,13 @@ BIN_FILE="/usr/bin/lightdm"
 
 case $1 in
    start)
-        log_info_msg "Lightdm başlatılıyor..."
+        log_info_msg "Starting lightdm..."
         start_daemon $BIN_FILE &
         evaluate_retval
         ;;
 
    stop)
-        log_info_msg "Lightdm durduruluyor..."
+        log_info_msg "Stopping lightdm..."
         killproc $BIN_FILE
         evaluate_retval
         ;;
@@ -46,9 +46,10 @@ case $1 in
         ;;
 
    *)
-        echo "Kullanımı: $0 [start|stop|restart|status]"
+        echo "usage: $0 [start|stop|restart|status]"
         exit 1
         ;;
 esac
 
 # End /etc/rc.d/init.d/lightdm
+
