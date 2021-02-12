@@ -22,10 +22,10 @@ local mpsconf={
 	},
 	betikdepo={
 		-- ilgili repodan bin/ ayarlar/ gibi betik içeren dizinlerin alınması
-		bin={["https://github.com/oltulu/Aylinux-2021"]="mps/bin"},
-		ayarlar={["https://github.com/oltulu/Aylinux-2021"]="mps/ayarlar"},
-		ayguci={["https://github.com/oltulu/Aylinux-2021"]="mps/ayguci"},
-		mps={["https://github.com/oltulu/Aylinux-2021"]="mps/mps"},
+		bin={["https://mls.akdeniz.edu.tr/git/milislinux/milis19"]="bin"},
+		ayarlar={["https://github.com/oltulu/mps"]="ayarlar"},
+		ayguci={["https://mls.akdeniz.edu.tr/git/milislinux/ayguci"]=""},
+		mps={["https://github.com/oltulu/mps"]=""},
 	},
 }
 
