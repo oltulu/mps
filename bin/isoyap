@@ -21,11 +21,12 @@ update-ca-trust
 
 cd /
 mps gun -GP
+mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
+mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
+echo "${RED}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${NONE}"
 select sistem in xfce4 cinnamon mate kde openbox 
 do
 echo " $sistem masaüstünü seçtiniz"
-mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
-mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 
 #mps kur enaz-kur
