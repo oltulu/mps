@@ -66,6 +66,7 @@ usermod -a -G pulse-access root
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
+cp -R /etc/skel/.[^.]* /root/
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}exit${YOK}${YESIL}yazarak mevcut ortamdan şıkış yapın...${YOK}"
 echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI}/tmp/isoyap2${YESIL} yazarak  devam ediniz...${YOK}"
 exit
