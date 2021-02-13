@@ -39,17 +39,12 @@ automake
 xz
 kmod
 gettext
-elfutils
 libffi
 openssl
 coreutils
-diffutils
-gawk
 findutils
 gzip
 which
-libmnl
-libnftnl
 iptables
 linux-atm
 kbd
@@ -90,8 +85,6 @@ libtasn1
 libunistring
 gnutls
 libseccomp
-krb5
-openldap
 cyrus-sasl
 brotli
 busybox
