@@ -1,0 +1,107 @@
+#!/bin/bash
+YOK='\033[00m'
+KIRMIZI='\033[01;31m'
+YESIL='\033[01;32m'
+
+if [ "$(id -u)" != "0" ]
+then
+    echo -e "${KIRMIZI}Bu dosyayı root olarak çalıştırmalısınız .${YOK}"
+    exit 1
+fi
+echo -e "${YESIL}Eğer ilk defa iso hazırlayacaksanız ${KIRMIZI}1${YOK} ${YESIL}tuşuna basın, daha önce hazırladığınız dosyaları düzenleyecekseniz ${KIRMIZI}2${YOK} ${YESIL}tuşuna basın...${YOK} "
+select durum in ilk-defa Yeniden
+do
+
+if [ $durum = ilk-defa ]
+then
+
+export MSYS=/home/Aylinux-ISO 
+export MPS_PATH=/opt/Aylinux-ISO 
+export MILIS_PATH=$MSYS/usr/milis
+
+rm -r $MPS_PATH
+rm -r $MSYS
+echo -e "${YESIL}Varsa önceden oluşmuş dosyalar silindi..${YOK}"
+git clone https://github.com/oltulu/mps  $MPS_PATH
+cd $MPS_PATH
+bash derle.sh $MPS_PATH
+cd bin
+chmod +x ./mps
+chmod +x ./mpsd
+#chmod +x ./paket
+./mps
+./mps
+./mps -v
+./mps --ilkds --ilk --kok=$MSYS
+./mps gun -GPB --kok=$MSYS
+cp /etc/ld.so.conf $MSYS/etc/
+echo -e "${KIRMIZI}Temel paketler yükleniyor..${YOK}"
+./mps kur --dosya=$MSYS/usr/milis/ayarlar/iso/temel.liste --kurkos=0 --koskur=0 --kok=$MSYS
+#./mps kur temel-kur --kurkos=0 --koskur=0 --kok=$MSYS
+cp -r $MPS_PATH $MSYS/usr/milis/mps
+cp -f /etc/hosts $MSYS/etc/
+chmod +x $MSYS/usr/milis/mps/bin/isoyap
+chmod +x ./enter-chroot
+
+cat > /tmp//isoyap2 << "EOf"
+#!/bin/bash
+export MSYS=/home/Aylinux-ISO 
+export MPS_PATH=/opt/Aylinux-ISO 
+export MILIS_PATH=$MSYS/usr/milis
+rm -f $MSYS/root/.bash_history
+cd /opt
+git clone https://github.com/oltulu/Aylinux-isoyap
+cd /opt/Aylinux-isoyap
+bash iso_olustur.sh $MSYS
+EOf
+chmod +x /tmp//isoyap2
+echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
+echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
+echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
+echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın ve sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
+
+
+else
+
+#if [ "$(whoami)" == "root" ]
+#then
+#$masasecimi=(zenity --list --radiolist --text "<b>Lütfen</b> kurmak istediğiniz masaüstünü seçiniz" --hide-header --column "Buy" --column "Item" FALSE "xfce" FALSE "cinnamon" FALSE "mate" FALSE Quit)
+# Dizinleri belirliyoruz
+export MSYS=/home//Aylinux-ISO 
+export MPS_PATH=/opt/Aylinux-ISO 
+export MILIS_PATH=$MSYS/usr/milis
+
+cd $MPS_PATH/bin
+chmod +x ./mps
+chmod +x ./mpsd
+#chmod +x ./paket
+chmod +x $MSYS/usr/milis/mps/bin/isoyap
+echo "isoyap 2 oluşturuluyor..."
+cat > /tmp//isoyap2 << "EOf"
+#!/bin/bash
+export MSYS=/home/Aylinux-ISO 
+export MPS_PATH=/opt/Aylinux-ISO 
+export MILIS_PATH=$MSYS/usr/milis
+rm -f $MSYS/root/.bash_history
+cd /opt
+git clone https://github.com/oltulu/Aylinux-isoyap
+cd /opt/Aylinux-isoyap
+bash iso_olustur.sh $MSYS
+EOf
+
+chmod +x /tmp//isoyap2
+echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
+echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
+echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın ve sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
+chmod +x ./enter-chroot
+
+fi
+done
+#echo "Şimdi yeni sistemden çıtınız iso hazırlanacak..."
+#rm -f $MSYS/root/.bash_history
+#cd /opt/imaj-uretici
+#bash iso_olustur.sh $MSYS
+#------------------------------------------      
+#else
+ #   echo "Bu dosyayı root olarak çalıştırmalısınız..."
+
