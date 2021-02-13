@@ -205,6 +205,7 @@ for script in /etc/profile.d/*.sh ; do
 done
 
 unset script RED GREEN NORMAL
+figlet "Aylinux"
 
 # End /etc/profile
 EOF
