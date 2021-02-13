@@ -33,6 +33,7 @@ select sistem in xfce4 cinnamon mate kde openbox
 do
 echo " $sistem masaüstünü seçtiniz"
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
+mps kur --dosya=/usr/milis/ayarlar/iso/ortak.liste
 
 #mps kur enaz-kur
 #mps kur xorg-kur
