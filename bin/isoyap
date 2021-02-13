@@ -26,25 +26,27 @@ update-ca-trust
 
 cd /
 mps gun -GP
+echo -e "${KIRMIZI}Minimal paketler yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
+echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
 echo -e "${RED}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${NONE}"
 select sistem in xfce4 cinnamon mate kde openbox 
 do
 echo " $sistem masaüstünü seçtiniz"
+echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
+echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/ortak.liste
 
-#mps kur enaz-kur
-#mps kur xorg-kur
-#mps kur $sistem-kur
-#mps kur ortak-kur
+mps kur $sistem-kur
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
+echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
 rm /etc/sysconfig/clock
 # saat ayarları
 cat > $ROOTDIR/etc/sysconfig/clock << "EOF"
-# Begin /etc/sysconfig/clock
+# Başlangıç /etc/sysconfig/clock
 
 UTC=1
 TIMEZONE="Turkey"
@@ -53,7 +55,7 @@ TIMEZONE="Turkey"
 # such as machine hardware clock type for Alphas.
 CLOCKPARAMS=
 
-# End /etc/sysconfig/clock
+# Bitiş /etc/sysconfig/clock
 EOF
 
 echo ". /etc/profile" > /root/.bashrc
