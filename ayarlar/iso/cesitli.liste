@@ -1,12 +1,7 @@
-galculator
-geany
-feh
-htop
 alsa-utils
 cmus
-firefox
+firefox-tr
 vlc
-libreoffice
 gnome-keyring
 milis-icon-theme
 milis-gtk-theme
@@ -17,3 +12,4 @@ python-pyparted
 gparted
 mps-ui
 mservice
+pakur
