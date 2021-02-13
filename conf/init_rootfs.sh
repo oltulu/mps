@@ -176,7 +176,7 @@ pathappend () {
 export -f pathremove pathprepend pathappend
 
 # Set the initial path
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/milis/bin:/usr/milis/mps/bin:/usr/local/bin
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/milis/bin:/usr/milis/mps/bin:/usr/local/bin:/usr/lib/jvm/java-8-openjdk/bin
 
 
 # Setup some environment variables.
