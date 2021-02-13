@@ -1,7 +1,7 @@
 #!/bin/bash
-NONE='\033[00m'
-RED='\033[01;31m'
-GREEN='\033[01;32m'
+YOK='\033[00m'
+KIRMIZI='\033[01;31m'
+YESIL='\033[01;32m'
 sed -i 's/^# *\(tr_TR.UTF-8\)/\1/' /etc/locale.gen
 locale-gen
 cd /usr/milis/mps
@@ -14,7 +14,7 @@ chmod +x /usr/milis/bin/make-ca
 chmod +x /usr/milis/bin/update-ca-trust
 chmod +x /usr/milis/mps/bin/mpsd.lua
 git config --global pull.ff only
-
+ln -s /usr/bin/cc /usr/bin/gcc
 cd /usr/milis/ayarlar/servisler
 make install
 make kur-random
@@ -64,7 +64,7 @@ usermod -a -G pulse-access root
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
-echo -e "${GREEN}Önce klavyeden ${RED}exit${NONE}${GREEN}yazarak mevcut ortamdan şıkış yapın...${NONE}"
-echo -e "${GREEN}Şimdi yeni ISO dosyası oluşturmak için ${RED}/tmp/isoyap2${GREEN} yazarak  devam ediniz...${NONE}"
+echo -e "${YESIL}Önce klavyeden ${KIRMIZI}exit${YOK}${YESIL}yazarak mevcut ortamdan şıkış yapın...${YOK}"
+echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI}/tmp/isoyap2${YESIL} yazarak  devam ediniz...${YOK}"
 exit
 done
