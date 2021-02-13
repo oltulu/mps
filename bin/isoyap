@@ -39,7 +39,7 @@ mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/ortak.liste
 
-mps kur $sistem-kur
+mps der $sistem-kur
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
