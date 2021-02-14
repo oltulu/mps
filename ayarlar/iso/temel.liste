@@ -4,7 +4,6 @@ file
 readline
 m4
 bc
-elfutils
 binutils
 gmp
 mpfr
