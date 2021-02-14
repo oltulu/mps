@@ -1,0 +1,2 @@
+#!/bin/bash
+LC_ALL=C wget --no-clobber --convert-links --random-wait -r -p -E -e robots=off -U mozilla $1

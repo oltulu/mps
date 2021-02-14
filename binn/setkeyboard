@@ -1,0 +1,40 @@
+#!/bin/sh
+# todo!! Turkish output
+# todo!! wayland support
+[ -f /etc/default/keyboard ] && source /etc/default/keyboard
+[ -f /root/.Xkbmap ] && XKBLAYOUT2=$(cat /root/.Xkbmap)
+
+if [ -z $1 ];then
+	if [ ! -z $XKBLAYOUT ];then
+		echo $XKBLAYOUT
+		exit 1
+	else
+		echo "usage: setkeyboard layout_value"
+	fi
+else
+	# activate default
+	if [ $1 == "--default" ];then
+		[ -z ${XKBLAYOUT} ] && XKBLAYOUT="none"
+		setxkbmap ${XKBLAYOUT} 
+		if [ $? -ne 0 ];then 
+			setxkbmap ${XKBLAYOUT2}
+			if [ $? -ne 0 ];then 
+				echo "/etc/default/keyboard has not XKBLAYOUT variable or /root/.Xkbmap has not XKBLAYOUT value"
+				exit 1
+			else
+				echo "keyboard set from /root/.Xkbmap : ${XKBLAYOUT2}"
+			fi 
+		else
+			echo "keyboard set from /etc/default/keyboard : ${XKBLAYOUT}"
+		fi
+		exit 0
+	fi
+	# activate parameter
+	layout=$1
+	setxkbmap ${layout}
+	if [ $? -eq 0 ];then
+		[ -f /etc/default/keyboard ] && sed  -i '/^XKBLAYOUT/d' /etc/default/keyboard
+		echo "XKBLAYOUT=${layout}" >> /etc/default/keyboard
+		echo "keyboard set to /etc/default/keyboard: ${layout}"
+	fi
+fi 

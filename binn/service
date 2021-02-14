@@ -1,0 +1,194 @@
+#!/bin/bash
+
+# Milis Linux 2.0 easy service management script milisarge 2019-2020
+# todo!!! localization
+
+usage="  Milis Linux 2.0 Service Management Script
+ 
+  service start|stop|restart|status|install|remove|enable|disable <service_name>
+  
+  service create <service_daemon_path> - install service manually
+  
+  service list  - list available services
+  service fixer - fix service system
+  service setup - configure service initialization
+"
+
+_err(){
+	echo "$1" 
+	exit 1
+}
+
+_service_create(){
+echo '
+#!/bin/sh
+
+. /etc/rc.d/functions
+
+DAEMON=@@daemon@@
+NAME=`basename ${DAEMON}`
+OPT=""
+
+case "${1}" in
+   start)
+      log_info_msg "Starting  ${NAME^} daemon..."
+      pidlist=`pidofproc ${DAEMON}`
+
+      if [  "${?}" = "0" ]; then
+        log_info_msg2 " Already running"
+        log_success_msg2
+        exit 0;
+      fi
+      # Start as background process and assume OK
+      ${DAEMON} $OPT &
+      log_success_msg2
+      ;;
+
+   stop)
+      log_info_msg "Stopping ${NAME^} daemon..."
+      killproc ${DAEMON}
+      evaluate_retval
+      ;;
+
+   restart)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
+   status)
+      statusproc ${DAEMON}
+      ;;
+
+   *)
+      echo "Usage: ${0} {start|stop|restart|status}"
+      exit 1
+      ;;
+esac
+
+exit 0
+
+# End of service
+
+'
+}
+
+service_dir="/usr/milis/ayarlar/servisler"
+old_services="checkfs cleanfs console localnet modules mountvirtfs mountfs sysctl udev udev_retry"
+
+[ ! -d $service_dir ] && _err "$service_dir not found!"
+
+[ -z "$1" ] &&  _err "$usage"
+job=$1
+
+if [ $job == "fixer" ] ; then
+	# update new service up-functions
+	sed -i "s/lib\/lsb\/init-functions/etc\/rc.d\/functions/g" /etc/rc.d/init.d/*
+	# remove deprecated services
+	for osrv in ${old_services}; do rm -fv /etc/rc.d/init.d/${osrv}; done
+	# remove broken service sysmlinks
+	find /etc/rc.d -xtype l 
+	find /etc/rc.d -xtype l -delete
+	# fix sendsignals wrong symlink
+	[ -L /etc/rc.d/rc0.d/S60sendsignals ] && mv /etc/rc.d/rc0.d/S60sendsignals /etc/rc.d/rc0.d/K60sendsignals
+	[ -L /etc/rc.d/rc6.d/S60sendsignals ] && mv /etc/rc.d/rc6.d/S60sendsignals /etc/rc.d/rc6.d/K60sendsignals
+	exit 0
+fi
+
+if [ $job == "list" ] ; then
+	# list available services
+	for srv in `ls "$service_dir/init.d/"`;do
+		#_status="-"
+		if [ -f /etc/rc.d/init.d/${srv} ] ;then
+			printf '\e[1;32m%-6s\e[m\n' "$srv" | column -t
+		else
+			printf '\e[1;31m%-6s\e[m\n' "$srv" | column -t
+		fi
+	done
+	exit 0
+fi
+
+if [ $job == "setup" ] ; then
+	pushd $(pwd)
+	cd ${service_dir}
+	make install
+	popd
+	exit 0
+fi
+
+[ -z "$2" ] &&  _err "service_name not found"
+service=$2
+
+# service install	
+if [ $job == "install" ]; then
+	[ ! -f ${service_dir}/init.d/$service ] && _err "service not found in $service_dir"
+	cd $service_dir
+	make kur-$service
+# service remove
+# handle this in two case, first it is already registred service latter is manual service.
+elif [ $job == "remove" ]; then
+	[ ! -f /etc/init.d/${service} ] && _err "service not found in /etc/init.d"
+	if [ -f ${service_dir}/init.d/${service} ];then
+		cd $service_dir
+		make sil-$service
+	else
+		for link in $(ls -d /etc/rc.d/rc[0-6].d/*);do
+			[ "`readlink -f $link`" = "/etc/rc.d/init.d/${service}" ] && rm -vf $link
+		done
+		rm -fv /etc/rc.d/init.d/${service}
+	fi
+elif [ $job == "links" ]; then
+	for link in $(ls -d /etc/rc.d/rc[0-6].d/*);do
+		[ "`readlink -f $link`" = "/etc/rc.d/init.d/${service}" ] && echo $link
+	done
+elif [ $job == "create" ]; then
+	[ -z ${service} ] && service="/usr/bin/test"
+	_service_create > /tmp/`basename ${service}`
+	sed -i "s~@@daemon@@~${service}~g" /tmp/`basename ${service}`
+	echo "`basename ${service}` prepared under /tmp - execute command below for service setup"
+	echo "cp /tmp/`basename ${service}` /etc/rc.d/init.d/`basename ${service}`"
+# service disable / if we don't want to auto-starting of a service
+# after this we can start it manually
+# handle this in two case, first it is already registred service latter is manual service.
+elif [ $job == "disable" ]; then
+	[ ! -f /etc/init.d/${service} ] && _err "service not found in /etc/init.d"
+	if [ -f ${service_dir}/init.d/${service} ];then
+		cd $service_dir
+		make sil-$service
+		cp -vf ${service_dir}/init.d/${service} /etc/init.d/
+	# manual service comes with package standalone or put by the user
+	else
+		_disabled="n"
+		for link in $(ls -d /etc/rc.d/rc[0-6].d/*);do
+			if [ "`readlink -f $link`" = "/etc/rc.d/init.d/${service}" ];then 
+				rm -vf $link
+				_disabled="y"
+			fi
+		done
+		[ "${_disabled}" == "n" ] && echo "service already disabled"
+	fi
+# if service already under /etc/init.d but has not auto-init/close status
+# handle this in two case, first it is already registred service latter is manual service.
+elif [ $job == "enable" ]; then
+	[ ! -f /etc/init.d/${service} ] && _err "service not found in /etc/init.d"
+	if [ -f ${service_dir}/init.d/${service} ];then
+		cd $service_dir
+		make kur-$service
+	# manual service comes with package standalone or put by the user
+	else
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc0.d/K11${service}"
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc1.d/K11${service}"
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc2.d/K11${service}"
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc6.d/K11${service}"
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc3.d/S91${service}"
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc4.d/S91${service}"
+		ln -svf /etc/init.d/${service} "/etc/rc.d/rc5.d/S91${service}"
+	fi
+# service start/stop/status
+elif [ $job == "start" ] || [ $job == "prestart" ] || [ $job == "restart" ] || [ $job == "reload" ] || [ $job == "stop" ] || [ $job == "status" ]; then
+	[ ! -f /etc/init.d/${service} ] && _err "service not found in /etc/init.d"
+	/etc/init.d/${service} $job
+else
+	echo "non-valid $job"
+	_err "$usage"
+fi

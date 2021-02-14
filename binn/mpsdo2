@@ -1,0 +1,146 @@
+#!/bin/bash
+
+# Milis 2.0 Derleme Ortam Kurulması
+# derleme ortamının indirilmesi
+#set -e -x
+mpsconf="/usr/milis/mps/conf/conf.lua"
+[ ! -z $1 ] && mpsconf=$1
+
+if [ ! -f $mpsconf ];then
+ echo "$mpsconf geçerli yol değil!"
+fi
+
+#surum="121019"
+#ortam_sha="ef7d14d5c9848b167a73ddf47208af64c46ddbf52ca6f4c00efdbd013cc8cbd8"
+
+surum="180320"
+ortam_sha="577ebb82a5e4d5ddaf1c4fc9ecdb831d2963d3cbe71fb8620473a30b829e5587"
+
+ortam_adres="https://mls.akdeniz.edu.tr/iso/milis2-ortam-${surum}.sfs"
+ortam=/mnt/milis2-ortam-${surum}.sfs
+
+shasum_kontrol(){
+	inen_sha=$(sha256sum $ortam | cut -d' ' -f1)
+	if [ "$ortam_sha" = "$inen_sha" ];then
+		echo "ortam shasum doğrulandı."
+	else
+		echo "indirilen ortamda shasum uyuşmazlığı var.silip tekrar deneyiniz.";exit 1
+	fi
+}	
+
+if [ ! -f $ortam ];then
+	wget $ortam_adres -O $ortam
+	shasum_kontrol
+fi
+
+# değişkenler - yolların iyi ayarlandığından emin olunuz.
+ 
+lfs=/mnt/milis2/ortam2
+rootfs=/mnt/milis2/rootfs2
+ikincil=/mnt/milis2/ikincil2
+kaynaklar=/mnt/sources
+paketdepo=/mnt/milis2/pkdepo_onbellek
+paketler=/mnt/milis2/uretilen_paketler
+
+[ ! -f $ortam ] && exit 1
+
+# kaynaklar dizinin var olduğu kontrol edilir.
+if [ ! -d $kaynaklar ];then 
+	ln -s /sources /mnt/
+fi
+# herhangi bir hatada çıkış yap
+set -e
+
+shasum_kontrol
+
+ortam_bagla(){
+	mkdir -p $rootfs
+	mkdir -p $lfs
+	mkdir -p $ikincil
+	mkdir -p $paketler
+	mkdir -p $paketdepo
+	mount -t squashfs -o loop $ortam $rootfs/
+	mount -t tmpfs -o size=4096M,mode=0744 tmpfs $ikincil/
+	mount -t aufs -o br=$ikincil=rw:$rootfs=ro none $lfs/ 
+	mkdir -p $lfs/sources
+	mount -t aufs -o br=$kaynaklar=rw none $lfs/sources/
+	mount -t aufs -o br=$paketdepo=rw none $lfs/var/cache/mps/depo/
+	mount -t aufs -o br=$paketler=rw none $lfs/opt
+}
+
+ortam_coz()
+{
+    for node in "${lfs}" \
+                "${ikincil}" \
+                "${rootfs}" \
+                "${lfs}/sys" \
+                "${lfs}/proc" \
+                "${lfs}/dev/pts" \
+                "${lfs}/dev" ; \
+    do
+        if mount | grep -q "$node"
+        then
+            echo "çözülüyor ${node} ..."
+            if ! umount "$node"
+            then
+                echo "sıkıntılı $node çözülüyor..."
+                umount -l "$node"
+            fi
+        fi
+    done
+}
+
+ortam_bagla_son(){
+	cp -v /etc/resolv.conf $lfs/etc
+	# ana sistemin mps ayarlarını kullanmak için
+	cp -f -v $mpsconf $lfs/usr/milis/mps/conf/conf.lua
+	mount -v -B /dev $lfs/dev
+	#mount -vt devpts devpts $lfs/dev/pts -o gid=5,mode=620
+	#mount -vt devpts devpts $lfs/dev/pts
+	# make hatası düzeliyor-segm fault
+	mount --bind /dev/pts $lfs/dev/pts
+	mount -vt proc proc $lfs/proc
+	#bazı durumlarda bu kullanılacak tty değilde pty i kullanan derlemelerde
+	#mount --bind /dev/pts $lfs/dev/pts
+	mount -vt sysfs sysfs $lfs/sys
+	#if [ -h /dev/shm ]; then rm -f $lfs/dev/shm;mkdir $lfs/dev/shm;fi
+	#mount -vt tmpfs shm $lfs/dev/shm
+	#chmod 1777 /dev/shm
+}
+
+# gerekli bağlamaların yapılmasından sonra ortama giriş-chroot
+ortam_gir(){
+	ortam_bagla_son
+	#[ -f "/sources/milis.git/ayarlar/bashrc_chroot" ] && cp "/sources/milis.git/ayarlar/bashrc_chroot" "$lfs"/etc/bashrc
+	cp -f /etc/hosts "$lfs"/etc/
+	chroot  "$lfs" /usr/bin/env -i LC_ALL=$LC_ALL HOME=/root USER=root TERM="$TERM" PS1='\u:\w\$ ' /bin/bash --login
+	#chroot "$lfs" /usr/bin/env -i HOME=/root PS1='\u:\w\$ ' /bin/bash --login +h
+}
+
+# ortam ayarlamalarından önce eski bağların çözülmesi
+ortam_coz
+
+# aufs modülünün kontrolü ve yüklenmesi
+if cat /usr/lib/modules/$(uname -r)/modules.builtin | grep aufs &> /dev/null ; then
+	ortam_bagla
+	echo "Milis paket üretim ortamı bağlandı."
+elif lsmod | grep "aufs" &> /dev/null ; then
+	ortam_bagla
+	echo "Milis paket üretim ortamı bağlandı."
+else
+	modprobe aufs
+	echo "aufs modülü yüklendi."
+	if lsmod | grep "aufs" &> /dev/null ; then
+		ortam_bagla
+	else
+		echo "aufs modülü bulunamadı!"
+		exit 1
+	fi
+fi
+
+# çıkarken bağların çözülmesi için trap-yakalama noktası ekleriz
+trap 'echo ; ortam_coz' EXIT HUP QUIT ABRT TERM
+
+# ortama giriş
+ortam_gir
+

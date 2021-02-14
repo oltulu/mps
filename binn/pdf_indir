@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# milisarge-milislinux
+if [ ! -f /usr/bin/wkhtmltopdf ];then
+	echo "wkhtmltopdf kurunuz!"
+	exit 1
+fi
+url=""
+if [ -z $1 ];then
+	echo "link eksik!"
+	exit 1
+else
+	url="$1"
+fi
+
+wkhtmltopdf ${url} "$(curl -s ${url}| grep -o "<title>[^<]*" | tail -c+8).pdf"

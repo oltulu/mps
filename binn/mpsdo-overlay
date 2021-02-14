@@ -1,0 +1,162 @@
+#!/bin/bash
+
+# Milis 2.0 Derleme Ortam Kurulması
+# derleme ortamının indirilmesi
+#set -e -x
+mpsconf="/usr/milis/mps/conf/conf.lua"
+[ ! -z $1 ] && mpsconf=$1
+
+if [ ! -f $mpsconf ];then
+ echo "$mpsconf geçerli yol değil!"
+fi
+
+surum="241120"
+ortam_sha="bdbd9aa32362145d43b1707bd85cd55d876d3eb8d7823d2413d148289fa4ac46"
+
+ortam_adres="https://mls.akdeniz.edu.tr/iso/milis2-ortam-${surum}.sfs"
+ortam=/mnt/milis2-ortam-${surum}.sfs
+
+shasum_kontrol(){
+	inen_sha=$(sha256sum $ortam | cut -d' ' -f1)
+	if [ "$ortam_sha" = "$inen_sha" ];then
+		echo "ortam shasum doğrulandı."
+	else
+		echo "indirilen ortamda shasum uyuşmazlığı var.silip tekrar deneyiniz.";exit 1
+	fi
+}	
+
+if [ ! -f $ortam ];then
+	wget $ortam_adres -O $ortam
+	shasum_kontrol
+fi
+
+# değişkenler - yolların iyi ayarlandığından emin olunuz.
+
+ortamdir="/mnt/mpsdo"
+rodir="${ortamdir}/ro"
+changedir="${ortamdir}/rw"
+
+changes="${changedir}/fs"
+sources="${changedir}/sources"
+opt="${changedir}/opt"
+cache="${changedir}/cache"
+
+sources_ro="${rodir}/sources"
+opt_ro="${rodir}/opt"
+cache_ro="${rodir}/cache"
+sfsdir="${rodir}/sfs"
+
+rootdir="${ortamdir}/system"
+workdir="${ortamdir}/work"
+
+# ortam dosyasının varlığı kontrol edilir.
+[ ! -f $ortam ] && exit 1
+
+# herhangi bir hatada çıkış yap
+set -e
+
+shasum_kontrol
+
+ortam_bagla(){
+	mkdir -p $changes
+	mkdir -p $sources
+	mkdir -p $opt
+	mkdir -p $cache
+	
+	mkdir -p $sfsdir
+	mkdir -p $sources_ro
+	mkdir -p $opt_ro
+	mkdir -p $cache_ro
+	
+	mkdir -p $rootdir
+	mkdir -p $workdir/{1,2,3,4,5}
+	
+	# eski değişikliklerin temizlenmesi
+	rm -rf $changes/*
+	
+	
+	mount -t squashfs -o loop $ortam $sfsdir
+	#mount -t tmpfs -o size=4096M,mode=0744 tmpfs $ikincil/
+	mount -t overlay overlay -o index=off,lowerdir=$sfsdir,upperdir=$changes,workdir=$workdir/1 $rootdir
+	
+	# ana sistemden milis19 reposu kopyalanır.
+	mkdir -p $rootdir/sources
+	[ ! -d $sources/mls.akdeniz.edu.tr.git.milislinux.milis19 ] && cp -r /sources/mls.akdeniz.edu.tr.git.milislinux.milis19 $sources/
+	
+	mount -t overlay overlay -o index=off,lowerdir=${sources_ro},upperdir=$sources,workdir=$workdir/2 $rootdir/sources
+	mount -t overlay overlay -o index=off,lowerdir=${opt_ro},upperdir=$opt,workdir=$workdir/3 $rootdir/opt
+	mount -t overlay overlay -o index=off,lowerdir=${cache_ro},upperdir=$cache,workdir=$workdir/4 $rootdir/var/cache/mps/depo
+}
+
+ortam_coz()
+{
+    for node in "${sfsdir}" \
+                "${rootdir}/sources" \
+                "${rootdir}/opt" \
+                "${rootdir}/var/cache/mps/depo" \
+                "${rootdir}/sys" \
+                "${rootdir}/proc" \
+                "${rootdir}/dev/pts" \
+                "${rootdir}/dev"  \
+                "${rootdir}" ; \
+    do
+        if mount | grep -q "$node"
+        then
+            echo "çözülüyor ${node} ..."
+            if ! umount "$node"
+            then
+                echo "sıkıntılı $node çözülüyor..."
+                umount -l "$node"
+            fi
+        fi
+    done
+}
+
+ortam_bagla_son(){
+	# ana sistem dns
+	cp -v /etc/resolv.conf $rootdir/etc/
+	# ana sistem gitconfig
+	[ -f /root/.gitconfig ] && cp /root/.gitconfig $rootdir/root/
+	# ana sistemin mps ayarlarını kullanmak için
+	cp -f -v $mpsconf $rootdir/usr/milis/mps/conf/conf.lua
+	#mkdir -p $rootdir/sources
+	
+	mount -v -B /dev $rootdir/dev
+	#mount -vt devpts devpts $rootdir/dev/pts -o gid=5,mode=620
+	#mount -vt devpts devpts $rootdir/dev/pts
+	# make hatası düzeliyor-segm fault
+	mount --bind /dev/pts $rootdir/dev/pts
+	mount -vt proc proc $rootdir/proc
+	#bazı durumlarda bu kullanılacak tty değilde pty i kullanan derlemelerde
+	#mount --bind /dev/pts $rootdir/dev/pts
+	mount -vt sysfs sysfs $rootdir/sys
+	#if [ -h /dev/shm ]; then rm -f $rootdir/dev/shm;mkdir $rootdir/dev/shm;fi
+	#mount -vt tmpfs shm $rootdir/dev/shm
+	#chmod 1777 /dev/shm
+}
+
+# gerekli bağlamaların yapılmasından sonra ortama giriş-chroot
+ortam_gir(){
+	ortam_bagla_son
+	sed -i 's/32/33/g' $rootdir/etc/profile
+    sed -i 's/31/33/g' $rootdir/etc/profile
+	chroot  "$rootdir" /usr/bin/env -i LC_ALL=$LC_ALL HOME=/root USER=root TERM="$TERM" PS1='(mpsdo)\u:\w\$ ' /bin/bash --login
+	#chroot "$rootdir" /usr/bin/env -i HOME=/root PS1='\u:\w\$ ' /bin/bash --login +h
+}
+
+# işlevleri başlat
+
+# ortam ayarlamalarından önce eski bağların çözülmesi
+ortam_coz
+
+# overlayfs kernel modul yükle ve ortam bağlanır
+modprobe overlay
+[ $? -ne 0 ] && exit 1
+ortam_bagla
+
+# çıkarken bağların çözülmesi için trap-yakalama noktası ekleriz
+trap 'echo ; ortam_coz' EXIT HUP QUIT ABRT TERM
+
+# ortama giriş
+ortam_gir
+

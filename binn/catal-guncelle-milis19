@@ -1,0 +1,4 @@
+#!/bin/bash
+git remote add upstream https://mls.akdeniz.edu.tr/git/milislinux/milis19.git
+git fetch upstream
+git pull upstream master

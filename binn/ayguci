@@ -1,0 +1,41 @@
+#!/bin/sh
+if [[ `id -g` -ne 0 ]]; then
+  sudo $0
+  exit 0
+fi
+ayguci_path="/usr/milis/ayguci"
+if [ -d $ayguci_path/server ];then
+	subcmd=$1
+	[ -z $subcmd ] && exit 0 
+	if [ $subcmd = "tui" ];then
+		lua $ayguci_path/tui/tui.lua
+	elif [ $subcmd = "gui" ];then
+		python3 $ayguci_path/gui/ayguci-gui.py
+	elif [ $subcmd = "update" ];then
+		cd $ayguci_path
+		./setup.sh
+	else
+		echo "tui veya gui alt komutu veriniz."
+		exit 1
+	fi
+	exit 1
+else
+	echo "Ayguci kurulumu için aşağıdaki adımları yetkili!! olarak uygulayınız:"
+	echo ""
+	echo "1- /usr/milis/mps/conf/conf.lua dosyasının betikdepo kısmına aşağıdaki kaydı ekleyiniz."
+	echo 'ayguci={["https://mls.akdeniz.edu.tr/git/milislinux/ayguci"]=""},'
+	echo ""
+	echo "2- Eski Ayguci depoyu silip betikdepoları güncelleyin."
+	echo "rm -rf /sources/mls.akdeniz.edu.tr.git.milislinux.ayguci"
+	echo "mps gun -B"
+	echo ""
+	echo "3- Ayguciyi kurun."
+	echo "cd $ayguci_path && ./setup.sh && cd -"
+	echo ""
+	echo "4- Ayguci servisini çalıştırın"
+	echo "service start ayguci"
+	echo ""
+	echo "5- Çalıştırmak için aşağıdaki komutları veya uygulama menüsünü kullanın."
+	echo "terminal  arayüz: ayguci tui"
+	echo "grafiksel arayüz: ayguci gui"
+fi

@@ -1,0 +1,1563 @@
+#!/bin/bash
+#
+# Milis Linux konsol kurulumu için Void Linux kurulum çatallaması
+# This installer forked from Void Linux installer for Milis Linux terminal based installation
+#            	
+#				2018 milisarge <milisarge@gmail.com>.
+#				2018 Aydin <yakar@live.com>
+# 	
+# 			    2012-2015 Juan Romero Pardines <xtraeme@Voidlinux.org>.
+#               2012 Dave Elusive <davehome@redthumb.info.tm>.
+#               
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#-
+
+
+DIZIN=`dirname $(readlink -f $0)`
+
+dil=${LANG/.*}
+if [ $dil == "en_US" ];then
+	# Language
+	LANG_LANG="English"
+
+
+	LANG_MENULABEL="Use UP and DOWN keys to navigate menus. Use TAB to switch between buttons and ENTER to select."
+	LANG_INSTALLATION="Installation"
+	LANG_BACK="Back"
+	LANG_CHANGE="Change"
+	LANG_DONE="Done"
+	LANG_PROCESSING="processing as settings"
+	LANG_SELECTPARTITION="Select the partition to edit"
+	LANG_SELECTFILESYSTEM="Select the filesystem type for %s"
+	LANG_MOUNTPOINT="Please specify the mount point for %s (use / as default)"
+	LANG_NEWFILESYSTEM="Do you want to create a new filesystem on %s?"
+	LANG_SELECTDISKPART="Select the disk to partition"
+
+	LANG_SCANLOCALES="Scanning locales"
+	LANG_MODPARTTABLE="Modify Partition Table on %s"
+	LANG_PARTITIONDIALOG="\n
+	%scfdisk will be executed in disk %s.%s\n\n
+	For BIOS systems, MBR or GPT partition tables are supported.\n
+	To use GPT on PC BIOS systems an empty partition of 1MB must be added\n
+	at the first 2GB of the disk with the TOGGLE \`bios_grub' enabled.\n
+	%sNOTE: you don't need this on EFI systems.%s\n\n
+	For EFI systems GPT is mandatory and a FAT32 partition with at least\n
+	100MB must be created with the TOGGLE \`boot', this will be used as\n
+	EFI System Partition. This partition must have mountpoint as \`/boot/efi'.\n\n
+	At least 1 partition is required for the rootfs (/).\n
+	For swap, RAM*2 must be really enough. For / 600MB are required.\n\n
+	%sWARNING: /usr is not supported as a separate partition.%s\n\n"
+
+	LANG_SELKEYMAP="Select your keymap"
+	LANG_SELLOCAL="Select your locale"
+	LANG_SELTZONE="Select your timezone"
+
+	LANG_SETHOST="Set the machine hostname"
+
+	LANG_ROOTPW="Enter the root password"
+	LANG_ROOTPWAGAIN="Enter the root password again"
+	LANG_PWNOTMATCH="Passwords do not match! Please enter again."
+
+	LANG_LOGINNAME="Enter a primary login name"
+	LANG_USERNAME="Enter a user name for login"
+	LANG_PASSWORD="Enter the password for login"
+	LANG_PASSWORDAGAIN="Enter the password for login again"
+
+	LANG_GMEMLOGIN="Select group membership for login"
+
+	LANG_BOOTLOADER="Select the disk to install the bootloader"
+	LANG_BOOTLOTHER="Manage bootloader otherwise"
+	LANG_BOOTLGRAPH="Use a graphical terminal for the boot loader?"
+
+	LANG_GRUBINST="Running grub-install %s..."
+	LANG_GRUBFAIL="%sERROR:%s failed to install GRUB to %s!\nCheck %s for errors."
+	LANG_GRUBMKCONF="Running grub-mkconfig on %s..."
+	LANG_GRUBMKCONFFAIL="%sERROR%s: failed to run grub-mkconfig!\nCheck %s for errors."
+
+	LANG_NEWFSYSTEM="NEW FILESYSTEM"
+	LANG_MOUNTEDON="%s (%s) mounted on %s as %s\n"
+
+	LANG_FSYSTEMNOTSET="%sERROR:%s the mount point for the root filesystem (/) has not yet been configured."
+	LANG_FSYSNOTSUPPORTED="%sERROR:%s /usr mount point has been configured but is not supported, please remove it to continue."
+	LANG_FSYSEFINOTSET="%sERROR:%s The EFI System Partition has not yet been configured, please create it\n
+	as FAT32, mountpoint /boot/efi and at least with 100MB of size."
+
+	LANG_SWAPFAIL="%sERROR:%s failed to create swap on %s!\ncheck %s for errors."
+	LANG_SWAPERROR="%sERROR:%s failed to activate swap on %s!\ncheck %s for errors."
+
+	LANG_ERRLOGTITLE="Check %s for details ..."
+	LANG_CREATEFSYS="Creating filesystem %s on %s for %s ..."
+	LANG_CREATEMKFS="Running %s..."
+
+	LANG_CREATEFAIL="%sERROR:%s failed to create filesystem %s on %s!\ncheck %s for errors."
+	LANG_MOUNTINGON="Mounting %s on %s (%s)..."
+	LANG_MOUNTINGERR="%sERROR:%s failed to mount %s on %s! check %s for errors."
+
+	LANG_SWAPDISABLING="Disabling swap space on %s..."
+	LANG_SWAPUNMOUNTING="Unmounting %s..."
+
+	LANG_PROGRESS="Progress: %d.%d%% (%d of %d files)\n"
+
+	LANG_COUNTFILES="Counting files, please be patient ..."
+	LANG_CPLIVEIMG="Copying live image to target rootfs."
+
+	LANG_DHCPON="enabled"
+
+	LANG_FSYSNOTCONF="%sRequired filesystems were not configured, please do so before starting the installation.%s"
+	LANG_ROOTPWNOTCONF="%sThe root password has not been configured, please do so before starting the installation.%s"
+	LANG_BOOTLNOTCONF="%sThe disk to install the bootloader has not been configured, please do so before starting the installation.%s"
+	LANG_DESTROYWARN="%sThe following operations will be executed:%s\n\n
+	%s\n
+	%sWARNING: data on partitions will be COMPLETELY DESTROYED for new \
+	filesystems.%s\n\n
+	%sDo you want to continue?%s"
+	LANG_RMTARGET="Removing %s live user from targetdir ..."
+	LANG_BUILDINGINITRAMFS="Rebuilding initramfs for target ..."
+	LANG_APPLYSETTINGS="Applying installer settings..."
+
+	LANG_ENABLESUDO="Enable sudo for login '%s'"
+
+	LANG_INSTALLSUCCESS="%sMilis Linux has been installed successfully!%s\nDo you want to reboot the system?"
+
+	LANG_MENUSETTINGS="Settings"
+	LANG_INSTMENU="Milis Linux installation menu"
+
+	LANG_MENUKEYBOARD="Keyboard"
+	LANG_MENUHOSTNAME="Hostname"
+	LANG_MENULOCALE="Locale"
+	LANG_MENUTIMEZONE="Timezone"
+	LANG_MENUROOTPW="RootPassword"
+	LANG_MENUUSERACC="UserAccount"
+	LANG_MENUBOOTLOADER="BootLoader"
+	LANG_MENUPARTITION="Partition"
+	LANG_MENUFILESYSTEM="Filesystems"
+	LANG_MENUINSTALL="Install"
+	LANG_MENUEXIT="Exit"
+
+	LANG_KEYBOARDSET="Set system keyboard"
+	LANG_HOSTSET="Set system hostname"
+	LANG_LOCALESET="Set system locale"
+	LANG_TIMEZONESET="Set system time zone"
+	LANG_ROOTPWSET="Set system root password"
+	LANG_USERNPWSET="Set primary user name and password"
+	LANG_BOOTLOADERSET="Set disk to install bootloader"
+	LANG_PARTITIONSET="Partition disk(s)"
+	LANG_FSYSSET="Configure filesystems and mount points"
+	LANG_INSTALLSETTINGS="Start installation with saved settings"
+	LANG_EXITINST="Exit installation"
+	LANG_ABORTINST="Abort Installation?"
+	LANG_ERRDIALOG="ERROR: missing dialog command, exiting..."
+	LANG_INSTMUSTROOT="Milis-installer must run as root"
+
+	LANG_SAVEDSETTINGS="Saved settings for installation"
+
+	LANG_ENTERMILIS="Milis Linux / $LANG_LANG"
+	LANG_MAINDIALOG="\n
+	Welcome to the Milis Linux installation. A simple and minimal \
+	Linux distribution made from scratch and built from the source package tree \
+	available for MPS, a new alternative package system.\n\n
+	The installation should be pretty straightforward. If you are in trouble \
+	please join us at %s#milisarge%s on %sirc.freenode.org%s or \
+	ask the %sforums%s on the site.\n\n
+	%shttp://www.milislinux.org%s\n\n"
+
+
+else
+
+	# Language
+	LANG_LANG="Türkçe"
+
+
+	LANG_MENULABEL="YUKARI ve AŞAĞI ok tuşları ile menüde ilerleyebilirsiniz. TAB tuşu ile butonlar arasında geçebilir ve ENTER ile seçebilirsiniz."
+	LANG_INSTALLATION="Yükleyici"
+	LANG_BACK="Geri"
+	LANG_CHANGE="Değiştir"
+	LANG_DONE="Bitti"
+	LANG_PROCESSING="ayar dosyası işleniyor"
+	LANG_SELECTPARTITION="Düzenlenecek bölümü seçiniz"
+	LANG_SELECTFILESYSTEM="%s için dosya sistemi türü seçiniz"
+	LANG_MOUNTPOINT="Lütfen %s için atama (mount) noktası belirtiniz. (öntanımlı kullanım için / kullanın.)"
+	LANG_NEWFILESYSTEM="%s üzerinde yeni dosya sistemi oluşturmak ister misiniz?"
+	LANG_SELECTDISKPART="Bölümleme için disk seçiniz"
+
+	LANG_SCANLOCALES="Yerel diller araştırılıyor"
+	LANG_MODPARTTABLE="%s üzerinde bölümleme (partition) tablosunu düzenle"
+	LANG_PARTITIONDIALOG="\n
+	%scfdisk %s üzerinde çalıştırıldı.%s\n\n
+	BIOS sistemler için MBR veya GPT bölümleme tablosu desteklenmektedir.\n
+	PC BIOS sistemlerde GPT kullanmak için TOGGLE \`bios_grub' aktifse diskin\n
+	ilk 2GB kısmına 1MB boş bir bölüm eklenmelidir.\n
+	%sNOT: EFI sistemleri üzerinde buna ihtiyacınız yoktur.%s\n\n
+	EFI sistemleri için GPT zorunludur ve TOGGLE \`boot' ile en az\n
+	100MB bir FAT32 bölümü oluşturulmalıdır, bu EFI sistem bölümü olarak\n
+	kullanılacaktır. Bu bölüm \`/boot/efi' olarak atanmış (mount) olmalıdır.\n\n
+	En az 1 bölüm kök dizini (rootfs) (/) için gereklidir.\n
+	Swap için RAM*2 yeterlidir. Kök dizini (/) için 600MB zorunludur.\n\n
+	%sUYARI: /usr ayrı bir bölümleme olarak desteklenmemektedir.%s\n\n"
+
+	LANG_SELKEYMAP="Klavye düzenini seçiniz"
+	LANG_SELLOCAL="Bölgesel ayarları seçiniz"
+	LANG_SELTZONE="Zaman diliminizi seçiniz"
+
+	LANG_SETHOST="Bilgisayar adını giriniz"
+
+	LANG_ROOTPW="Root parolasını giriniz"
+	LANG_ROOTPWAGAIN="Root parolasını tekrar giriniz"
+	LANG_PWNOTMATCH="Parolalar uyuşmamaktadır! Lütfen tekrar deneyiniz."
+
+	LANG_LOGINNAME="Kullanıcı giriş adını giriniz"
+	LANG_USERNAME="Kullanıcı gerçek adını giriniz"
+	LANG_PASSWORD="Parolanızı giriniz"
+	LANG_PASSWORDAGAIN="Parolanızı tekrar giriniz"
+
+	LANG_GMEMLOGIN="Kullanıcının grup üyeliklerini seçiniz"
+
+	LANG_BOOTLOADER="Önyükleyicinin (bootloader) yükleneceği diski seçiniz"
+	LANG_BOOTLOTHER="Önyükleyici kullanma"
+	LANG_BOOTLGRAPH="Terminalde önyükleyici için grafik arayüzü kullanmak ister misiniz?"
+
+	LANG_GRUBINST="Çalıştırılıyor grub-install %s..."
+	LANG_GRUBFAIL="%sHATA:%s %s GRUB kurulamadı!\nHata için %s kontrol ediniz."
+	LANG_GRUBMKCONF="%s üzerinde grub-mkconfig çalıştırılıyor..."
+	LANG_GRUBMKCONFFAIL="%sHATA%s: grub-mkconfig çalıştırılamadı!\nHata için %s kontrol ediniz."
+
+	LANG_NEWFSYSTEM="YENİ DOSYA SİSTEMİ"
+	LANG_MOUNTEDON="%s (%s) için atama noktası %s (%s)\n"
+
+	LANG_FSYSTEMNOTSET="%sHATA:%s Root dosya sistemi (/) için atama noktası henüz ayarlanmadı."
+	LANG_FSYSNOTSUPPORTED="%sHATA:%s /usr atama noktası ayarlandı fakat desteklenmiyor, lütfen kaldırıp devam ediniz."
+	LANG_FSYSEFINOTSET="%sHATA:%s EFI sistem bölümlemesi henüz ayarlanmadı, lütfen FAT32 olarak oluşturun,\n
+	/boot/efi atama noktası en az 100MB olamalıdır."
+
+	LANG_SWAPFAIL="%sHATA:%s swap alanı %s üzerinde oluşturulamadı!\nHata için %s kontrol ediniz."
+	LANG_SWAPERROR="%sHATA:%s swap alanı %s üzerinde aktif edilemedi!\nHata için %s kontrol ediniz."
+
+	LANG_ERRLOGTITLE="Detaylar için %s kontrol ediniz ..."
+	LANG_CREATEFSYS="Dosya sistemi %s %s üzerinde %s için oluşturuluyor..."
+	LANG_CREATEMKFS="%s çalıştırılıyor..."
+
+	LANG_CREATEFAIL="%sHATA:%s failed to create filesystem %s on %s!\nHata için %s kontrol ediniz."
+	LANG_MOUNTINGON="Atanıyor %s %s üzerine (%s)..."
+	LANG_MOUNTINGERR="%sHATA:%s %s %s üzerine atanamadı! Hata için %s kontrol ediniz."
+
+	LANG_SWAPDISABLING="%s üzerindeki swap alanı iptal ediliyor..."
+	LANG_SWAPUNMOUNTING="%s ataması ayrılıyor (unmount)..."
+
+	LANG_PROGRESS="İlerleme: %d.%d%% (dosyalar %d / %d)\n"
+
+	LANG_COUNTFILES="Dosyalar hesaplanıyor, lütfen sabırlı olunuz ..."
+	LANG_CPLIVEIMG="Canlı imaj hedef kök dizine (rootfs) kopyalanıyor."
+
+	LANG_DHCPON="aktifleşti"
+
+	LANG_FSYSNOTCONF="%sGerekli dosya sistemleri yapılandırılmadı, lütfen yüklemeye başlamadan önce yapılandırınız.%s"
+	LANG_ROOTPWNOTCONF="%sRoot parola yapılandırılmamış, lütfen yüklemeye başlamadan önce yapılandırınız.%s"
+	LANG_BOOTLNOTCONF="%sÖnyükleyiciyi yüklemek için disk yapılandırılmamış, lütfen yüklemeye başlamadan önce yapılandırınız.%s"
+	LANG_DESTROYWARN="%sAşağıdaki operasyon çalıştırılacak:%s\n\n
+	%s\n
+	%sUYARI: Yeni dosya sistemi için bölümlerdeki veri TAMAMEN SİLİNECEKTİR.%s\n\n
+	%sDevam etmek istiyor musunuz?%s"
+	LANG_RMTARGET="Hedef dizin için %s canlı kullanıcısı kaldırılıyor ..."
+	LANG_BUILDINGINITRAMFS="Hedef için initramfs oluşturuluyor ..."
+	LANG_APPLYSETTINGS="Yükleyici ayarları uygulanıyor..."
+
+	LANG_ENABLESUDO="Giriş için sudo '%s' aktifleştiriliyor"
+
+	LANG_INSTALLSUCCESS="%sMilis Linux başarıyla yüklendi!%s\nSistemi yeniden başlatmak ister misiniz?"
+
+	LANG_MENUSETTINGS="Ayarlar"
+	LANG_INSTMENU="Milis Linux Yükleyici Menüsü"
+
+	LANG_MENUKEYBOARD="Klavye"
+	LANG_MENUHOSTNAME="BilgisayarAdı"
+	LANG_MENULOCALE="BölgeselAyarlar" #"Bölgesel Ayarlar"
+	LANG_MENUTIMEZONE="ZamanDilimi"
+	LANG_MENUROOTPW="RootParolası"
+	LANG_MENUUSERACC="KullanıcıHesabı"
+	LANG_MENUBOOTLOADER="Önyükleyici"
+	LANG_MENUPARTITION="Bölümleme"
+	LANG_MENUFILESYSTEM="DosyaSistemi"
+	LANG_MENUINSTALL="Yükle"
+	LANG_MENUEXIT="Çıkış"
+
+	LANG_KEYBOARDSET="Klavye ayarlarını seçiniz"
+	LANG_HOSTSET="Bilgisayar adını giriniz"
+	LANG_LOCALESET="Bölgesel ayarları seçiniz"
+	LANG_TIMEZONESET="Zaman dilimini seçiniz"
+	LANG_ROOTPWSET="Root parolarını giriniz"
+	LANG_USERNPWSET="Öncelikli kullanıcı adı ve parolayı giriniz"
+	LANG_BOOTLOADERSET="Önyükleyici için disk seçiniz"
+	LANG_PARTITIONSET="Disk bölümleme"
+	LANG_FSYSSET="Dosya sistemi ve atama (mount) noktası ayarları"
+	LANG_INSTALLSETTINGS="Kayıtlı ayarlar ile yüklemeye başla"
+	LANG_EXITINST="Yükleyiciden çık"
+	LANG_ABORTINST="Yüklemekten vazgeç?"
+	LANG_ERRDIALOG="HATA: dialog komutu bulunamadı, çıkış yapılıyor..."
+	LANG_INSTMUSTROOT="Milis-yükleyici root hakları ile çalıştırılmalıdır"
+
+	LANG_SAVEDSETTINGS="Yükleme için ayarlar kaydedildi"
+
+	LANG_ENTERMILIS="Milis Linux / $LANG_LANG"
+	LANG_MAINDIALOG="\n
+	Milis Linux kurulumuna hoş geldiniz. Sıfırdan hazırlanan, kolay ve \
+	minimal bir Linux dağıtımıdır ve yeni bir alternatif paket sistemi olan \
+	MPS için kullanılabilen kaynak paketlerinden üretilmiştir.\n\n
+	Kurulum oldukça basittir. Eğer yardıma ihtiyacınız olursa %sirc.freenode.org%s \
+	%s#milisarge%s kanalımıza katılabilir veya sitemizdeki %sforumlardan%s yardım alabilirsiniz.\n\n
+	%shttp://www.milislinux.org%s\n\n"
+
+fi
+
+# menülerin işlem görme durumları.
+HOSTNAME_YAPILDI=
+KEYBOARD_YAPILDI=
+LOCALE_YAPILDI=
+TIMEZONE_YAPILDI=
+ROOTPASSWORD_YAPILDI=
+USERLOGIN_YAPILDI=
+USERPASSWORD_YAPILDI=
+USERNAME_YAPILDI=
+USERGROUPS_YAPILDI=
+BOOTLOADER_YAPILDI=
+PARTITIONS_YAPILDI=
+FILESYSTEMS_YAPILDI=
+FORMAT_ONAY=
+YEBASLAT_ONAY=
+DOSYADAN_KURULUM=
+
+HEDEF=/mnt/target
+LOG=/dev/tty9
+
+if [ ! -z $1 ];then
+	AYAR_DOSYASI=$1
+	if [ -f $AYAR_DOSYASI ];then
+		echo "$AYAR_DOSYASI $LANG_PROCESSING ......."
+		FORMAT_ONAY="HAYIR"
+		YEBASLAT_ONAY="HAYIR"
+		DOSYADAN_KURULUM="EVET"
+	fi
+else
+	AYAR_DOSYASI=/tmp/.kurulum.conf
+	if [ ! -f $AYAR_DOSYASI ]; then
+		touch -f $AYAR_DOSYASI
+	fi
+fi
+ANSWER=$(mktemp -t vinstall-XXXXXXXX || exit 1)
+TARGET_FSTAB=$(mktemp -t vinstall-fstab-XXXXXXXX || exit 1)
+
+if [ -f /etc/milis-surum ];then 
+	MILIS_SURUM=$(cat /etc/milis-surum)
+else
+	MILIS_SURUM="Milis 2.0 Deneme Sürüm"
+fi
+
+if [ -f /etc/canli_kullanici ];then 
+	CANLI_KULLANICI=$(cat /etc/canli_kullanici)
+else
+	CANLI_KULLANICI="root"
+fi
+
+trap "DIE" INT TERM QUIT
+
+# konsol log yazmasının kapatılması
+if [ -w /proc/sys/kernel/printk ]; then
+    echo 0 >/proc/sys/kernel/printk
+fi
+
+# EFIli sistem tesbiti
+if [ -e /sys/firmware/efi/systab ]; then
+    EFI_SYSTEM=1
+    EFI_FW_BITS=$(cat /sys/firmware/efi/fw_platform_size)
+    if [ $EFI_FW_BITS -eq 32 ]; then
+        EFI_TARGET=i386-efi
+    else
+        EFI_TARGET=x86_64-efi
+    fi
+fi
+
+# menü renkleri
+BLACK="\Z0"
+RED="\Z1"
+GREEN="\Z2"
+YELLOW="\Z3"
+BLUE="\Z4"
+MAGENTA="\Z5"
+CYAN="\Z6"
+WHITE="\Z7"
+BOLD="\Zb"
+REVERSE="\Zr"
+UNDERLINE="\Zu"
+RESET="\Zn"
+
+# menü pencere özellikleri
+MENULABEL="${BOLD}${LANG_MENULABEL}${RESET}"
+MENUSIZE="14 60 0"
+INPUTSIZE="8 60"
+MSGBOXSIZE="8 70"
+YESNOSIZE="$INPUTSIZE"
+WIDGET_SIZE="10 70"
+
+DIALOG() {
+    
+    rm -f $ANSWER
+    dialog --colors --keep-tite --no-shadow --no-mouse \
+        --backtitle "${BOLD}${WHITE}Milis Linux ${LANG_INSTALLATION} ($MILIS_SURUM)${RESET}" \
+        --cancel-label "$LANG_BACK" --aspect 20 "$@" 2>$ANSWER
+    return $?
+}
+
+INFOBOX() {
+    dialog --colors --no-shadow --no-mouse \
+        --backtitle "${BOLD}${WHITE}Milis Linux ${LANG_INSTALLATION} ($MILIS_SURUM)${RESET}" \
+        --title "${TITLE}" --aspect 20 --infobox "$@"
+}
+
+DIE() {
+    rval=$1
+    [ -z "$rval" ] && rval=0
+    clear
+    rm -f $ANSWER $TARGET_FSTAB
+    # printk yeniden aktif etme
+    if [ -w /proc/sys/kernel/printk ]; then
+        echo 4 >/proc/sys/kernel/printk
+    fi
+    umount_filesystems
+    exit $rval
+}
+
+set_option() {
+    if grep -Eq "^${1}.*" $AYAR_DOSYASI; then
+        sed -i -e "/^${1}.*/d" $AYAR_DOSYASI
+    fi
+    echo "${1} ${2}" >>$AYAR_DOSYASI
+}
+
+get_option() {
+    echo $(grep -E "^${1}.*" $AYAR_DOSYASI|sed -e "s|${1}||")
+}
+
+# ISO-639'e göre dil isimleri
+iso639_language() {
+    case "$1" in
+    aa)  echo "Afar" ;;
+    af)  echo "Afrikaans" ;;
+    an)  echo "Aragonese" ;;
+    ar)  echo "Arabic" ;;
+    ast) echo "Asturian" ;;
+    be)  echo "Belgian" ;;
+    bg)  echo "Bulgarian" ;;
+    bhb) echo "Bhili" ;;
+    br)  echo "Breton" ;;
+    bs)  echo "Bosnian" ;;
+    ca)  echo "Catalan" ;;
+    cs)  echo "Czech" ;;
+    cy)  echo "Welsh" ;;
+    da)  echo "Danish" ;;
+    de)  echo "German" ;;
+    el)  echo "Greek" ;;
+    en)  echo "English" ;;
+    es)  echo "Spanish" ;;
+    et)  echo "Estonian" ;;
+    eu)  echo "Basque" ;;
+    fi)  echo "Finnish" ;;
+    fo)  echo "Faroese" ;;
+    fr)  echo "French" ;;
+    ga)  echo "Irish" ;;
+    gd)  echo "Scottish Gaelic" ;;
+    gl)  echo "Galician" ;;
+    gv)  echo "Manx" ;;
+    he)  echo "Hebrew" ;;
+    hr)  echo "Croatian" ;;
+    hsb) echo "Upper Sorbian" ;;
+    hu)  echo "Hungarian" ;;
+    id)  echo "Indonesian" ;;
+    is)  echo "Icelandic" ;;
+    it)  echo "Italian" ;;
+    iw)  echo "Hebrew" ;;
+    ja)  echo "Japanese" ;;
+    ka)  echo "Georgian" ;;
+    kk)  echo "Kazakh" ;;
+    kl)  echo "Kalaallisut" ;;
+    ko)  echo "Korean" ;;
+    ku)  echo "Kurdish" ;;
+    kw)  echo "Cornish" ;;
+    lg)  echo "Ganda" ;;
+    lt)  echo "Lithuanian" ;;
+    lv)  echo "Latvian" ;;
+    mg)  echo "Malagasy" ;;
+    mi)  echo "Maori" ;;
+    mk)  echo "Macedonian" ;;
+    ms)  echo "Malay" ;;
+    mt)  echo "Maltese" ;;
+    nb)  echo "Norwegian Bokmål" ;;
+    nl)  echo "Dutch" ;;
+    nn)  echo "Norwegian Nynorsk" ;;
+    oc)  echo "Occitan" ;;
+    om)  echo "Oromo" ;;
+    pl)  echo "Polish" ;;
+    pt)  echo "Portugese" ;;
+    ro)  echo "Romanian" ;;
+    ru)  echo "Russian" ;;
+    sk)  echo "Slovak" ;;
+    sl)  echo "Slovenian" ;;
+    so)  echo "Somali" ;;
+    sq)  echo "Albanian" ;;
+    st)  echo "Southern Sotho" ;;
+    sv)  echo "Swedish" ;;
+    tcy) echo "Tulu" ;;
+    tg)  echo "Tajik" ;;
+    th)  echo "Thai" ;;
+    tl)  echo "Tagalog" ;;
+    tr)  echo "Türkçe" ;;
+    uk)  echo "Ukrainian" ;;
+    uz)  echo "Uzbek" ;;
+    wa)  echo "Walloon" ;;
+    xh)  echo "Xhosa" ;;
+    yi)  echo "Yiddish" ;;
+    zh)  echo "Chinese" ;;
+    zu)  echo "Zulu" ;;
+    *)   echo "$1" ;;
+    esac
+}
+
+# ISO-3166 ülke kodları yerel ayarlar için
+iso3166_country() {
+    case "$1" in
+    AD) echo "Andorra" ;;
+    AE) echo "United Arab Emirates" ;;
+    AL) echo "Albania" ;;
+    AR) echo "Argentina" ;;
+    AT) echo "Austria" ;;
+    AU) echo "Australia" ;;
+    BA) echo "Bonsia and Herzegovina" ;;
+    BE) echo "Belgium" ;;
+    BG) echo "Bulgaria" ;;
+    BH) echo "Bahrain" ;;
+    BO) echo "Bolivia" ;;
+    BR) echo "Brazil" ;;
+    BW) echo "Botswana" ;;
+    BY) echo "Belarus" ;;
+    CA) echo "Canada" ;;
+    CH) echo "Switzerland" ;;
+    CL) echo "Chile" ;;
+    CN) echo "China" ;;
+    CO) echo "Colombia" ;;
+    CR) echo "Costa Rica" ;;
+    CY) echo "Cyprus" ;;
+    CZ) echo "Czech Republic" ;;
+    DE) echo "Germany" ;;
+    DJ) echo "Djibouti" ;;
+    DK) echo "Denmark" ;;
+    DO) echo "Dominican Republic" ;;
+    DZ) echo "Algeria" ;;
+    EC) echo "Ecuador" ;;
+    EE) echo "Estonia" ;;
+    EG) echo "Egypt" ;;
+    ES) echo "Spain" ;;
+    FI) echo "Finland" ;;
+    FO) echo "Faroe Islands" ;;
+    FR) echo "France" ;;
+    GB) echo "Great Britain" ;;
+    GE) echo "Georgia" ;;
+    GL) echo "Greenland" ;;
+    GR) echo "Greece" ;;
+    GT) echo "Guatemala" ;;
+    HK) echo "Hong Kong" ;;
+    HN) echo "Honduras" ;;
+    HR) echo "Croatia" ;;
+    HU) echo "Hungary" ;;
+    ID) echo "Indonesia" ;;
+    IE) echo "Ireland" ;;
+    IL) echo "Israel" ;;
+    IN) echo "India" ;;
+    IQ) echo "Iraq" ;;
+    IS) echo "Iceland" ;;
+    IT) echo "Italy" ;;
+    JO) echo "Jordan" ;;
+    JP) echo "Japan" ;;
+    KE) echo "Kenya" ;;
+    KR) echo "Korea, Republic of" ;;
+    KW) echo "Kuwait" ;;
+    KZ) echo "Kazakhstan" ;;
+    LB) echo "Lebanon" ;;
+    LT) echo "Lithuania" ;;
+    LU) echo "Luxembourg" ;;
+    LV) echo "Latvia" ;;
+    LY) echo "Libya" ;;
+    MA) echo "Morocco" ;;
+    MG) echo "Madagascar" ;;
+    MK) echo "Macedonia" ;;
+    MT) echo "Malta" ;;
+    MX) echo "Mexico" ;;
+    MY) echo "Malaysia" ;;
+    NI) echo "Nicaragua" ;;
+    NL) echo "Netherlands" ;;
+    NO) echo "Norway" ;;
+    NZ) echo "New Zealand" ;;
+    OM) echo "Oman" ;;
+    PA) echo "Panama" ;;
+    PE) echo "Peru" ;;
+    PH) echo "Philippines" ;;
+    PL) echo "Poland" ;;
+    PR) echo "Puerto Rico" ;;
+    PT) echo "Portugal" ;;
+    PY) echo "Paraguay" ;;
+    QA) echo "Qatar" ;;
+    RO) echo "Romania" ;;
+    RU) echo "Russian Federation" ;;
+    SA) echo "Saudi Arabia" ;;
+    SD) echo "Sudan" ;;
+    SE) echo "Sweden" ;;
+    SG) echo "Singapore" ;;
+    SI) echo "Slovenia" ;;
+    SK) echo "Slovakia" ;;
+    SO) echo "Somalia" ;;
+    SV) echo "El Salvador" ;;
+    SY) echo "Syria" ;;
+    TH) echo "Thailand" ;;
+    TJ) echo "Tajikistan" ;;
+    TN) echo "Tunisia" ;;
+    TR) echo "Türkiye" ;;
+    TW) echo "Taiwan" ;;
+    UA) echo "Ukraine" ;;
+    UG) echo "Uganda" ;;
+    US) echo "United States of America" ;;
+    UY) echo "Uruguay" ;;
+    UZ) echo "Uzbekistan" ;;
+    VE) echo "Venezuela" ;;
+    YE) echo "Yemen" ;;
+    ZA) echo "South Africa" ;;
+    ZW) echo "Zimbabwe" ;;
+    *)  echo "$1" ;;
+    esac
+}
+
+show_disks() {
+    local dev size sectorsize gbytes
+
+    # IDE
+    for dev in $(ls /sys/block|grep -E '^hd'); do
+        if [ "$(cat /sys/block/$dev/device/media)" = "disk" ]; then
+            # sektör, alan bilgisinin bulunması;
+            echo "/dev/$dev"
+            size=$(cat /sys/block/$dev/size)
+            sectorsize=$(cat /sys/block/$dev/queue/hw_sector_size)
+            gbytes="$(($size * $sectorsize / 1024 / 1024 / 1024))"
+            echo "size:${gbytes}GB;sector_size:$sectorsize"
+        fi
+    done
+    # SATA/SCSI ve Virtual diskleri (virtio)
+    for dev in $(ls /sys/block|grep -E '^([sv]|xv)d|mmcblk|nvme'); do
+        echo "/dev/$dev"
+        size=$(cat /sys/block/$dev/size)
+        sectorsize=$(cat /sys/block/$dev/queue/hw_sector_size)
+        gbytes="$(($size * $sectorsize / 1024 / 1024 / 1024))"
+        echo "size:${gbytes}GB;sector_size:$sectorsize"
+    done
+    # cciss(4) aygıtları
+    for dev in $(ls /dev/cciss 2>/dev/null|grep -E 'c[0-9]d[0-9]$'); do
+        echo "/dev/cciss/$dev"
+        size=$(cat /sys/block/cciss\!$dev/size)
+        sectorsize=$(cat /sys/block/cciss\!$dev/queue/hw_sector_size)
+        gbytes="$(($size * $sectorsize / 1024 / 1024 / 1024))"
+        echo "size:${gbytes}GB;sector_size:$sectorsize"
+    done
+}
+
+show_partitions() {
+    local dev fstype fssize p part
+
+    set -- $(show_disks)
+    while [ $# -ne 0 ]; do
+        disk=$(basename $1)
+        shift 2
+        # ATA/SCSI/SATA
+        for p in /sys/block/$disk/$disk*; do
+            if [ -d $p ]; then
+                part=$(basename $p)
+                fstype=$(lsblk -nfr /dev/$part|awk '{print $2}'|head -1)
+                [ "$fstype" = "iso9660" ] && continue
+                [ "$fstype" = "crypto_LUKS" ] && continue
+                [ "$fstype" = "LVM2_member" ] && continue
+                fssize=$(lsblk -nr /dev/$part|awk '{print $4}'|head -1)
+                echo "/dev/$part"
+                echo "size:${fssize:-unknown};fstype:${fstype:-none}"
+            fi
+        done
+    done
+    # Device Mapper
+    for p in /dev/mapper/*; do
+        part=$(basename $p)
+        [ "${part}" = "live-rw" ] && continue
+        [ "${part}" = "live-base" ] && continue
+        [ "${part}" = "control" ] && continue
+
+        fstype=$(lsblk -nfr $p|awk '{print $2}'|head -1)
+        fssize=$(lsblk -nr $p|awk '{print $4}'|head -1)
+        echo "${p}"
+        echo "size:${fssize:-unknown};fstype:${fstype:-none}"
+    done
+    # Software raid (md)
+    for p in $(ls -d /dev/md* 2>/dev/null|grep '[0-9]'); do
+        part=$(basename $p)
+        if cat /proc/mdstat|grep -qw $part; then
+            fstype=$(lsblk -nfr /dev/$part|awk '{print $2}')
+            [ "$fstype" = "crypto_LUKS" ] && continue
+            [ "$fstype" = "LVM2_member" ] && continue
+            fssize=$(lsblk -nr /dev/$part|awk '{print $4}')
+            echo "$p"
+            echo "size:${fssize:-unknown};fstype:${fstype:-none}"
+        fi
+    done
+    # cciss(4) aygıtları
+    for part in $(ls /dev/cciss 2>/dev/null|grep -E 'c[0-9]d[0-9]p[0-9]+'); do
+        fstype=$(lsblk -nfr /dev/cciss/$part|awk '{print $2}')
+        [ "$fstype" = "crypto_LUKS" ] && continue
+        [ "$fstype" = "LVM2_member" ] && continue
+        fssize=$(lsblk -nr /dev/cciss/$part|awk '{print $4}')
+        echo "/dev/cciss/$part"
+        echo "size:${fssize:-unknown};fstype:${fstype:-none}"
+    done
+    if [ -e /sbin/lvs ]; then
+        # LVM
+        lvs --noheadings|while read lvname vgname perms size; do
+            echo "/dev/mapper/${vgname}-${lvname}"
+            echo "size:${size};fstype:lvm"
+        done
+    fi
+}
+
+menu_filesystems() {
+    local dev fstype fssize mntpoint reformat
+
+    while true; do
+        DIALOG --ok-label "$LANG_CHANGE" --cancel-label "$LANG_DONE" \
+            --title " $LANG_SELECTPARTITION " --menu "$MENULABEL" \
+            ${MENUSIZE} $(show_partitions)
+        [ $? -ne 0 ] && return
+
+        dev=$(cat $ANSWER)
+        DIALOG --title " `printf "$LANG_SELECTFILESYSTEM" "$dev"` " \
+            --menu "$MENULABEL" ${MENUSIZE} \
+            "btrfs" "Oracle Btrfs" \
+            "ext2" "Linux ext2 (no journaling)" \
+            "ext3" "Linux ext3 (journal)" \
+            "ext4" "Linux ext4 (journal)" \
+            "f2fs" "Flash-Friendly Filesystem" \
+            "swap" "Linux swap" \
+            "vfat" "FAT32" \
+            "xfs" "SGI's XFS"
+        if [ $? -eq 0 ]; then
+            fstype=$(cat $ANSWER)
+        else
+            continue
+        fi
+        if [ "$fstype" != "swap" ]; then
+            DIALOG --inputbox "`printf "$LANG_MOUNTPOINT" "$dev"`:" ${INPUTSIZE}
+            if [ $? -eq 0 ]; then
+                mntpoint=$(cat $ANSWER)
+            elif [ $? -eq 1 ]; then
+                continue
+            fi
+        else
+            mntpoint=swap
+        fi
+        DIALOG --yesno "`printf "$LANG_NEWFILESYSTEM" "$dev"`" ${YESNOSIZE}
+        if [ $? -eq 0 ]; then
+            reformat=1
+        elif [ $? -eq 1 ]; then
+            reformat=0
+        else
+            continue
+        fi
+        fssize=$(lsblk -nr $dev|awk '{print $4}')
+        set -- "$fstype" "$fssize" "$mntpoint" "$reformat"
+        if [ -n "$1" -a -n "$2" -a -n "$3" -a -n "$4" ]; then
+            local bdev=$(basename $dev)
+            local ddev=$(basename $(dirname $dev))
+            if [ "$ddev" != "dev" ]; then
+                sed -i -e "/^MOUNTPOINT \/dev\/${ddev}\/${bdev}.*/d" $AYAR_DOSYASI
+            else
+                sed -i -e "/^MOUNTPOINT \/dev\/${bdev}.*/d" $AYAR_DOSYASI
+            fi
+            echo "MOUNTPOINT $dev $1 $2 $3 $4" >>$AYAR_DOSYASI
+        fi
+    done
+}
+
+menu_partitions() {
+    DIALOG --title " $LANG_SELECTDISKPART " \
+        --menu "$MENULABEL" ${MENUSIZE} $(show_disks)
+    if [ $? -eq 0 ]; then
+        local device=$(cat $ANSWER)
+
+        DIALOG --title "`printf "$LANG_MODPARTTABLE" "$device"`" --msgbox "`printf "$LANG_PARTITIONDIALOG" "${BOLD}" "$device" "${RESET}" "${BOLD}" "${RESET}" "${BOLD}" "${RESET}"`" 18 80
+        if [ $? -eq 0 ]; then
+            while true; do
+                clear; cfdisk $device; PARTITIONS_YAPILDI=1
+                break
+            done
+        else
+            return
+        fi
+    fi
+}
+
+menu_keymap() {
+    if [ -f /usr/bin/lightdm ];then
+		local _keymaps="$(sed '/^! layout$/,/^ *$/!d;//d' /usr/share/X11/xkb/rules/base.lst | awk {'print $1 ":" $2'})"
+    else
+		local _keymaps="$(find /usr/share/kbd/keymaps/ -type f -iname "*.map.gz" -printf "%f\n" | sed 's|.map.gz||g' | sort)"
+    fi
+    local _KEYMAPS=
+	
+    for f in ${_keymaps}; do
+        _KEYMAPS="${_KEYMAPS} ${f} -"
+    done
+    while true; do
+        DIALOG --title " $LANG_SELKEYMAP " --menu "$MENULABEL" 14 70 14 ${_KEYMAPS}
+        if [ $? -eq 0 ]; then
+            set_option KEYMAP "$(cat $ANSWER)"
+            loadkeys "$(cat $ANSWER)"
+            KEYBOARD_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+}
+
+set_keymap() {
+    local KEYMAP=$(get_option KEYMAP)
+	if [ -f /usr/bin/lightdm ];then
+		echo "$KEYMAP" | cut -d':' -f1 > $HEDEF/home/"$(get_option USERLOGIN)"/.Xkbmap
+    else
+		sed -i -e "s|KEYMAP=.*|KEYMAP=$KEYMAP|g" $HEDEF/etc/sysconfig/rc.site
+    fi
+}
+
+menu_locale() {
+    local _locales="$(locale -a)"
+    local LOCALES ISO639 ISO3166
+    local TMPFILE=$(mktemp -t vinstall-XXXXXXXX || exit 1)
+    INFOBOX "$LANG_SCANLOCALES ..." 4 60
+    for f in ${_locales}; do
+        eval $(echo $f | awk 'BEGIN { FS="." } \
+            { FS="_"; split($1, a); printf "ISO639=%s ISO3166=%s\n", a[1], a[2] }')
+        echo "$f|$(iso639_language $ISO639) ($(iso3166_country $ISO3166))|" >> $TMPFILE
+    done
+    clear
+    # ISO-639^e göre dil isimlerinin sıralanması
+    LOCALES=$(sort -t '|' -k 2 < $TMPFILE | xargs | sed -e's/| /|/g')
+    rm -f $TMPFILE
+    while true; do
+        (IFS="|"; DIALOG --title " $LANG_SELLOCAL " --menu "$MENULABEL" 18 70 18 ${LOCALES})
+        if [ $? -eq 0 ]; then
+            set_option LOCALE "$(cat $ANSWER)"
+            LOCALE_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+}
+
+set_locale() {
+	local LOCALE=$(get_option LOCALE)
+	rm -rf $HEDEF/etc/profile.d/i18n.sh
+	echo "export LANG=$LOCALE" > $HEDEF/etc/profile.d/i18n.sh
+	echo "export LC_ALL=$LOCALE" >> $HEDEF/etc/profile.d/i18n.sh
+	echo "export LANGUAGE=$LOCALE" >> $HEDEF/etc/profile.d/i18n.sh
+	# environment içinde de ayarlanması
+	echo "LANG=$LOCALE" > $HEDEF/etc/environment
+}
+
+menu_timezone() {
+    local _tzones="$(cd /usr/share/zoneinfo; find Africa/ America/ Antarctica/ Arctic/ Asia/ Atlantic/ Australia/ Europe/ Indian/ Pacific/ UTC Turkey -type f | sort)"
+    local _TIMEZONES=
+
+    for f in ${_tzones}; do
+        _TIMEZONES="${_TIMEZONES} ${f} -"
+    done
+    while true; do
+        DIALOG --title " $LANG_SELTZONE " --menu "$MENULABEL" 14 70 14 ${_TIMEZONES}
+        if [ $? -eq 0 ]; then
+            set_option TIMEZONE "$(cat $ANSWER)"
+            TIMEZONE_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+}
+
+set_timezone() {
+    local MYTIMEZONE="$(get_option TIMEZONE)"
+    if [ -f $HEDEF/etc/sysconfig/clock ];then
+		sed -i '/^TIMEZONE=/ d' $HEDEF/etc/sysconfig/clock
+		echo "TIMEZONE=\"$MYTIMEZONE\"" >> $HEDEF/etc/sysconfig/clock
+    fi
+    if [ -f /usr/share/zoneinfo/$MYTIMEZONE ];then
+		rm -f $HEDEF/etc/localtime
+		ln -s /usr/share/zoneinfo/$MYTIMEZONE $HEDEF/etc/localtime
+    fi
+}
+
+menu_hostname() {
+    while true; do
+        DIALOG --inputbox "$LANG_SETHOST:" ${INPUTSIZE}
+        if [ $? -eq 0 ]; then
+            set_option HOSTNAME "$(cat $ANSWER)"
+            HOSTNAME_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+}
+
+set_hostname() {
+    echo "$(get_option HOSTNAME)" > $HEDEF/etc/hostname
+    echo "127.0.0.1 $(get_option HOSTNAME)" >> /etc/hosts
+    #sed -i -e "s|HOSTNAME=.*|HOSTNAME=\"$(get_option HOSTNAME)\"|g" $HEDEF/etc/sysconfig/network
+}
+
+menu_rootpassword() {
+    local _firstpass _secondpass _desc
+
+    while true; do
+        if [ -z "${_firstpass}" ]; then
+            _desc="$LANG_ROOTPW"
+        else
+            _desc="$LANG_ROOTPWAGAIN"
+        fi
+        DIALOG --insecure --passwordbox "${_desc}" ${INPUTSIZE}
+        if [ $? -eq 0 ]; then
+            if [ -z "${_firstpass}" ]; then
+                _firstpass="$(cat $ANSWER)"
+            else
+                _secondpass="$(cat $ANSWER)"
+            fi
+            if [ -n "${_firstpass}" -a -n "${_secondpass}" ]; then
+                if [ "${_firstpass}" != "${_secondpass}" ]; then
+                    INFOBOX "$LANG_PWNOTMATCH" 6 60
+                    unset _firstpass _secondpass
+                    sleep 2 && clear && continue
+                fi
+                set_option ROOTPASSWORD "${_firstpass}"
+                ROOTPASSWORD_YAPILDI=1
+                break
+            fi
+        else
+            return
+        fi
+    done
+}
+
+set_rootpassword() {
+    echo "root:$(get_option ROOTPASSWORD)" | chpasswd -R $HEDEF -c SHA512
+}
+
+menu_useraccount() {
+    local _firstpass _secondpass _desc
+    local _groups _status _group _checklist
+    local _preset
+
+    while true; do
+        _preset=$(get_option USERLOGIN)
+        [ -z "$_preset" ] && _preset=""
+        DIALOG --inputbox "$LANG_LOGINNAME:" ${INPUTSIZE} "$_preset"
+        if [ $? -eq 0 ]; then
+            set_option USERLOGIN "$(cat $ANSWER)"
+            USERLOGIN_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+
+    while true; do
+        _preset=$(get_option USERNAME)
+        [ -z "$_preset" ] && _preset=""
+        DIALOG --inputbox "$LANG_USERNAME '$(get_option USERLOGIN)' :" \
+            ${INPUTSIZE} "$_preset"
+        if [ $? -eq 0 ]; then
+            set_option USERNAME "$(cat $ANSWER)"
+            USERNAME_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+
+    while true; do
+        if [ -z "${_firstpass}" ]; then
+            _desc="$LANG_PASSWORD '$(get_option USERLOGIN)'"
+        else
+            _desc="$LANG_PASSWORDAGAIN '$(get_option USERLOGIN)'"
+        fi
+        DIALOG --insecure --passwordbox "${_desc}" ${INPUTSIZE}
+        if [ $? -eq 0 ]; then
+            if [ -z "${_firstpass}" ]; then
+                _firstpass="$(cat $ANSWER)"
+            else
+                _secondpass="$(cat $ANSWER)"
+            fi
+            if [ -n "${_firstpass}" -a -n "${_secondpass}" ]; then
+                if [ "${_firstpass}" != "${_secondpass}" ]; then
+                    INFOBOX "$LANG_PWNOTMATCH" 6 60
+                    unset _firstpass _secondpass
+                    sleep 2 && clear && continue
+                fi
+                set_option USERPASSWORD "${_firstpass}"
+                USERPASSWORD_YAPILDI=1
+                break
+            fi
+        else
+            return
+        fi
+    done
+
+    #_groups="wheel,audio,video,floppy,cdrom,optical,kvm"
+    _groups="users,disk,network,floppy,fuse,video,lp,tty,audio,cdrom,scanner,adm,vboxusers,wheel"
+    while true; do
+        _desc="$LANG_GMEMLOGIN '$(get_option USERLOGIN)':"
+        for _group in $(cat /etc/group); do
+            _gid="$(echo ${_group} | cut -d: -f3)"
+            _group="$(echo ${_group} | cut -d: -f1)"
+            _status="$(echo ${_groups} | grep -w ${_group})"
+            if [ -z "${_status}" ]; then
+                _status=off
+            else
+                _status=on
+            fi
+            if [ -z "${_checklist}" ]; then
+                _checklist="${_group} ${_group}:${_gid} ${_status}"
+            else
+                _checklist="${_checklist} ${_group} ${_group}:${_gid} ${_status}"
+            fi
+        done
+        DIALOG --no-tags --checklist "${_desc}" 20 60 18 ${_checklist}
+        if [ $? -eq 0 ]; then
+            set_option USERGROUPS $(cat $ANSWER | sed -e's| |,|g')
+            USERGROUPS_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+}
+
+set_useraccount() {
+    USERLOGIN_YAPILDI=$(get_option USERLOGIN)
+    USERPASSWORD_YAPILDI=$(get_option USERPASSWORD)
+    USERNAME_YAPILDI=$(get_option USERNAME)
+    USERGROUPS_YAPILDI=$(get_option USERGROUPS)
+    [ -z "$USERLOGIN_YAPILDI" ] && return
+    [ -z "$USERPASSWORD_YAPILDI" ] && return
+    [ -z "$USERNAME_YAPILDI" ] && return
+    [ -z "$USERGROUPS_YAPILDI" ] && return
+   
+    #chroot $HEDEF useradd -m -G $(get_option USERGROUPS) -c "$(get_option USERNAME)" $(get_option USERLOGIN)
+    useradd -R $HEDEF -m -G $(get_option USERGROUPS) -c "$(get_option USERNAME)" $(get_option USERLOGIN)
+    #chroot $HEDEF echo "$(get_option USERLOGIN):$(get_option USERPASSWORD)" | chpasswd -R $HEDEF -c SHA512 
+    echo "$(get_option USERLOGIN):$(get_option USERPASSWORD)" | chpasswd -R $HEDEF -c SHA512 
+}
+
+menu_bootloader() {
+    while true; do
+        DIALOG --title " $LANG_BOOTLOADER" \
+            --menu "$MENULABEL" ${MENUSIZE} $(show_disks) none "$LANG_BOOTLOTHER"
+        if [ $? -eq 0 ]; then
+            set_option BOOTLOADER "$(cat $ANSWER)"
+            BOOTLOADER_YAPILDI=1
+            break
+        else
+            return
+        fi
+    done
+    while true; do
+        DIALOG --yesno "$LANG_BOOTLGRAPH" ${YESNOSIZE}
+        if [ $? -eq 0 ]; then
+            set_option TEXTCONSOLE 0
+            break
+        elif [ $? -eq 1 ]; then
+            set_option TEXTCONSOLE 1
+            break
+        else
+            return
+        fi
+    done
+}
+
+set_bootloader() {
+    local dev=$(get_option BOOTLOADER) grub_args="--force "  
+    
+    if [ "$dev" = "none" ]; then return; fi
+
+    # efi sistem ve efivar kontrolü
+    if [ -n "$EFI_SYSTEM" ]; then
+        grub_args="--force --target=$EFI_TARGET --efi-directory=/boot/efi --bootloader-id=boot --recheck"
+        chroot $HEDEF grub-install $grub_args $dev >$LOG 2>&1
+        cp $HEDEF/boot/efi/EFI/boot/grubx64.efi $HEDEF/boot/efi/EFI/boot/bootx64.efi
+    else
+		echo "`printf "$LANG_GRUBINST" "$grub_args $dev"`" >$LOG
+		chroot $HEDEF grub-install $grub_args $dev >$LOG 2>&1
+	fi
+    if [ $? -ne 0 ]; then
+        DIALOG --msgbox "`printf "$LANG_GRUBFAIL" "${BOLD}${RED}" "${RESET}" "$dev" "$LOG"`" ${MSGBOXSIZE}
+        DIE 1
+    fi
+    echo "`printf "$LANG_GRUBMKCONF" "$HEDEF"`" >$LOG
+    chroot $HEDEF grub-mkconfig -o /boot/grub/grub.cfg >$LOG 2>&1
+    if [ $? -ne 0 ]; then
+        DIALOG --msgbox "`printf "$LANG_GRUBMKCONFFAIL" "${BOLD}${RED}" "${RESET}" "$LOG"`" ${MSGBOXSIZE}
+        DIE 1
+    fi
+}
+
+validate_filesystems() {
+    local mnts dev size fstype mntpt mkfs rootfound fmt
+    local usrfound efi_system_partition
+
+    unset TARGETFS
+    mnts=$(grep -E '^MOUNTPOINT.*' $AYAR_DOSYASI)
+    set -- ${mnts}
+    while [ $# -ne 0 ]; do
+        fmt=""
+        dev=$2; fstype=$3; size=$4; mntpt="$5"; mkfs=$6
+        shift 6
+
+        if [ "$mntpt" = "/" ]; then
+            rootfound=1
+        elif [ "$mntpt" = "/usr" ]; then
+            usrfound=1
+        elif [ "$fstype" = "vfat" -a "$mntpt" = "/boot/efi" ]; then
+            efi_system_partition=1
+        fi
+        if [ "$mkfs" -eq 1 ]; then
+            fmt="$LANG_NEWFSYSTEM: "
+        fi
+        if [ -z "$TARGETFS" ]; then
+            TARGETFS="`printf "$LANG_MOUNTEDON" "${fmt}$dev" "$size" "$mntpt" "${fstype}"`"
+        else
+            TARGETFS="`printf "$LANG_MOUNTEDON" "${TARGETFS}${fmt}${dev}" "$size" "$mntpt" "${fstype}"`"
+        fi
+    done
+    if [ -z "$rootfound" ]; then
+        DIALOG --msgbox "`printf "$LANG_FSYSTEMNOTSET" "${BOLD}${RED}" "${RESET}" `" ${MSGBOXSIZE}
+        return 1
+    elif [ -n "$usrfound" ]; then
+        DIALOG --msgbox "`printf "$LANG_FSYSNOTSUPPORTED" "${BOLD}${RED}" "${RESET}"`" ${MSGBOXSIZE}
+        return 1
+    elif [ -n "$EFI_SYSTEM" -a -z "$efi_system_partition" ]; then
+        DIALOG --msgbox "`printf "$LANG_FSYSEFINOTSET" "${BOLD}${RED}" "${RESET}"`" ${MSGBOXSIZE}
+    fi
+    FILESYSTEMS_YAPILDI=1
+}
+
+create_filesystems() {
+    local mnts dev mntpt fstype fspassno mkfs size rv uuid
+
+    mnts=$(grep -E '^MOUNTPOINT.*' $AYAR_DOSYASI)
+    set -- ${mnts}
+    while [ $# -ne 0 ]; do
+        dev=$2; fstype=$3; mntpt="$5"; mkfs=$6
+        shift 6
+
+        # swap bölümleme
+        if [ "$fstype" = "swap" ]; then
+            swapoff $dev >/dev/null 2>&1
+            if [ "$mkfs" -eq 1 ]; then
+                mkswap $dev >$LOG 2>&1
+                if [ $? -ne 0 ]; then
+                    DIALOG --msgbox "`printf "$LANG_SWAPFAIL" "${BOLD}${RED}" "${RESET}" "$dev" "$LOG"`" ${MSGBOXSIZE}
+                    DIE 1
+                fi
+            fi
+            swapon $dev >$LOG 2>&1
+            if [ $? -ne 0 ]; then
+                DIALOG --msgbox "`printf "$LANG_SWAPERROR" "${BOLD}${RED}" "${RESET}" "$dev" "$LOG"`" ${MSGBOXSIZE}
+                DIE 1
+            fi
+            # hedef fstaba girdi eklenmesi
+            uuid=$(blkid -o value -s UUID "$dev")
+            echo "UUID=$uuid none swap sw 0 0" >>$TARGET_FSTAB
+            continue
+        fi
+
+        if [ "$mkfs" -eq 1 ]; then
+            case "$fstype" in
+            btrfs) MKFS="mkfs.btrfs -f"; modprobe btrfs >$LOG 2>&1;;
+            ext2) MKFS="mke2fs -F"; modprobe ext2 >$LOG 2>&1;;
+            ext3) MKFS="mke2fs -F -j"; modprobe ext3 >$LOG 2>&1;;
+            ext4) MKFS="mke2fs -F -t ext4"; modprobe ext4 >$LOG 2>&1;;
+            f2fs) MKFS="mkfs.f2fs"; modprobe f2fs >$LOG 2>&1;;
+            vfat) MKFS="mkfs.vfat -F32"; modprobe vfat >$LOG 2>&1;;
+            xfs) MKFS="mkfs.xfs -f"; modprobe xfs >$LOG 2>&1;;
+            esac
+            TITLE="`printf "$LANG_ERRLOGTITLE" "$LOG"`"
+            INFOBOX "`printf "$LANG_CREATEFSYS" "$fstype" "$dev" "$mntpt"`" 8 60
+            echo "`printf "$LANG_CREATEMKFS" "$MKFS $dev"`" >$LOG
+            # hedef disk bölümü bağlı olabilir, çözmek için
+            mount | grep -q "$dev" && umount -l $dev
+            $MKFS $dev >$LOG 2>&1; rv=$?
+            if [ $rv -ne 0 ]; then
+                DIALOG --msgbox "`printf "$LANG_CREATEFAIL" "${BOLD}${RED}" "${RESET}" "$fstype" "$dev" "$LOG"`" ${MSGBOXSIZE}
+                DIE 1
+            fi
+        fi
+        # rootfs nin bağlanması
+        [ "$mntpt" != "/" ] && continue
+        mkdir -p $HEDEF
+        echo "`printf "$LANG_MOUNTINGON" "$dev" "$mntpt" "$fstype"`" >$LOG
+        mount -t $fstype $dev $HEDEF >$LOG 2>&1
+        if [ $? -ne 0 ]; then
+            DIALOG --msgbox "`printf "$LANG_MOUNTINGERR" "${BOLD}${RED}" "${RESET}" "$dev" "${mntpt}" "$LOG"`" ${MSGBOXSIZE}
+            DIE 1
+        fi
+        # hedef fstaba girdi eklenmesi
+        uuid=$(blkid -o value -s UUID "$dev")
+        if [ "$fstype" = "f2fs" ]; then
+            fspassno=0
+        else
+            fspassno=1
+        fi
+        echo "UUID=$uuid $mntpt $fstype defaults 0 $fspassno" >>$TARGET_FSTAB
+    done
+
+    # dosya sistemlerinin hedefe bağlanması
+    mnts=$(grep -E '^MOUNTPOINT.*' $AYAR_DOSYASI)
+    set -- ${mnts}
+    while [ $# -ne 0 ]; do
+        dev=$2; fstype=$3; mntpt="$5"
+        shift 6
+        [ "$mntpt" = "/" -o "$fstype" = "swap" ] && continue
+        mkdir -p ${HEDEF}${mntpt}
+        echo "$LANG_MOUNTINGON" >$LOG
+        mount -t $fstype $dev ${HEDEF}${mntpt} >$LOG 2>&1
+        if [ $? -ne 0 ]; then
+            DIALOG --msgbox "$LANG_MOUNTINGERR" ${MSGBOXSIZE}
+            DIE
+        fi
+        # hedef fstaba girdi eklenmesi
+        uuid=$(blkid -o value -s UUID "$dev")
+        echo "UUID=$uuid $mntpt $fstype defaults 0 2" >>$TARGET_FSTAB
+    done
+}
+
+mount_filesystems() {
+    for f in sys proc dev; do
+        [ ! -d $HEDEF/$f ] && mkdir $HEDEF/$f
+        echo "Mounting $HEDEF/$f..." >$LOG
+        mount --bind /$f $HEDEF/$f >$LOG 2>&1
+    done
+}
+
+umount_filesystems() {
+    local f
+
+    for f in sys/fs/fuse/connections sys proc dev; do
+        echo "Unmounting $HEDEF/$f..." >$LOG
+        umount $HEDEF/$f >$LOG 2>&1
+    done
+    local mnts="$(grep -E '^MOUNTPOINT.*$' $AYAR_DOSYASI)"
+    set -- ${mnts}
+    while [ $# -ne 0 ]; do
+        local dev=$2; local fstype=$3; local mntpt=$5
+        shift 6
+        if [ "$fstype" = "swap" ]; then
+            echo "`printf "$LANG_SWAPDISABLING" "$dev" `" >$LOG
+            swapoff $dev >$LOG 2>&1
+            continue
+        fi
+        if [ "$mntpt" != "/" ]; then
+            echo "`printf "$LANG_SWAPUNMOUNTING" "$HEDEF/$mntpt" `" >$LOG
+            umount $HEDEF/$mntpt >$LOG 2>&1
+        fi
+    done
+    echo "`printf "$LANG_SWAPUNMOUNTING" "$HEDEF"`" >$LOG
+    umount $HEDEF >$LOG 2>&1
+}
+
+log_and_count() {
+    local progress whole tenth
+    while read line; do
+        #echo "$line" >$LOG
+        copy_count=$((copy_count + 1))
+        progress=$((1000 * copy_count / copy_total))
+        if [ "$progress" != "$copy_progress" ]; then
+            whole=$((progress / 10))
+            tenth=$((progress % 10))
+            printf "$LANG_PROGRESS" $whole $tenth $copy_count $copy_total
+            copy_progress=$progress
+        fi
+        echo "$copy_progress" >$LOG
+    done
+}
+
+copy_rootfs() {
+    local tar_in="--create --one-file-system --xattrs"
+    TITLE="`printf "$LANG_ERRLOGTITLE" "$LOG"`"
+    INFOBOX "$LANG_COUNTFILES" 4 60
+    copy_total=$(tar ${tar_in} -v -f /dev/null / 2>/dev/null | wc -l)
+    export copy_total copy_count=0 copy_progress=
+    clear
+    tar ${tar_in} -f - / 2>/dev/null | \
+        tar --extract --xattrs --xattrs-include='*' --preserve-permissions -v -f - -C $HEDEF | \
+        log_and_count | \
+        DIALOG --title "${TITLE}" \
+            --progressbox "$LANG_CPLIVEIMG" 5 60
+    if [ $? -ne 0 ]; then
+        DIE 1
+    fi
+    unset copy_total copy_count copy_percent
+}
+
+menu_install() {
+    # dosya sistemi hazır değilse devam edilmeyecek.
+    validate_filesystems || return 1
+
+    ROOTPASSWORD_YAPILDI="$(get_option ROOTPASSWORD)"
+    BOOTLOADER_YAPILDI="$(get_option BOOTLOADER)"
+
+    if [ -z "$FILESYSTEMS_YAPILDI" ]; then
+        DIALOG --msgbox "`printf "$LANG_FSYSNOTCONF" "${BOLD}" "${RESET}"`" ${MSGBOXSIZE}
+        return 1
+    elif [ -z "$ROOTPASSWORD_YAPILDI" ]; then
+        DIALOG --msgbox "`printf "$LANG_ROOTPWNOTCONF" "${BOLD}" "${RESET}"`" ${MSGBOXSIZE}
+        return 1
+    elif [ -z "$BOOTLOADER_YAPILDI" ]; then
+        DIALOG --msgbox "`printf "$LANG_BOOTLNOTCONF" "${BOLD}" "${RESET}"`" ${MSGBOXSIZE}
+        return 1
+    fi
+    
+    if [ -z "$FORMAT_ONAY" ]; then
+		DIALOG --yesno "`printf "$LANG_DESTROYWARN" "${BOLD}" "${RESET}" "${BOLD}${TARGETFS}${RESET}" "${BOLD}${RED}" "${RESET}" "${BOLD}" "${RESET}"`" 20 80 || return
+    fi
+    unset TARGETFS
+
+    # Dosya sistemlerinin oluşturulup-bağlanması
+    create_filesystems
+    
+    # ağdan paket kurulum eklenecek.
+	KAYNAK="YEREL"
+   
+    if [ $KAYNAK="YEREL" ]; then
+        # dosya sisteminin kopyalanması
+        copy_rootfs
+        
+        USERNAME=$CANLI_KULLANICI
+        # Canlı kulanıcının silinmesi root değilse
+        if [ $USERNAME != "root" ];then
+			echo "`printf "$LANG_RMTARGET" "$USERNAME"`" >$LOG
+			chroot $HEDEF userdel -r $USERNAME >$LOG 2>&1
+			sed -i -e "/$USERNAME ALL=.*/d" $HEDEF/etc/sudoers
+		fi
+		TITLE="`printf "$LANG_ERRLOGTITLE" "$LOG"`"
+		INFOBOX "$LANG_BUILDINGINITRAMFS" 4 60
+		echo "$LANG_BUILDINGINITRAMFS" >$LOG
+        # gerekli dosya istemlerinin bağlanması
+        mount_filesystems
+       
+        rm -f $HEDEF/boot/initramfs*
+        rm -f $HEDEF/boot/initrd*
+        rm -f $HEDEF/boot/kernel*
+        cp /boot/kernel-* $HEDEF/boot/
+        
+        local sonek="milis"
+        local kversion=`ls $HEDEF/boot/kernel-* | xargs -I {} basename {} | head -n1 |cut -d'-' -f2`
+        chroot $HEDEF dracut --no-hostonly --xz --omit systemd --add-drivers "ahci" -f /boot/initrd.img-${kversion} $kversion-$sonek --force >>$LOG 2>&1
+        #chroot $HEDEF ln -s /boot/kernel-* /boot/kernel
+        rmdir $HEDEF/mnt/target
+    fi
+
+    INFOBOX "$LANG_APPLYSETTINGS" 4 60
+
+    # fstab ın hedef diske kopyalanması
+    install -Dm644 $TARGET_FSTAB $HEDEF/etc/fstab
+    
+    # /tmp in tmpfs olarak bağlanması - milis2 de sorun verdi. ln: creating hard link `/usr/bin/abc' => `/tmp/abc#123/usr/bin/abc': Invalid cross-device link
+    # echo "tmpfs /tmp tmpfs defaults,nosuid,nodev 0 0" >> $HEDEF/etc/fstab
+
+
+    # keymap, bölgesel ve yerel zaman ayarları, hostname, root-kullanıcı şifre
+    #set_keymap
+    set_locale
+    set_timezone
+    set_hostname
+    set_rootpassword
+    set_useraccount
+
+    # Kullanıcı ve root için öntanımlı ayarların kopyalanması
+    #cp $HEDEF/etc/skel/.[bix]* $HEDEF/root
+    USERLOGIN="$(get_option USERLOGIN)"
+    mkdir -p $HEDEF/home/$USERLOGIN/
+    # todo!!! kull. ayarları updates/skel altından alınacak.
+    # todo!!! alias mps
+    # todo!!! source /etc/profile
+    if [ $CANLI_KULLANICI == "root" ];then
+		[ -d /root/.config ] && cp -rf /root/.config  $HEDEF/home/$USERLOGIN/
+		[ -f /root/.xinitrc ] && cp -rf /root/.xinitrc  $HEDEF/home/$USERLOGIN/
+		[ -f /root/.bashrc ] && cp -f /root/.bashrc  $HEDEF/home/$USERLOGIN/
+		[ -f /root/.jwmrc ] && cp -rf /root/.jwmrc  $HEDEF/home/$USERLOGIN/
+		if [ -d /run/initramfs/live/updates/root ];then
+			cp -rf /run/initramfs/live/updates/root/.  $HEDEF/etc/skel/
+		    cp -rf /run/initramfs/live/updates/root/. $HEDEF/home/$USERLOGIN/
+		fi
+    else
+		cp -rf /home/$CANLI_KULLANICI/.config  $HEDEF/home/$USERLOGIN
+		cp -rf /run/initramfs/live/updates/home/$CANLI_KULLANICI/.  $HEDEF/etc/skel/
+		cp -rf /run/initramfs/live/updates/home/$CANLI_KULLANICI/. $HEDEF/home/$USERLOGIN/
+    fi
+    
+    # kurulum özgü dosyaların silinmesi
+	rm -f $HEDEF/root/bin/canli_kullanici.sh
+	rm -rf $HEDEF/etc/canli_kullanici
+	rm -rf $HEDEF/opt/Milis-Yukleyici
+	rm -f $HEDEF/root/Desktop/kurulum.desktop
+	rm -f $HEDEF/root/Masaüstü/kurulum.desktop
+	rm -f $HEDEF/home/$USERLOGIN/Desktop/kurulum.desktop
+	rm -f $HEDEF/home/$USERLOGIN/Masaüstü/kurulum.desktop
+	rm -f $HEDEF/root/Masaüstü/milis-kur.desktop
+	rm -f $HEDEF/etc/shadow- $HEDEF/etc/gshadow- $HEDEF/etc/passwd- $HEDEF/etc/group-
+	#sed -i "/^$USERLOGIN/d" $HEDEF/etc/security/opasswd
+	[ -f $HEDEF/etc/lightdm/lightdm.conf.orj ] && cp $HEDEF/etc/lightdm/lightdm.conf.orj $HEDEF/etc/lightdm/lightdm.conf
+    
+    YDIL="$(echo "$(get_option LOCALE)" | tr "." "\n" | head -n1)"
+    echo "$YDIL" > $HEDEF/home/$USERLOGIN/.config/user-dirs.locale
+    # dil Türkçe ise kullanıcı dizinlerindeki Türkçe adlandırmanın düzeltilmesi
+  
+    set_keymap 
+    
+    chroot $HEDEF  chown $USERLOGIN:$USERLOGIN -R /home/$USERLOGIN
+    rm -f $HEDEF/home/$USERLOGIN/.config/user-dirs.dirs
+    
+	[ -d $HEDEF/dev/snd ] && chroot $HEDEF  setfacl -m u:$USERLOGIN:rw /dev/snd/*
+	
+    if [ -f $HEDEF/etc/sudoers ]; then
+        
+        if [ -z "$(echo $(get_option USERGROUPS) | grep -w wheel)" -a -n "$USERLOGIN" ]; then
+            # wheel grubuna üye olamayan kullanıcı için sudo açılır.
+            echo "# `printf "$LANG_ENABLESUDO" "$USERLOGIN"`" >> $HEDEF/etc/sudoers
+            echo "$USERLOGIN ALL=(ALL) ALL" >> $HEDEF/etc/sudoers
+        else
+            # wheel grubuna üye olan kullanıcı için sudoers eklemesi yapılır.
+            sed -i $HEDEF/etc/sudoers \
+                -e "s;#.*%wheel ALL=(ALL) ALL;%wheel ALL=(ALL) ALL;"
+        fi
+        unset USERLOGIN
+    fi
+    
+    # Text tabanlı açılışı aktif et seçiliyse
+    if [ "$(get_option TEXTCONSOLE)" = "1" ]; then
+        sed -i $HEDEF/etc/default/grub \
+            -e 's|#\(GRUB_TERMINAL_INPUT\).*|\1=console|' \
+            -e 's|#\(GRUB_TERMINAL_OUTPUT\).*|\1=console|'
+    fi
+
+    # Bootloader yüklemesi
+    set_bootloader
+    sync && sync && sync
+
+    # bağlanan dizinler çözülür
+    umount_filesystems
+
+    # sistemin kopyalandıktan sonra yebaşla sorusu
+    if [ -z "$YEBASLAT_ONAY" ]; then
+		DIALOG --yesno "`printf "$LANG_INSTALLSUCCESS" "${BOLD}" "${RESET}"`" ${YESNOSIZE}
+		if [ $? -eq 0 ]; then
+			shutdown -r now
+		else
+			return
+		fi
+    fi
+}
+
+menu() {
+    if [ -z "$DEFITEM" ]; then
+        DEFITEM="$LANG_MENUKEYBOARD"
+    fi
+
+	DIALOG --default-item $DEFITEM \
+		--extra-button --extra-label "$LANG_MENUSETTINGS" \
+		--title " $LANG_INSTMENU " \
+		--menu "$MENULABEL" 10 70 0 \
+		"$LANG_MENUKEYBOARD" "$LANG_KEYBOARDSET" \
+		"$LANG_MENUHOSTNAME" "$LANG_HOSTSET" \
+		"$LANG_MENULOCALE" "$LANG_LOCALESET" \
+		"$LANG_MENUTIMEZONE" "$LANG_TIMEZONESET" \
+		"$LANG_MENUROOTPW" "$LANG_ROOTPWSET" \
+		"$LANG_MENUUSERACC" "$LANG_USERNPWSET" \
+		"$LANG_MENUBOOTLOADER" "$LANG_BOOTLOADERSET" \
+		"$LANG_MENUPARTITION" "$LANG_PARTITIONSET" \
+		"$LANG_MENUFILESYSTEM" "$LANG_FSYSSET" \
+		"$LANG_MENUINSTALL" "$LANG_INSTALLSETTINGS" \
+		"$LANG_MENUEXIT" "$LANG_EXITINST"
+
+    if [ $? -eq 3 ]; then
+        # Ayarların gösterilmesi
+        cp $AYAR_DOSYASI /tmp/conf_hidden.$$;
+        sed -i "s/^ROOTPASSWORD.*/ROOTPASSWORD <-hidden->/" /tmp/conf_hidden.$$
+        DIALOG --title "$LANG_SAVEDSETTINGS" --textbox /tmp/conf_hidden.$$ 18 90
+        rm /tmp/conf_hidden.$$
+        return
+    fi
+
+    case $(cat $ANSWER) in
+        "$LANG_MENUKEYBOARD") menu_keymap && [ -n "$KEYBOARD_YAPILDI" ] && DEFITEM="$LANG_MENUHOSTNAME";;
+        "$LANG_MENUHOSTNAME") menu_hostname && [ -n "$HOSTNAME_YAPILDI" ] && DEFITEM="$LANG_MENULOCALE";;
+        "$LANG_MENULOCALE") menu_locale && [ -n "$LOCALE_YAPILDI" ] && DEFITEM="$LANG_MENUTIMEZONE";;
+        "$LANG_MENUTIMEZONE") menu_timezone && [ -n "$TIMEZONE_YAPILDI" ] && DEFITEM="$LANG_MENUROOTPW";;
+        "$LANG_MENUROOTPW") menu_rootpassword && [ -n "$ROOTPASSWORD_YAPILDI" ] && DEFITEM="$LANG_MENUUSERACC";;
+        "$LANG_MENUUSERACC") menu_useraccount && [ -n "$USERNAME_YAPILDI" ] && [ -n "$USERPASSWORD_YAPILDI" ] && DEFITEM="$LANG_MENUBOOTLOADER";;
+        "$LANG_MENUBOOTLOADER") menu_bootloader && [ -n "$BOOTLOADER_YAPILDI" ] && DEFITEM="$LANG_MENUPARTITION";;
+        "$LANG_MENUPARTITION") menu_partitions && [ -n "$PARTITIONS_YAPILDI" ] && DEFITEM="$LANG_MENUFILESYSTEM";;
+        "$LANG_MENUFILESYSTEM") menu_filesystems && [ -n "$FILESYSTEMS_YAPILDI" ] && DEFITEM="$LANG_MENUINSTALL";;
+        "$LANG_MENUINSTALL") menu_install;;
+        "$LANG_MENUEXIT") DIE;;
+        *) DIALOG --yesno "$LANG_ABORTINST" ${YESNOSIZE} && DIE
+    esac
+}
+
+if [ ! -x /bin/dialog ]; then
+    echo "$LANG_ERRDIALOG"
+    exit 1
+fi
+
+if [ "$(id -u)" != "0" ]; then
+   echo "$LANG_INSTMUSTROOT" 1>&2
+   exit 1
+fi
+
+#
+# kuruluma giriş noktası - eğer kurulum ayar dosyası parametre verilirse direk kuruluma başlayacak.
+#
+[ ! -z $DOSYADAN_KURULUM ] && menu_install && exit 0
+DIALOG --title "${BOLD}${RED} $LANG_ENTERMILIS ${RESET}" --msgbox "`printf "$LANG_MAINDIALOG" "${BOLD}" "${RESET}" "${BOLD}" "${RESET}" "${BOLD}" "${RESET}" "${BOLD}" "${RESET}"`" 16 80
+
+while true; do
+    menu
+done
+
+exit 0

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# milisarge-milislinux 2021
+#grub_cfg="/boot/grub/grub.cfg"
+grub_cfg="/boot/grub/grub.cfg"
+initramfs_file="/boot/initramfs-$(uname -r | cut -d'-' -f1).img"
+
+if [ $1 == "test" ];then 
+	grub_cfg="/tmp/grub.cfg"
+	initramfs_file="/tmp/initramfs-$(uname -r | cut -d'-' -f1).img"
+fi
+
+dracut --force -H -f ${initramfs_file}
+
+grub-mkconfig -o ${grub_cfg}
+
+echo "--------------------------------"
+echo "iniramfs file: ${initramfs_file}"
+echo "grub.cfg file: ${grub_cfg}"
+echo "--------------------------------"

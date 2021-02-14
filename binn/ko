@@ -1,0 +1,147 @@
+#!/bin/bash
+# Milis Linux Kullanıcı Ekleme Betiği
+# Milis Linux 2.0 2019
+# Nutyx Linux kullanıcı ekleme betiğinden çatallanmıştır.
+# https://github.com/NuTyX/packages-x86_64/blob/rolling/scripts/setup-nutyx.in#L203
+
+# Değişkenler
+
+user_groups=""
+default_groups="users,disk,network,netdev,floppy,fuse,video,lp,tty,audio,cdrom,scanner,adm,vboxusers,wheel,pulse-access"
+
+# İşlevler
+
+check_args()
+{
+    description="$1"
+    name="$2"
+
+    name_test=`echo -n "$name" | sed 's@^[a-z][a-z0-9]*$@@g'`
+    if [ "$name_test" != "" ]; then
+	echo 1>&2 "HATA=kullanıcı sorunlu kareketerler içerrmektedir."
+	return 1
+    fi
+    if grep "$name" /etc/passwd > /dev/null; then
+	echo 1>&2 "$name kullanıcısı zaten var!"
+	return 2
+    fi
+
+    desc_test=`echo "$description" | sed 's@^[[:alnum:]! -.,~_@;%<>?]*$@@ig'`
+    if [ "$desc_test" != "" ]; then
+	echo 1>&2 "HATA=Kullanıcı tam ismi ! -.,~_\\\@;%<>? karekerleri içeremez.Harf-sayı olmalıdır! "
+	return 3
+    fi
+    return 0
+}
+
+usage()
+{
+  echo 1>&2 'KULLANIM:
+ ko kullanıcı kullanıcı_ismi'
+  exit 1
+}
+
+# kullanıcıya Milis Xfce4 öntanımlı masaüstü ayarlarının kopyalanması
+xfce4_ayarla(){
+	if [ $1 ];then
+		_isim=$1
+		mkdir -p /home/${_isim}/.config
+		if [ -d /etc/skel/xfce4 ];then
+			cp -rf /etc/skel/xfce4 /home/${_isim}/.config/
+		else
+			cp -rf /root/.config/xfce4 /home/${_isim}/.config/
+		fi
+	else
+		echo "kullanıcı parametresi eksik"
+	fi
+}
+
+if [ $# -eq 1 -o $# -gt 2 ]; then
+    usage
+fi
+
+if [ $UID -ne 0 ]; then
+    echo 1>&2 "Bu betik root yetkileriyle çalışmaktadır."
+    exit 1;
+fi
+
+if [ $# -lt 2 ]; then
+    echo -n "Kullanıcı: "
+    read name
+    echo -n "Kullanıcı tam ismi: "
+    read description
+else
+    description="$1"
+    name="$2"
+fi
+
+check_args "$description" "$name"
+ret=$?
+while [ $ret -ne 0 ]; do
+    if [ $ret -lt 3 ]; then
+	echo -n "Kullanıcı: "
+	read name
+    fi
+    if [ $ret -eq 3 ]; then
+	echo -n "Kullanıcı tam ismi: "
+	read description
+    fi
+    if [ "$name" == "!stop!" -o "$description" == "!stop!" ]; then
+	exit 1
+    fi
+    check_args "$description" "$name"
+	ret=$?
+done
+
+export IFS=","
+for entry in $default_groups; do
+  if grep $entry /etc/group > /dev/null ; then
+    if [ -z "$user_groups" ]; then
+      user_groups=$entry
+    else
+      user_groups="$user_groups,$entry"
+    fi
+  fi
+done
+
+echo 1>&2 "
+$name kullanıcısının oluşturulması.
+"
+
+
+
+if [ -z "$user_groups" ]; then
+    /usr/bin/useradd -c "${description}" -m "${name}" || exit 1
+else
+    /usr/bin/useradd -c "${description}" -G "$user_groups" -m "${name}" || exit 1
+fi
+
+if [ -f /root/.xinitrc ]; then
+	cp /root/.xinitrc /home/${name}
+fi
+
+
+passwd "$name"
+
+while true; do
+	if [ `pgrep xfce4-session` ];then
+		echo "${name} için Milis-Xfce4 öntanımlı masaüstü ayarları kopyalansın mı?";read -p "e veya h-> " eh
+		case $eh in
+			[Ee]* ) xfce4_ayarla ${name}; break;;
+			[Hh]* ) break;;
+			* ) echo "e veya h";;
+		esac
+	fi
+	exit 0
+done
+
+# kullanıcı izinlerinin ayarlanması
+if [ -d /home/${name} ]; then
+	#evdizini
+	chown -R ${name}:${name} /home/${name}
+	#ses aygıtları 
+	# todo!!! Milis2 için gerek var mı? kontro edilecek 
+	setfacl -m u:${name}:rw /dev/snd/* 
+fi
+
+exit 0

@@ -1,0 +1,80 @@
+#!/bin/bash
+
+if [ -z $ROOTFS ];then
+	ROOTFS="/home/mlfs/onsistem"
+fi
+
+if [ ! -z $1 ];then
+	ROOTFS="$1"
+fi
+
+if [ ! -d $ROOTFS ];then
+	echo "$ROOTFS dizini mevcut değil!"
+	exit 1
+fi
+
+# Herhangi bir hatada çıkış için
+set -e
+
+LC_ALL=C
+export LC_ALL
+
+unmount_ortam()
+{
+    for node in "${ROOTFS}/sys" \
+                "${ROOTFS}/proc" \
+                "${ROOTFS}/dev/pts" \
+                "${ROOTFS}/dev"  \
+                "${ROOTFS}/run" ; \
+    do
+        if mount | grep -q "$node"
+        then
+            echo "Çözülüyor ${node} ..."
+            if ! umount "$node"
+            then
+                echo "Sorunlu $node çözülüyor ..."
+                umount -l "$node"
+            fi
+        fi
+    done
+}
+
+# chroot girerken eski bağlar temizlenir.
+unmount_ortam
+
+# chroot için gerekli dizinlerin oluşturulması
+# Create required directory for destination
+mkdir -p -- "${ROOTFS}/dev"                 \
+            "${ROOTFS}/dev/pts"             \
+            "${ROOTFS}/proc"                \
+            "${ROOTFS}/sys"                 \
+            "${ROOTFS}/run"                 
+
+if [ -h $ROOTFS/dev/shm ]; then
+  mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
+fi
+
+rm -f ${ROOTFS}/dev/console
+rm -f ${ROOTFS}/dev/null
+mknod -m 600 ${ROOTFS}/dev/console c 5 1
+mknod -m 666 ${ROOTFS}/dev/null c 1 3
+
+echo "Chroot ortamı bağlanıyor..."
+mount -v --bind /dev $ROOTFS/dev
+mount -vt devpts devpts $ROOTFS/dev/pts -o gid=5,mode=620
+mount -vt proc proc $ROOTFS/proc
+mount -vt sysfs sysfs $ROOTFS/sys
+mount -vt tmpfs tmpfs $ROOTFS/run
+
+# Çıkışları yakalamak için bash tuzak(trap) eklenir.
+trap 'echo ; unmount_ortam' EXIT HUP QUIT ABRT TERM
+
+cp -f /etc/resolv.conf $ROOTFS/etc/
+
+chroot "$ROOTFS" /usr/bin/env -i \
+    HOME=/root                  \
+    TERM="$TERM"                \
+    PS1='(temel) \u:\w\$ ' \
+    PATH=/bin:/usr/bin:/sbin:/usr/sbin \
+    USER=root \
+    /usr/bin/bash --login +h
