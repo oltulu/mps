@@ -43,7 +43,8 @@ cp -f /etc/hosts $MSYS/etc/
 chmod +x $MSYS/usr/milis/mps/bin/isoyap
 chmod +x ./enter-chroot
 
-cat > /tmp//isoyap2 << "EOf"
+echo "isoyap 2 oluşturuluyor..."
+cat > /usr/bin/isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
@@ -52,9 +53,11 @@ rm -f $MSYS/root/.bash_history
 cd /opt
 git clone https://github.com/oltulu/Aylinux-isoyap
 cd /opt/Aylinux-isoyap
+rm /usr/bin//isoyap2 
 bash iso_olustur.sh $MSYS
 EOf
-chmod +x /tmp//isoyap2
+
+chmod +x /usr/bin//isoyap
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
@@ -77,7 +80,7 @@ chmod +x ./mpsd
 #chmod +x ./paket
 chmod +x $MSYS/usr/milis/mps/bin/isoyap
 echo "isoyap 2 oluşturuluyor..."
-cat > /tmp//isoyap2 << "EOf"
+cat > /usr/bin/isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
@@ -86,22 +89,16 @@ rm -f $MSYS/root/.bash_history
 cd /opt
 git clone https://github.com/oltulu/Aylinux-isoyap
 cd /opt/Aylinux-isoyap
+rm /usr/bin//isoyap2 
 bash iso_olustur.sh $MSYS
 EOf
 
-chmod +x /tmp//isoyap2
+chmod +x /usr/bin//isoyap
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
-echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın ve sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
+echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basarak  devam ediniz...${YOK} "
+echo -e "${YESIL}Yapmak istediğiniz değişiklikleri yaptıktan sonra  ${KIRMIZI} exit  ${YOK} ${YESIL}yazarak  çıkış yapın...${YOK} "
 chmod +x ./enter-chroot
 
 fi
 done
-#echo "Şimdi yeni sistemden çıtınız iso hazırlanacak..."
-#rm -f $MSYS/root/.bash_history
-#cd /opt/imaj-uretici
-#bash iso_olustur.sh $MSYS
-#------------------------------------------      
-#else
- #   echo "Bu dosyayı root olarak çalıştırmalısınız..."
-
