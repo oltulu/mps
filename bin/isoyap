@@ -30,7 +30,7 @@ echo -e "${KIRMIZI}Minimal paketler yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
 echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
-echo -e "${RED}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${NONE}"
+echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 select sistem in xfce4 cinnamon mate kde openbox 
 do
 echo " $sistem masaüstünü seçtiniz"
