@@ -57,7 +57,7 @@ rm /usr/bin//isoyap2
 bash iso_olustur.sh $MSYS
 EOf
 
-chmod +x /usr/bin//isoyap
+chmod +x /usr/bin//isoyap2
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
@@ -93,7 +93,7 @@ rm /usr/bin//isoyap2
 bash iso_olustur.sh $MSYS
 EOf
 
-chmod +x /usr/bin//isoyap
+chmod +x /usr/bin//isoyap2
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
 echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basarak  devam ediniz...${YOK} "
@@ -102,3 +102,4 @@ chmod +x ./enter-chroot
 
 fi
 done
+
