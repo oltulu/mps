@@ -98,8 +98,8 @@ echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basa
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
 echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basarak  devam ediniz...${YOK} "
 echo -e "${YESIL}Yapmak istediğiniz değişiklikleri yaptıktan sonra  ${KIRMIZI} exit  ${YOK} ${YESIL}yazarak  çıkış yapın...${YOK} "
+echo -e "${YESIL}Çıkış yaptıktan sonra  ${KIRMIZI} isoyap2  ${YOK} ${YESIL}yazarak  iso oluşturabilirsiniz...${YOK} "
 chmod +x ./enter-chroot
 
 fi
 done
-
