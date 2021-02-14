@@ -27,8 +27,7 @@ ristretto
 pavucontrol
 network-manager-applet
 gvfs
-xarchiver
-consolekit2
+consolekit
 polkit-gnome
 numlockx
 lightdm
