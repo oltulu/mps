@@ -68,6 +68,7 @@ usermod -a -G pulse-access root
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
+setkeyboard tr
 cp -R /etc/skel/.[^.]* /root/
 gtk-update-icon-cache /usr/share/icons/Adwaita/
 gtk-update-icon-cache /usr/share/icons/beautyLine/
