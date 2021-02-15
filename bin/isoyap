@@ -19,9 +19,7 @@ cd /usr/milis/ayarlar/servisler
 make install
 make kur-random
 
-update-ca-certificates --fresh 
-mps kur p11-kit 
-make-ca -g 
+update-ca-certificates --fresh && mps kur p11-kit && make-ca -g
 update-ca-trust
 
 cd /
