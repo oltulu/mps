@@ -283,10 +283,10 @@ else
 
 	LANG_ENABLESUDO="Giriş için sudo '%s' aktifleştiriliyor"
 
-	LANG_INSTALLSUCCESS="%sMilis Linux başarıyla yüklendi!%s\nSistemi yeniden başlatmak ister misiniz?"
+	LANG_INSTALLSUCCESS="%sAylinux başarıyla yüklendi!%s\nSistemi yeniden başlatmak ister misiniz?"
 
 	LANG_MENUSETTINGS="Ayarlar"
-	LANG_INSTMENU="Milis Linux Yükleyici Menüsü"
+	LANG_INSTMENU="Aylinux Yükleyici Menüsü"
 
 	LANG_MENUKEYBOARD="Klavye"
 	LANG_MENUHOSTNAME="BilgisayarAdı"
@@ -313,13 +313,13 @@ else
 	LANG_EXITINST="Yükleyiciden çık"
 	LANG_ABORTINST="Yüklemekten çık?"
 	LANG_ERRDIALOG="HATA: dialog komutu bulunamadı, çıkış yapılıyor..."
-	LANG_INSTMUSTROOT="Milis-yükleyici root hakları ile çalıştırılmalıdır"
+	LANG_INSTMUSTROOT="Aylinux-yükleyici root hakları ile çalıştırılmalıdır"
 
 	LANG_SAVEDSETTINGS="Yükleme için ayarlar kaydedildi"
 
-	LANG_ENTERMILIS="Milis Linux / $LANG_LANG"
+	LANG_ENTERMILIS="Aylinux Linux / $LANG_LANG"
 	LANG_MAINDIALOG="\n
-	Milis Linux kurulumuna hoş geldiniz. Sıfırdan hazırlanan, kolay ve \
+	Aylinux kurulumuna hoş geldiniz. Milis Linux tabanlı hazırlanan, kolay ve \
 	minimal bir Linux dağıtımıdır ve yeni bir alternatif paket sistemi olan \
 	MPS için kullanılabilen kaynak paketlerinden üretilmiştir.\n\n
 	Kurulum oldukça basittir. Eğer yardıma ihtiyacınız olursa %sirc.freenode.org%s \
@@ -366,10 +366,10 @@ fi
 ANSWER=$(mktemp -t vinstall-XXXXXXXX || exit 1)
 TARGET_FSTAB=$(mktemp -t vinstall-fstab-XXXXXXXX || exit 1)
 
-if [ -f /etc/milis-surum ];then 
-	MILIS_SURUM=$(cat /etc/milis-surum)
+if [ -f /etc/aylinux-surum ];then 
+	MILIS_SURUM=$(cat /etc/aylinux-surum)
 else
-	MILIS_SURUM="Milis 2.0 Deneme Sürüm"
+	MILIS_SURUM="Aylinux 2021"
 fi
 
 if [ -f /etc/canli_kullanici ];then 
@@ -422,14 +422,14 @@ DIALOG() {
     
     rm -f $ANSWER
     dialog --colors --keep-tite --no-shadow --no-mouse \
-        --backtitle "${BOLD}${WHITE}Milis Linux ${LANG_INSTALLATION} ($MILIS_SURUM)${RESET}" \
+        --backtitle "${BOLD}${WHITE}Aylinux ${LANG_INSTALLATION} ($MILIS_SURUM)${RESET}" \
         --cancel-label "$LANG_BACK" --aspect 20 "$@" 2>$ANSWER
     return $?
 }
 
 INFOBOX() {
     dialog --colors --no-shadow --no-mouse \
-        --backtitle "${BOLD}${WHITE}Milis Linux ${LANG_INSTALLATION} ($MILIS_SURUM)${RESET}" \
+        --backtitle "${BOLD}${WHITE}Aylinux ${LANG_INSTALLATION} ($MILIS_SURUM)${RESET}" \
         --title "${TITLE}" --aspect 20 --infobox "$@"
 }
 
@@ -1434,7 +1434,7 @@ menu_install() {
         rm -f $HEDEF/boot/kernel*
         cp /boot/kernel-* $HEDEF/boot/
         
-        local sonek="milis"
+        local sonek="aylinux"
         local kversion=`ls $HEDEF/boot/kernel-* | xargs -I {} basename {} | head -n1 |cut -d'-' -f2`
         chroot $HEDEF dracut --no-hostonly --xz --omit systemd --add-drivers "ahci" -f /boot/initrd.img-${kversion} $kversion-$sonek --force >>$LOG 2>&1
         #chroot $HEDEF ln -s /boot/kernel-* /boot/kernel
@@ -1487,12 +1487,12 @@ menu_install() {
     # kurulum özgü dosyaların silinmesi
 	rm -f $HEDEF/root/bin/canli_kullanici.sh
 	rm -rf $HEDEF/etc/canli_kullanici
-	rm -rf $HEDEF/opt/Milis-Yukleyici
+	rm -rf $HEDEF/opt/Aylinux-Yukleyici
 	rm -f $HEDEF/root/Desktop/kurulum.desktop
 	rm -f $HEDEF/root/Masaüstü/kurulum.desktop
 	rm -f $HEDEF/home/$USERLOGIN/Desktop/kurulum.desktop
 	rm -f $HEDEF/home/$USERLOGIN/Masaüstü/kurulum.desktop
-	rm -f $HEDEF/root/Masaüstü/milis-kur.desktop
+	rm -f $HEDEF/root/Masaüstü/aylinux-kur.desktop
 	rm -f $HEDEF/etc/shadow- $HEDEF/etc/gshadow- $HEDEF/etc/passwd- $HEDEF/etc/group-
 	#sed -i "/^$USERLOGIN/d" $HEDEF/etc/security/opasswd
 	[ -f $HEDEF/etc/lightdm/lightdm.conf.orj ] && cp $HEDEF/etc/lightdm/lightdm.conf.orj $HEDEF/etc/lightdm/lightdm.conf
