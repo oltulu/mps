@@ -31,6 +31,7 @@ chmod +x ./mpsd
 #chmod +x ./paket
 ./mps
 ./mps
+./mps -v
 ./mps --ilkds --ilk --kok=$MSYS
 ./mps gun -GPB --kok=$MSYS
 cp /etc/ld.so.conf $MSYS/etc/
@@ -60,7 +61,7 @@ chmod +x /usr/bin//isoyap2
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
-echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın ve sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
+echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın. \n Daha sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
 
 
 else
@@ -90,6 +91,7 @@ git clone https://github.com/oltulu/Aylinux-isoyap
 cd /opt/Aylinux-isoyap
 rm /usr/bin//isoyap2 
 bash iso_olustur.sh $MSYS
+mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
 EOf
 
 chmod +x /usr/bin//isoyap2
@@ -102,3 +104,4 @@ chmod +x ./enter-chroot
 
 fi
 done
+
