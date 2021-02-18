@@ -21,6 +21,7 @@ export MILIS_PATH=$MSYS/usr/milis
 
 rm -r $MPS_PATH
 rm -r $MSYS
+rm -r /opt/Aylinux-isoyap
 echo -e "${YESIL}Varsa önceden oluşmuş dosyalar silindi..${YOK}"
 git clone https://github.com/oltulu/mps  $MPS_PATH
 cd $MPS_PATH
