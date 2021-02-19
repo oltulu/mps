@@ -59,6 +59,12 @@ echo "LANG=tr_TR.UTF-8" >> /etc/environment
 # aşağıdaki ayarlar X için gerekli
 echo "tr" > /root/.Xkbmap
 usermod -a -G pulse-access root
+echo -e "${KIRMIZI}Menüdeki gereksiz uygulamalar temizleniyor...${YOK}"
+rm /usr/share/applications/uxterm.desktop
+rm /usr/share/applications/xterm.desktop
+rm /usr/share/applications/qv4l2.desktop
+rm /usr/share/applications/qvidcap.desktop
+rm /usr/share/applications/xarchiver.desktop
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
