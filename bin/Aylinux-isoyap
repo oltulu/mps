@@ -32,7 +32,7 @@ chmod +x ./mpsd
 #chmod +x ./paket
 ./mps
 ./mps
-./mps -v
+#./mps -v
 ./mps --ilkds --ilk --kok=$MSYS
 ./mps gun -GPB --kok=$MSYS
 cp /etc/ld.so.conf $MSYS/etc/
