@@ -64,7 +64,6 @@ rm /usr/share/applications/uxterm.desktop
 rm /usr/share/applications/xterm.desktop
 rm /usr/share/applications/qv4l2.desktop
 rm /usr/share/applications/qvidcap.desktop
-rm /usr/share/applications/xarchiver.desktop
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
