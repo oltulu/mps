@@ -28,10 +28,10 @@ pavucontrol
 network-manager-applet
 gvfs
 polkit-gnome
-numlockx
 lightdm
 lightdm-gtk-greeter
 pm-utils
 mousepad
+parole
 mugshot
 papirus-icon-theme
