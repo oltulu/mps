@@ -69,9 +69,10 @@ rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
 #setkeyboard tr
 cp -R /etc/skel/.[^.]* /root/
-pulseaudio -D --system
-gtk-update-icon-cache /usr/share/icons/Adwaita/
-gtk-update-icon-cache /usr/share/icons/BeautyLine/
+pulseaudio -D
+#gtk-update-icon-cache /usr/share/icons/Adwaita/
+#gtk-update-icon-cache /usr/share/icons/BeautyLine/
+echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRMIZI}mps kur paket_adı${YESIL} şeklinde kurabilirsiniz ...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI} exit ${YOK}${YESIL}yazarak mevcut ortamdan çıkış yapın...${YOK}"
 echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap2${YESIL} yazarak  devam ediniz...${YOK}"
 exit
