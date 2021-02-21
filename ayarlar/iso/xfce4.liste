@@ -25,11 +25,6 @@ xfce4-appfinder
 xfce4-notifyd
 ristretto
 pavucontrol
-network-manager-applet
-gvfs
-polkit-gnome
-lightdm
-lightdm-gtk-greeter
 pm-utils
 mousepad
 parole
