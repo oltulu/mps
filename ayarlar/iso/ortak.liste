@@ -11,3 +11,5 @@ plymouth-garuda
 librsvg
 gparted
 numlockx
+lightdm
+lightdm-gtk-greeter
