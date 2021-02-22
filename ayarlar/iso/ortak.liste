@@ -10,9 +10,9 @@ python-pyparted
 plymouth-garuda
 librsvg
 gparted
-numlockx
 lightdm
 lightdm-gtk-greeter
 network-manager-applet
 gvfs
 polkit-gnome
+numlockx
