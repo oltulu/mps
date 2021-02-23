@@ -85,6 +85,7 @@ service fixer
 cp -R /etc/skel/.[^.]* /root/
 cp -R /usr/milis/mps/bin/* /usr/bin/
 chmod +x /usr/bin/mps
+echo "Aylinux-2021-${month}.${day}" > /etc/aylinux-surum
 #gtk-update-icon-cache /usr/share/icons/Adwaita/
 #gtk-update-icon-cache /usr/share/icons/BeautyLine/
 echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRMIZI}mps kur paket_adı${YESIL} şeklinde kurabilirsiniz ...${YOK}"
