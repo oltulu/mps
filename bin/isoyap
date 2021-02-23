@@ -30,7 +30,7 @@ select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
 do
 echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 
-if [ ! $sistem = masayok];then
+if [ ! $sistem = masayok ];then
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
