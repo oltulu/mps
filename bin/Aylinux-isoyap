@@ -86,9 +86,16 @@ export MSYS=/home/Aylinux-ISO
 export MPS_PATH=/opt/Aylinux-ISO 
 export MILIS_PATH=$MSYS/usr/milis
 rm -f $MSYS/root/.bash_history
-mps kur xorriso
-cd /opt
-git clone https://github.com/oltulu/Aylinux-isoyap
+if [ ! -f /usr/bin/xorriso ];then
+	mps kur xorriso
+fi
+echo -e "${KIRMIZI}Aylinux-isoyap dizini daha önceden varsa varolan olan dizin kullanılacak..${YOK}"
+if [ ! -d /opt/Aylinux-isoyap ];then
+ cd /opt
+ git clone https://github.com/oltulu/Aylinux-isoyap  
+ 
+fi
+
 cd /opt/Aylinux-isoyap
 chmod +x MSYS/root/Masaüstü/kurulum.desktop
 bash iso_olustur.sh $MSYS
