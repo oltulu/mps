@@ -26,13 +26,17 @@ echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 echo -e "${YESIL}Şimdilik sadece xfce4 ve openbox çalışıyor...${YOK}"
-select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome
+select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
 do
 echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
+
+if [$sistem -ne masayok];then
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/ortak.liste
+fi
+
 rm /etc/lightdm/lightdm-gtk-greeter.conf
 rm /etc/lightdm/lightdm.conf
 
@@ -61,10 +65,19 @@ echo "LANG=tr_TR.UTF-8" >> /etc/environment
 echo "tr" > /root/.Xkbmap
 usermod -a -G pulse-access root
 echo -e "${KIRMIZI}Menüdeki gereksiz uygulamalar temizleniyor...${YOK}"
-rm /usr/share/applications/uxterm.desktop
-rm /usr/share/applications/xterm.desktop
-rm /usr/share/applications/qv4l2.desktop
-rm /usr/share/applications/qvidcap.desktop
+
+if [ -f /usr/share/applications/uxterm.desktop ];then
+	rm /usr/share/applications/uxterm.desktop
+fi
+if [ -f /usr/share/applications/xterm.desktop ];then
+	rm /usr/share/applications/xterm.desktop
+fi
+if [ -f /usr/share/applications/qv4l2.desktop ];then
+	rm /usr/share/applications/qv4l2.desktop
+fi
+if [ -f /usr/share/applications/qvidcap.desktop ];then
+	rm /usr/share/applications/qvidcap.desktop
+fi
 
 rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
