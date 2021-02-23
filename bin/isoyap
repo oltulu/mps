@@ -25,9 +25,10 @@ mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
 echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
-select sistem in xfce4 cinnamon mate kde openbox 
+echo -e "${YESIL}Şimdilik sadece xfce4 ve openbox çalışıyor...${YOK}"
+select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome
 do
-echo " $sistem masaüstünü seçtiniz"
+echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
 mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
 echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
