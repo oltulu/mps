@@ -2,14 +2,14 @@
 -- mps lua kodlaması
 
 -- IMPORT --
-local milispath=os.getenv("AYLINUX_PATH")
-if not milispath then milispath="/usr/aylinux" end
+local aylinuxpath=os.getenv("AYLINUX_PATH")
+if not aylinuxpath then milispath="/usr/aylinux" end
 
 local talimatname=os.getenv("TALIMATNAME")
-if not talimatname then talimatname=milispath.."/".."talimatname" end
+if not talimatname then talimatname=aylinuxpath.."/".."talimatname" end
 
 local mps_path=os.getenv("MPS_PATH")
-if not mps_path then mps_path=milispath.."/".."mps" end
+if not mps_path then mps_path=aylinuxpath.."/".."mps" end
 
 --package.cpath = package.cpath .. ";"..mps_path.."/lua/?.so"
 -- genel lua kütüphanelerinden etkilenmemesi için önce mps yolunda olanlar kullanılacak.
@@ -71,7 +71,7 @@ local arsivci="bsdtar"
 local islem={}
 islem.api={}
 
--- local talimatname="/usr/milis/talimatname"
+-- local talimatname="/usr/aylinux/talimatname"
 local kokdizin=""
 
 local paket_arsiv_pattern="([%a%d-_+]+)#([%d%a.]+)-([%d]+)" -- paket_isim#surum-devir-mimari : abc#1.2.3-1-x86_64
@@ -136,9 +136,9 @@ function rootfs_check()
 	kokdizin=args.kok
 	-- kok dizin kontrolü yapıldıktan sonra alt dizin kontrolleri
 	--[[
-	-- milis dizini yoksa oluşturuyoruz.
-	if path_exists(milispath) == false then
-		shell("mkdir -p "..kokdizin..milispath)
+	-- aylinux dizini yoksa oluşturuyoruz.
+	if path_exists(aylinuxpath) == false then
+		shell("mkdir -p "..kokdizin..aylinuxpath)
 	end
 
 	-- talimat dizini yoksa oluşturuyoruz.
@@ -169,7 +169,7 @@ end
 
 -- mps dosya sistemi ilkleme
 function mps_initfs()
-	-- Milis için gerekli dizinlerin oluşturulması
+	-- Aylinux için gerekli dizinlerin oluşturulması
 	local initfs_komut=("bash %s/conf/init_rootfs.sh %s"):format(mps_path,kokdizin)
 	shell(initfs_komut);
 	--print(initfs_komut);
@@ -2352,7 +2352,7 @@ islem.guncelle={
 	retkey="guncelle:",
 	comment=messages.usage_updating_repos,
 	usage="mps guncelle",
-	betikdepo={isim="betikdepo",tnm="Betik",path=milispath},
+	betikdepo={isim="betikdepo",tnm="Betik",path=aylinuxpath},
 	talimatdepo={isim="talimatdepo",tnm="Git",path=talimatname},
 	paketlist={},
 }
@@ -2440,7 +2440,7 @@ function islem.guncelle.sistem(input)
 	-- talimat ile paket sürümleri aynı olmak zorundadır yoksa derleyerek üretim gerekir.
 	-- bu durum garantilendikten sonra ikili depodan güncelleme tespiti yapılıp sistem güncellenebilir.
 	--local tkomut="find %s -name talimat | xargs -I {} dirname {} | xargs -I {} basename {}"
-	--tkomut=tkomut:format(milispath)
+	--tkomut=tkomut:format(aylinuxpath)
 	---local t_pak={}
 	--for line in shell(tkomut):gmatch("[^\r\n]+") do
 	--	table.insert(t_pak, line)
@@ -2597,7 +2597,7 @@ end
 
 function islem.guncelle.gitdepo(sira,depo)
 	-- tip=betikdepo, gitdepo
-	-- depo={isim="betikdepo",tnm="Betik",path=milispath}
+	-- depo={isim="betikdepo",tnm="Betik",path=aylinuxpath}
 	-- depo={isim="gitdepo",tnm="Git",path=talimatname}
 	-- bin, ayarlar lı betikdepo güncelleme yapılacak todo!!!
 	assert(depo,"depo is nil!!!");
@@ -2758,7 +2758,7 @@ parser:command_target("command")
 
 -- genel seçenekler
 parser:flag "-v" "--version" :description "Sürüm bilgisi gösterir"
-   :action(function() print("MPS 2.1.1 - aAylinux Paket Sistemi milisarge@gmail.com") ;os.exit(0) end)
+   :action(function() print("MPS 2.1.1 - Aylinux Paket Sistemi milisarge@gmail.com") ;os.exit(0) end)
 
 parser:option "--renk"  :default(1)  :description "Çıktının renkli olup olmama durumunu belirler"
 
