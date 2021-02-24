@@ -2520,7 +2520,7 @@ function islem.guncelle.mps()
 	assert(path_exists(mps_path.."/.git"),"invalid git directory");
 	("MPS güncelleniyor:"):yaz(2);
 	("------------------------------------"):yaz(2);
-	local komut="cd %s && git reset --hard HEAD && git pull ; chmod +x bin/mps*"
+	local komut="cd %s && git reset --hard HEAD && git pull ; chmod +x bin/paket*; chmod +x bin/mps*"
 	local ret=shell(komut:format(mps_path));
 	-- ret=shell(git_kont:format(repo,tmp,tmp))
 	("------------------------------------"):yaz(2)
