@@ -4,7 +4,7 @@ KIRMIZI='\033[01;31m'
 YESIL='\033[01;32m'
 sed -i 's/^# *\(tr_TR.UTF-8\)/\1/' /etc/locale.gen
 locale-gen
-cd /usr/milis/mps
+cd /usr/aylinux/mps
 bash derle.sh
 
 chmod +x /usr/aylinux/mps/bin/*
