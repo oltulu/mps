@@ -8,7 +8,7 @@ if [ -z $mod ];then
 	exit 1
 fi
 
-tname="/usr/milis/talimatname"
+tname="/usr/aylinux/talimatname"
 
 echo "paket kur otokoş işlemi"
 # talimatnameden otokos.sh uzantılı betikleri bulup iç ederek
