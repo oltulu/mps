@@ -34,6 +34,8 @@ libxcursor
 libxdamage
 libxdmcp
 libxext
+twm
+
 libxfixes
 libxfont2
 libxft
