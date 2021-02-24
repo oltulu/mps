@@ -2,8 +2,8 @@
 -- mps lua kodlaması
 
 -- IMPORT --
-local milispath=os.getenv("MILIS_PATH")
-if not milispath then milispath="/usr/milis" end
+local milispath=os.getenv("AYLINUX_PATH")
+if not milispath then milispath="/usr/aylinux" end
 
 local talimatname=os.getenv("TALIMATNAME")
 if not talimatname then talimatname=milispath.."/".."talimatname" end
@@ -732,7 +732,7 @@ islem.arsiv={
 	retkey="arşiv:",
 }
 
--- Milis paketi ön kontrolleri
+-- Aylinux paketi ön kontrolleri
 function islem.arsiv.kontrol(paket)
 	-- kullanıcı hedefli de çıktı verilebilinir.
 	assert(path_exists(paket),"islem.arsiv.kontrol : paket is not found")
@@ -764,7 +764,7 @@ function islem.arsiv.tempdir(paket)
 	return tempdir.."/"
 end
 
--- Milis paketi dışarı çıkarma/extract
+-- Aylinux paketi dışarı çıkarma/extract
 function islem.arsiv.cikar(paket)
 	-- ön kontrollerin yapıldığı varsayılıyor/handler func ile ?
 	-- extract komutu
@@ -2445,7 +2445,7 @@ function islem.guncelle.sistem(input)
 	--for line in shell(tkomut):gmatch("[^\r\n]+") do
 	--	table.insert(t_pak, line)
 	--end
-	-- find /usr/milis/talimatname/ -name talimat | xargs -I {} dirname {} | xargs -I {} basename {}
+	-- find /usr/aylinux/talimatname/ -name talimat | xargs -I {} dirname {} | xargs -I {} basename {}
 	-- kurulu paket list
 	-- find /var/lib/mps/db -type l | xargs -I {} basename {}
 	local esgeclist=input.esgec
@@ -2751,20 +2751,20 @@ authorised_check()
 -- kur, sil, in, gun, der, bil, ara, sor, kos
 
 
-local parser = argparse("mps", "Milis Linux Paket Yöneticisi") :require_command(false)
+local parser = argparse("mps", "Aylinux Linux Paket Yöneticisi") :require_command(false)
 
 --seçili olan komutu tespit etmek için
 parser:command_target("command")
 
 -- genel seçenekler
 parser:flag "-v" "--version" :description "Sürüm bilgisi gösterir"
-   :action(function() print("MPS 2.1.1 - Milis Paket Sistemi milisarge@gmail.com") ;os.exit(0) end)
+   :action(function() print("MPS 2.1.1 - aAylinux Paket Sistemi milisarge@gmail.com") ;os.exit(0) end)
 
 parser:option "--renk"  :default(1)  :description "Çıktının renkli olup olmama durumunu belirler"
 
 parser:option "--kok"    :default "/" :description "Mps işlemleri için hedef kök dizini belirtir"
 
-parser:option "--ilkds" :args(0)     :description "Milis dosya sistemi için hedef kök dizinde ilk yapılandırmaları yapar"
+parser:option "--ilkds" :args(0)     :description "Aylinux dosya sistemi için hedef kök dizinde ilk yapılandırmaları yapar"
 
 parser:option "--ilk"    :args(0)     :description "Mps nin hedef kök dizinde ilk yapılandırmaları yapar"
 
