@@ -226,7 +226,7 @@ end
 
 islem.ara={usage="",}
 
--- talimat bulma işlevi (mps bul talimat_isim)
+-- talimat bulma işlevi (paket bul talimat_isim)
 function islem.ara.handler(input)
 	local hepsi = input.hepsi
 	local arlist={}
@@ -274,7 +274,7 @@ end
 -- todo!!! talimat.lua ya göre güncel
 
 islem.kaynak={
-	usage="mps kaynak talimat_ismi",
+	usage="paket kaynak talimat_ismi",
 	kontrol=false,
 }
 
@@ -375,7 +375,7 @@ end
 
 islem.gerek={
 	retkey="gerek:",
-	usage="mps gerek paket_ismi tip",
+	usage="paket gerek paket_ismi tip",
 	-- aktif gerek listesi
 	liste={},
 	-- aktif gereklerin eklenme kontrol listesi
@@ -516,7 +516,7 @@ end
 
 islem.derle={
 	retkey="derle:",
-	usage="mps derle paket_ismi",
+	usage="paket derle paket_ismi",
 }
 
 function islem.derle.handler(input)
@@ -600,7 +600,7 @@ function islem.derle.job(paket,hedefkur)
 			-- ksd kurulu yol, sadece talimat isim formatı
 			ksd=get_basename(ksd)
 			if tsd ~= ksd then
-				print("kurulu sürümd ile derlenmesi gereken sürümd farklı-derlenecek!")
+				print("kurulu sürümd ile derlenmesi gereken sürüm farklı-derlenecek!")
 				-- paket kurulu sd uyumsuzluğu var
 				-- paketi sildir(onaylı?) ve derlet
 				-- önemli !!!-eski paketi derleme başarılı olursa sildir.
@@ -655,7 +655,7 @@ function islem.derle.job(paket,hedefkur)
 				-- ağdan inen veya önbellekteki paket kurulabilir
 				-- ayrıca eski paket kurulu ise kaldırılacak.
 				if eski_sil == true then
-					print("eski sürüm paket tespit edildi, kaldırılacak")
+					print("Paketin eski sürümü tespit edildi, kaldırılacak")
 					islem.sil.handler({paket={pk}})
 				end
 				--print(_pktyol,"kurulacak")
@@ -1333,7 +1333,7 @@ end
 
 islem.indir={
 	retkey="indir",
-	usage="mps indir paket_ismi",
+	usage="paket indir paket_ismi",
 	comment=messages.comment_mps_download
 }
 
@@ -1582,7 +1582,7 @@ end
 
 islem.sil={
 	retkey="sil:",
-	usage="mps sil paket_ismi",
+	usage="paket sil paket_ismi",
 	dlistfile="%stmp/%s.del.list",
 	keeplist=".silme",
 	logdir=islem.paket.logdir.."sil/",
@@ -1679,9 +1679,9 @@ function islem.sil.job(paket)
 end
 
 function islem.sil.set_logger(paket)
-	-- bu assert mps başına konulabilir
-	assert(path_exists(kokdizin..islem.paket.logdir),"islem.sil.set_logger : islem.paket.logdir is not availables, needs mps --ilk")
-	assert(path_exists(kokdizin..islem.sil.logdir),"islem.sil.set_logger : islem.sil.logdir is not availables, needs mps --ilk")
+	-- bu assert paket başına konulabilir
+	assert(path_exists(kokdizin..islem.paket.logdir),"islem.sil.set_logger : islem.paket.logdir is not availables, needs paket --ilk")
+	assert(path_exists(kokdizin..islem.sil.logdir),"islem.sil.set_logger : islem.sil.logdir is not availables, needs paket --ilk")
 	local logfile=kokdizin..islem.sil.logdir..paket..".log"
 	islem.sil.logger = assert(io.open(logfile, "w"),"islem.sil.set_logger logfile can not open")
 	islem.sil.logger:write(paket.."\t"..os.date("%x %H:%M:%S").."\n");
@@ -1942,7 +1942,7 @@ islem.kur={
 	retkey="kur:",
 	kurulandos="kurulan",
 	dizinler={"boot","etc","usr","opt","var","tools"}, -- paket içi desteklenen dizinler
-	usage="mps kur paket_ismi | paket_yolu",
+	usage="paket kur paket_ismi | paket_yolu",
 	logdir=islem.paket.logdir.."kur/",
 	logger=nil,
 	kurkos=true,
@@ -2031,7 +2031,7 @@ function islem.kur.agdan(paket)
 end
 
 function islem.kur.yerelden(paket)
-	--print (paket) -- belki bu mps.log a atılabilir/nereden talimatlandığına dair
+	--print (paket) -- belki bu paket.log a atılabilir/nereden talimatlandığına dair
 	-- yerelden gelen paketin mevcut kontrolü
 	-- gönderen işlevler yapamazsa
 	if not paket then
@@ -2096,9 +2096,9 @@ function islem.kur.bitis(paket)
 end
 
 function islem.kur.set_logger(paket)
-	-- bu assert mps başına konulabilir
-	assert(path_exists(kokdizin..islem.paket.logdir),"islem.kur.set_logger : islem.paket.logdir is not available, needs mps --ilk")
-	assert(path_exists(kokdizin..islem.kur.logdir),"islem.kur.set_logger : islem.kur.logdir is not availables, needs mps --ilk")
+	-- bu assert paket başına konulabilir
+	assert(path_exists(kokdizin..islem.paket.logdir),"islem.kur.set_logger : islem.paket.logdir is not available, needs paket --ilk")
+	assert(path_exists(kokdizin..islem.kur.logdir),"islem.kur.set_logger : islem.kur.logdir is not availables, needs paket --ilk")
 	local logfile=kokdizin..islem.kur.logdir..paket..".log"
 	--print("-",logfile)
 	islem.kur.logger = assert(io.open(logfile, "w"),"islem.kur.set_logger logfile can not open")
@@ -2351,7 +2351,7 @@ end
 islem.guncelle={
 	retkey="guncelle:",
 	comment=messages.usage_updating_repos,
-	usage="mps guncelle",
+	usage="paket guncelle",
 	betikdepo={isim="betikdepo",tnm="Betik",path=aylinuxpath},
 	talimatdepo={isim="talimatdepo",tnm="Git",path=talimatname},
 	paketlist={},
@@ -2360,7 +2360,7 @@ islem.guncelle={
 
 function islem.guncelle.handler(input)
 	local sira=tonumber(input.sira)
-	-- mps güncelleme
+	-- paket güncelleme
 	if input.mps then 
 		islem.guncelle.mps() 
 	end
@@ -2514,7 +2514,7 @@ function islem.guncelle.paket(input)
 end
 
 function islem.guncelle.mps()
-	-- todo!!! mps commit hash tutulacak oradan commit değer değişimi gösterilecek
+	-- todo!!! paket commit hash tutulacak oradan commit değer değişimi gösterilecek
 	-- değişim yoksa güncelleme yok
 	assert(path_exists(mps_path),"mps_path not exist")
 	assert(path_exists(mps_path.."/.git"),"invalid git directory");
@@ -2705,11 +2705,11 @@ end
 
 -- -ayar öntanımlı ayarlar yükler/kopyalar
 
--- todo!!! mps kos altına alınacak
+-- todo!!! paket kos altına alınacak
 islem.ayarla={
 	retkey="ayarla:",
 	comment=messages.usage_configure,
-	usage="mps ayarla",
+	usage="paket ayarla",
 }
 
 function islem.ayarla.handler()
