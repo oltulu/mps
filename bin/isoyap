@@ -15,15 +15,15 @@ cd /usr/aylinux/ayarlar/servisler
 make install
 make kur-random
 
-update-ca-certificates --fresh && mps kur p11-kit && make-ca -g
+update-ca-certificates --fresh && paket kur p11-kit && make-ca -g
 update-ca-trust
 
 cd /
-mps gun -GP
+paket gun -GP
 echo -e "${KIRMIZI}Minimal paketler yükleniyor..${YOK}"
-mps kur --dosya=/usr/aylinux/ayarlar/iso/minimal.liste
+paket kur --dosya=/usr/aylinux/ayarlar/iso/minimal.liste
 echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
-mps kur --dosya=/usr/aylinux/ayarlar/iso/xorg.liste
+paket kur --dosya=/usr/aylinux/ayarlar/iso/xorg.liste
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 echo -e "${KIRMIZI}Şimdilik sadece xfce4 ve openbox çalışıyor...${YOK}"
 select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
@@ -32,15 +32,15 @@ echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 
 if [ ! $sistem = masayok ];then
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
-mps kur --dosya=/usr/aylinux/ayarlar/iso/$sistem.liste
+paket kur --dosya=/usr/aylinux/ayarlar/iso/$sistem.liste
 echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
-mps kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
+paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
 #rm /etc/lightdm/lightdm-gtk-greeter.conf
 #rm /etc/lightdm/lightdm.conf
 
-mps der $sistem-kur
+paket der $sistem-kur
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
@@ -87,11 +87,11 @@ cp -R /usr/aylinux/mps/bin/* /usr/bin/
 mkdir /boot/grub
 mkdir /boot/grub/locale
 cp -R /usr/share/locale/tr/LC_MESSAGES/grub.mo /boot/grub/locale/tr.mo
-chmod +x /usr/bin/mps
+chmod +x /usr/bin/paket
 echo "Aylinux-2021-${month}.${day}" > /etc/aylinux-surum
 #gtk-update-icon-cache /usr/share/icons/Adwaita/
 #gtk-update-icon-cache /usr/share/icons/BeautyLine/
-echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRMIZI}mps kur paket_adı${YESIL} şeklinde kurabilirsiniz ...${YOK}"
+echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRMIZI}paket kur paket_adı${YESIL} şeklinde kurabilirsiniz ...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI} exit ${YOK}${YESIL}yazarak mevcut ortamdan çıkış yapın...${YOK}"
 echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap2${YESIL} yazarak  devam ediniz...${YOK}"
 exit
