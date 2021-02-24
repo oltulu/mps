@@ -7,11 +7,11 @@ locale-gen
 cd /usr/milis/mps
 bash derle.sh
 
-chmod +x /usr/milis/mps/bin/*
-chmod +x /usr/milis/bin/* 
+chmod +x /usr/aylinux/mps/bin/*
+chmod +x /usr/aylinux/bin/* 
 git config --global pull.ff only
 ln -s /usr/bin/gcc /usr/bin/cc
-cd /usr/milis/ayarlar/servisler
+cd /usr/aylinux/ayarlar/servisler
 make install
 make kur-random
 
@@ -21,9 +21,9 @@ update-ca-trust
 cd /
 mps gun -GP
 echo -e "${KIRMIZI}Minimal paketler yükleniyor..${YOK}"
-mps kur --dosya=/usr/milis/ayarlar/iso/minimal.liste
+mps kur --dosya=/usr/aylinux/ayarlar/iso/minimal.liste
 echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
-mps kur --dosya=/usr/milis/ayarlar/iso/xorg.liste
+mps kur --dosya=/usr/aylinux/ayarlar/iso/xorg.liste
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 echo -e "${KIRMIZI}Şimdilik sadece xfce4 ve openbox çalışıyor...${YOK}"
 select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
@@ -32,9 +32,9 @@ echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 
 if [ ! $sistem = masayok ];then
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
-mps kur --dosya=/usr/milis/ayarlar/iso/$sistem.liste
+mps kur --dosya=/usr/aylinux/ayarlar/iso/$sistem.liste
 echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
-mps kur --dosya=/usr/milis/ayarlar/iso/ortak.liste
+mps kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
 #rm /etc/lightdm/lightdm-gtk-greeter.conf
@@ -83,7 +83,7 @@ rm -f /var/cache/mps/depo/*.kur ; rm -f /tmp/*.log
 service fixer 
 #setkeyboard tr
 cp -R /etc/skel/.[^.]* /root/
-cp -R /usr/milis/mps/bin/* /usr/bin/
+cp -R /usr/aylinux/mps/bin/* /usr/bin/
 mkdir /boot/grub
 mkdir /boot/grub/locale
 cp -R /usr/share/locale/tr/LC_MESSAGES/grub.mo /boot/grub/locale/tr.mo
