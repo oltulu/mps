@@ -11,7 +11,7 @@ then
 
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/aylinux
+export AYLINUX_PATH=$MSYS/usr/aylinux
 
 rm -r $MPS_PATH
 rm -r $MSYS
@@ -30,7 +30,7 @@ chmod +x ./mpsd
 ./mps gun -GPB --kok=$MSYS
 cp /etc/ld.so.conf $MSYS/etc/
 echo -e "${RED}Temel paketler yükleniyor..${NONE}"
-./mps kur --dosya=$MSYS/usr/milis/ayarlar/iso/ortam.order --kurkos=0 --koskur=0 --kok=$MSYS
+./mps kur --dosya=$MSYS/usr/aylinux/ayarlar/iso/ortam.order --kurkos=0 --koskur=0 --kok=$MSYS
 #./mps kur temel-kur --kurkos=0 --koskur=0 --kok=$MSYS
 cp -r $MPS_PATH $MSYS/usr/aylinux/mps
 cp -f /etc/hosts $MSYS/etc/
@@ -41,7 +41,7 @@ cat > /tmp//isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/aylinux
+export AYLINUX_PATH=$MSYS/usr/aylinux
 rm -f $MSYS/root/.bash_history
 cd /opt
 git clone https://github.com/oltulu/Aylinux-isoyap
@@ -63,7 +63,7 @@ else
 # Dizinleri belirliyoruz
 export MSYS=/home//Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/aylinux
+export AYLINUX_PATH=$MSYS/usr/aylinux
 
 cd $MPS_PATH/bin
 chmod +x ./mps
@@ -75,7 +75,7 @@ cat > /tmp//isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home//Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/aylinux
+export AYLINUX_PATH=$MSYS/usr/aylinux
 rm -f $MSYS/root/.bash_history
 cd /opt
 git clone https://github.com/oltulu/Aylinux-isoyap
