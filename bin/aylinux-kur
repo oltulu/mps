@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Milis Linux konsol kurulumu için Void Linux kurulum çatallaması
+# Aylinux konsol kurulumu için Milis Linux kurulum çatallaması
 # This installer forked from Void Linux installer for Milis Linux terminal based installation
 #            	
 #				2018-2020 milisarge <milisarge@gmail.com>.
@@ -173,7 +173,7 @@ if [ $dil == "en_US" ];then
 
 	LANG_ENTERMILIS="Aylinux/ $LANG_LANG"
 	LANG_MAINDIALOG="\n
-	Welcome to the Milis Linux installation. A simple and minimal \
+	Welcome to the Aylinux installation. A simple and minimal \
 	Linux distribution made from scratch and built from the source package tree \
 	available for MPS, a new alternative package system.\n\n
 	The installation should be pretty straightforward. If you are in trouble \
