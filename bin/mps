@@ -3,7 +3,7 @@
 
 -- IMPORT --
 local aylinuxpath=os.getenv("AYLINUX_PATH")
-if not aylinuxpath then milispath="/usr/aylinux" end
+if not aylinuxpath then aylinuxpath="/usr/aylinux" end
 
 local talimatname=os.getenv("TALIMATNAME")
 if not talimatname then talimatname=aylinuxpath.."/".."talimatname" end
