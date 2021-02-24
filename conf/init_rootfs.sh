@@ -176,7 +176,7 @@ pathappend () {
 export -f pathremove pathprepend pathappend
 
 # Set the initial path
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/milis/bin:/usr/milis/mps/bin:/usr/local/bin:/usr/lib/jvm/java-8-openjdk/bin
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/aylinux/bin:/usr/aylinux/mps/bin:/usr/local/bin:/usr/lib/jvm/java-8-openjdk/bin
 
 
 # Setup some environment variables.
@@ -386,7 +386,7 @@ chmod -v 664  $ROOTDIR/var/log/lastlog
 chmod -v 600  $ROOTDIR/var/log/btmp
 
 # talimatname yolu 
-mkdir -p $ROOTDIR/usr/milis/talimatname
+mkdir -p $ROOTDIR/usr/aylinux/talimatname
 
 # mps
 #mkdir -p $ROOTDIR/var/lib/mps/db
