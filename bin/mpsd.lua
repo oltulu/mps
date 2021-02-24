@@ -1,7 +1,7 @@
 #!/usr/bin/lua
 
 local mps_path=os.getenv("MPS_PATH")
-if not mps_path then mps_path="/usr/milis/mps" end
+if not mps_path then mps_path="/usr/aylinux/mps" end
 
 --package.cpath = package.cpath .. ";"..mps_path.."/lua/?.so"
 -- genel lua kütüphanelerinden etkilenmemesi için önce mps yolunda olanlar kullanılacak.
@@ -111,9 +111,9 @@ function create_talimat(tdir)
 	local template=[===[
 [paket]
 tanim   = %s paketi
-paketci = milisarge
+paketci = Cihan_Alkan
 grup    = kütüphane
-url     = https://mls.akdeniz.edu.tr
+url     = https://aylinux.kripto.com.tr
 
 [gerek]
 derleme = 
