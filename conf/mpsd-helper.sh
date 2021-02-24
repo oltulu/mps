@@ -257,8 +257,8 @@ kosuk_kopyala(){
 }
 
 paket_arsiv_bilgi_uret(){
-	[ -z $1 ] && hata_olustu "mps paketi tanımlı değil!"
-	[ ! -f $1 ] && hata_olustu "mps paketi bulunamadı!"
+	[ -z $1 ] && hata_olustu "kur paketi tanımlı değil!"
+	[ ! -f $1 ] && hata_olustu "kur paketi bulunamadı!"
 	echo "paket arşiv bilgisi"
 	local pkt=$1
 	local pakboyut=`boyut_hesapla $pkt`
@@ -266,7 +266,7 @@ paket_arsiv_bilgi_uret(){
 	# bir diğer yöntem de içinde dolu dizin barındırıyor mu ona bakılacak.
 	# derleme aşamaları başarı mesajı üretebilir. her işlev kendisinden önceki başarı mesajını kontrol edebilir.
 	if [ "$pakboyut" -lt "2000" ]; then
-		echo "${urpkt}.mps.lz.bilgi -"
+		echo "${urpkt}.kur.bilgi -"
 		rm -f $pkt
 		hata_olustu "paket oluşturmada hata, yetersiz boyut. Pakur aşamasını kontrol ediniz!!!"	
 	else
@@ -275,7 +275,7 @@ paket_arsiv_bilgi_uret(){
 		local pakhash=`sha256sum $pkt | awk '{print $1}'`
 		local mimari=`uname -m`
 		echo "$isim $surum $devir $mimari $pakboyut $kurboyut $pakhash" > "${pkt}.bilgi"
-		echo "${urpkt}.mps.lz.bilgi +"
+		echo "${urpkt}.kur.bilgi +"
 	fi
 	echo "-----------------------------------"
 }
@@ -333,16 +333,16 @@ paket_arsivle(){
 	set -x
 	LANG=C \
 	$BSDTAR --preserve-permissions \
-	-cf ${urpkt}.mps * ${META} ${ICBILGI}
-	rm -f ${urpkt}.mps.lz
+	-cf ${urpkt}.kur * ${META} ${ICBILGI}
+	rm -f ${urpkt}.kur.lz
 	#xz -4 --threads=0 ${urpkt}
 	set +x
-	#mv ${urpkt}.xz ${urpkt}.mps
-	lzip -9 ${urpkt}.mps
+	#mv ${urpkt}.xz ${urpkt}.kur
+	lzip -9 ${urpkt}.kur
 	popd &>/dev/zero
-	echo "paket arşivi: ${urpkt}.mps.lz +"
+	echo "paket arşivi: ${urpkt}.kur.lz +"
 	echo "-------------------------------"
-	paket_arsiv_bilgi_uret "${urpkt}.mps.lz"
+	paket_arsiv_bilgi_uret "${urpkt}.kur.lz"
 }
 
 _generate_package(){
