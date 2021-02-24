@@ -73,7 +73,7 @@ exit 0
 '
 }
 
-service_dir="/usr/milis/ayarlar/servisler"
+service_dir="/usr/aylinux/ayarlar/servisler"
 old_services="checkfs cleanfs console localnet modules mountvirtfs mountfs sysctl udev udev_retry"
 
 [ ! -d $service_dir ] && _err "$service_dir not found!"
