@@ -8,7 +8,7 @@ then
     echo -e "${KIRMIZI}Bu dosyayı root olarak çalıştırmalısınız .${YOK}"
     exit 1
 fi
-echo -e "${YESIL}Eğer ilk defa iso hazırlayacaksanız ${KIRMIZI}1${YOK} ${YESIL}tuşuna basın, daha önce hazırladığınız dosyaları düzenleyecekseniz ${KIRMIZI}2${YOK} ${YESIL}tuşuna basın...${YOK} "
+echo -e "${YESIL}Eğer ilk defa iso hazırlayacaksanız ${KIRMIZI}1${YOK} ${YESIL}tuşuna basın...\nDaha önce hazırladığınız kalıbı düzenleyecekseniz ${KIRMIZI}2${YOK} ${YESIL}tuşuna basın...${YOK} "
 select durum in ilk-defa Yeniden
 do
 
