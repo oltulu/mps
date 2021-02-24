@@ -17,7 +17,7 @@ then
 
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/milis
+export AYLINUX_PATH=$MSYS/usr/aylinux
 
 rm -r $MPS_PATH
 rm -r $MSYS
@@ -35,11 +35,11 @@ chmod +x ./mpsd
 ./mps gun -GPB --kok=$MSYS
 cp /etc/ld.so.conf $MSYS/etc/
 echo -e "${KIRMIZI}Temel paketler yükleniyor..${YOK}"
-./mps kur --dosya=$MSYS/usr/milis/ayarlar/iso/temel.liste --kurkos=0 --koskur=0 --kok=$MSYS
+./mps kur --dosya=$MSYS/usr/aylinux/ayarlar/iso/temel.liste --kurkos=0 --koskur=0 --kok=$MSYS
 #./mps kur temel-kur --kurkos=0 --koskur=0 --kok=$MSYS
-cp -r $MPS_PATH $MSYS/usr/milis/mps
+cp -r $MPS_PATH $MSYS/usr/aylinux/mps
 cp -f /etc/hosts $MSYS/etc/
-chmod +x $MSYS/usr/milis/mps/bin/isoyap
+chmod +x $MSYS/usr/aylinux/mps/bin/isoyap
 chmod +x ./enter-chroot
 
 echo "isoyap 2 oluşturuluyor..."
@@ -47,16 +47,16 @@ cat > /usr/bin/isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/milis
+export AYLINUX_PATH=$MSYS/usr/milis
 rm -f $MSYS/root/.bash_history
 cd /opt
 git clone https://github.com/oltulu/Aylinux-isoyap
 cd /opt/Aylinux-isoyap
-rm /usr/bin//isoyap2 
+rm /usr/bin/isoyap2 
 bash iso_olustur.sh $MSYS
 EOf
 
-chmod +x /usr/bin//isoyap2
+chmod +x /usr/bin/isoyap2
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
@@ -71,20 +71,20 @@ else
 # Dizinleri belirliyoruz
 export MSYS=/home//Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/milis
+export AYLINUX_PATH=$MSYS/usr/aylinux
 
 cd $MPS_PATH/bin
 chmod +x ./mps
 chmod +x ./mpsd
 #chmod +x ./paket
-chmod +x $MSYS/usr/milis/mps/bin/isoyap
+chmod +x $MSYS/usr/aylinux/mps/bin/isoyap
 echo "isoyap 2 oluşturuluyor..."
 rm /usr/bin/isoyap2
 cat > /usr/bin/isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export MILIS_PATH=$MSYS/usr/milis
+export AYLINUX_PATH=$MSYS/usr/aylinux
 rm -f $MSYS/root/.bash_history
 if [ ! -f /usr/bin/xorriso ];then
 	mps kur xorriso
