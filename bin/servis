@@ -30,7 +30,7 @@ NAME=`basename ${DAEMON}`
 OPT=""
 
 case "${1}" in
-   start)
+   baslat)
       log_info_msg "${NAME^} daemon başlatılıyor..."
       pidlist=`pidofproc ${DAEMON}`
 
@@ -44,19 +44,19 @@ case "${1}" in
       log_success_msg2
       ;;
 
-   stop)
+   durdur)
       log_info_msg "${NAME^} daemon durduruluyor..."
       killproc ${DAEMON}
       evaluate_retval
       ;;
 
-   restart)
-      ${0} stop
+   yenidenbaslat)
+      ${0} durdur
       sleep 1
-      ${0} start
+      ${0} baslat
       ;;
 
-   status)
+   durum)
       statusproc ${DAEMON}
       ;;
 
@@ -73,10 +73,10 @@ exit 0
 '
 }
 
-service_dir="/usr/milis/ayarlar/servisler"
+service_dir="/usr/aylinux/ayarlar/servisler"
 old_services="checkfs cleanfs console localnet modules mountvirtfs mountfs sysctl udev udev_retry"
 
-[ ! -d $service_dir ] && _err "$service_dir not found!"
+[ ! -d $service_dir ] && _err "$service_dir bulunamadı!"
 
 [ -z "$1" ] &&  _err "$usage"
 job=$1
@@ -116,18 +116,18 @@ if [ $job == "ayar" ] ; then
 	exit 0
 fi
 
-[ -z "$2" ] &&  _err "service_name not found"
+[ -z "$2" ] &&  _err "service_name bulunamadı"
 service=$2
 
 # service install	
 if [ $job == "kur" ]; then
-	[ ! -f ${service_dir}/init.d/$service ] && _err "service not found in $service_dir"
+	[ ! -f ${service_dir}/init.d/$service ] && _err "servisi $service_dir dizininde bulunamadı"
 	cd $service_dir
 	make kur-$service
 # service remove
 # handle this in two case, first it is already registred service latter is manual service.
 elif [ $job == "sil" ]; then
-	[ ! -f /etc/init.d/${service} ] && _err "service not found in /etc/init.d"
+	[ ! -f /etc/init.d/${service} ] && _err "servisi /etc/init.d dizininde bulunamadı"
 	if [ -f ${service_dir}/init.d/${service} ];then
 		cd $service_dir
 		make sil-$service
@@ -165,12 +165,12 @@ elif [ $job == "disable" ]; then
 				_disabled="y"
 			fi
 		done
-		[ "${_disabled}" == "n" ] && echo "service already disabled"
+		[ "${_disabled}" == "n" ] && echo "servisi saten çalışmıyor"
 	fi
 # if service already under /etc/init.d but has not auto-init/close status
 # bunu iki durumda halledin, birincisi zaten kayıtlı servis, ikincisi manuel servis.
 elif [ $job == "enable" ]; then
-	[ ! -f /etc/init.d/${service} ] && _err "service not found in /etc/init.d"
+	[ ! -f /etc/init.d/${service} ] && _err "servisi /etc/init.d dizininde bulunamadı"
 	if [ -f ${service_dir}/init.d/${service} ];then
 		cd $service_dir
 		make kur-$service
@@ -185,7 +185,7 @@ elif [ $job == "enable" ]; then
 		ln -svf /etc/init.d/${service} "/etc/rc.d/rc5.d/S91${service}"
 	fi
 # service start/stop/status
-elif [ $job == "baslat" ] || [ $job == "prestart" ] || [ $job == "restart" ] || [ $job == "reload" ] || [ $job == "stop" ] || [ $job == "status" ]; then
+elif [ $job == "baslat" ] || [ $job == "prestart" ] || [ $job == "yenidenbaslat" ] || [ $job == "yenidenyukle" ] || [ $job == "durdur" ] || [ $job == "durum" ]; then
 	[ ! -f /etc/init.d/${service} ] && _err "servis /etc/init.d klasöründe bulunamadı."
 	/etc/init.d/${service} $job
 else
