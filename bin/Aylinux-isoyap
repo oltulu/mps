@@ -26,16 +26,16 @@ git clone https://github.com/oltulu/mps  $MPS_PATH
 cd $MPS_PATH
 bash derle.sh $MPS_PATH
 cd bin
-chmod +x ./mps
+chmod +x ./paket
 chmod +x ./mpsd
 #chmod +x ./paket
-./mps
-./mps
-./mps --ilkds --ilk --kok=$MSYS
-./mps gun -GPB --kok=$MSYS
+./paket
+./paket
+./paket --ilkds --ilk --kok=$MSYS
+./paket gun -GPB --kok=$MSYS
 cp /etc/ld.so.conf $MSYS/etc/
 echo -e "${KIRMIZI}Temel paketler yükleniyor..${YOK}"
-./mps kur --dosya=$MSYS/usr/aylinux/ayarlar/iso/temel.liste --kurkos=0 --koskur=0 --kok=$MSYS
+./paket kur --dosya=$MSYS/usr/aylinux/ayarlar/iso/temel.liste --kurkos=0 --koskur=0 --kok=$MSYS
 #./mps kur temel-kur --kurkos=0 --koskur=0 --kok=$MSYS
 cp -r $MPS_PATH $MSYS/usr/aylinux/mps
 cp -f /etc/hosts $MSYS/etc/
@@ -74,7 +74,7 @@ export MPS_PATH=/opt/Aylinux-ISO
 export AYLINUX_PATH=$MSYS/usr/aylinux
 
 cd $MPS_PATH/bin
-chmod +x ./mps
+chmod +x ./paket
 chmod +x ./mpsd
 #chmod +x ./paket
 chmod +x $MSYS/usr/aylinux/mps/bin/isoyap
@@ -87,7 +87,7 @@ export MPS_PATH=/opt/Aylinux-ISO
 export AYLINUX_PATH=$MSYS/usr/aylinux
 rm -f $MSYS/root/.bash_history
 if [ ! -f /usr/bin/xorriso ];then
-	mps kur xorriso
+	paket kur xorriso
 fi
 echo -e "${KIRMIZI}Aylinux-isoyap dizini daha önceden varsa varolan olan dizin kullanılacak..${YOK}"
 if [ ! -d /opt/Aylinux-isoyap ];then
@@ -100,7 +100,7 @@ cd /opt/Aylinux-isoyap
 chmod +x MSYS/root/Masaüstü/kurulum.desktop
 bash iso_olustur.sh $MSYS
 if [ ! -f /usr/bin/mintstick ];then
-	mps kur mintstick
+	paket kur mintstick
 fi
 mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
 EOf
