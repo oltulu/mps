@@ -52,3 +52,5 @@ rm -rf $MPS_PATH/lua/ext.old
 
 # exe
 chmod +x $MPS_PATH/bin/mps*.lua
+chmod +x $MPS_PATH/bin/paket
+chmod +x $MPS_PATH/bin/servis
