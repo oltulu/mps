@@ -47,7 +47,7 @@ cat > /usr/bin/isoyap2 << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
-export AYLINUX_PATH=$MSYS/usr/milis
+export AYLINUX_PATH=$MSYS/usr/aylinux
 rm -f $MSYS/root/.bash_history
 cd /opt
 git clone https://github.com/oltulu/Aylinux-isoyap
