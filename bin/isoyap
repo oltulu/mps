@@ -84,7 +84,7 @@ service fixer
 #setkeyboard tr
 cp -R /etc/skel/.[^.]* /root/
 cp -R /usr/aylinux/mps/bin/* /usr/bin/
-mkdir /boot/grub
+#mkdir /boot/grub
 mkdir /boot/grub/locale
 cp -R /usr/share/locale/tr/LC_MESSAGES/grub.mo /boot/grub/locale/tr.mo
 chmod +x /usr/bin/paket
