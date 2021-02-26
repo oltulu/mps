@@ -4,7 +4,7 @@ local mpsconf={
 	repo_dizin="/sources",
 	sunucu={
 		--[1]="https://mls.akdeniz.edu.tr/paketler",
-		[1]="http://aylinux.kripto.com.tr/dosyalar/Aylinux-2021/depo",
+		--[1]="http://aylinux.kripto.com.tr/dosyalar/Aylinux-2021/depo",
 		--[1]="http://localhost:9999",
 		[2]="/home/cihan/Masaüstü/Aylinux-2021/depo",
 	},
