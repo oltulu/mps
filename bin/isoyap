@@ -37,8 +37,8 @@ echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
-#rm /etc/lightdm/lightdm-gtk-greeter.conf
-#rm /etc/lightdm/lightdm.conf
+rm /etc/lightdm/lightdm-gtk-greeter.conf
+rm /etc/lightdm/lightdm.conf
 
 paket der $sistem-kur
 
