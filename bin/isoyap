@@ -37,10 +37,15 @@ echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
-rm /etc/lightdm/lightdm-gtk-greeter.conf
-rm /etc/lightdm/lightdm.conf
+#rm /etc/lightdm/lightdm-gtk-greeter.conf
+#rm /etc/lightdm/lightdm.conf
 
 paket der $sistem-kur
+if [ $sistem = cinnamon ];then
+ko aylinux Aylinux
+echo -e "${KIRMIZI}Aylinux kullanıcısı için şifre giriniz..${YOK}"
+passwd aylinux
+fi
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
