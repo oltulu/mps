@@ -14,6 +14,6 @@ dracut --force -H -f ${initramfs_file}
 grub-mkconfig -o ${grub_cfg}
 
 echo "--------------------------------"
-echo "iniramfs file: ${initramfs_file}"
-echo "grub.cfg file: ${grub_cfg}"
+echo "iniramfs dosyası: ${initramfs_file}"
+echo "grub.cfg dosyası: ${grub_cfg}"
 echo "--------------------------------"
