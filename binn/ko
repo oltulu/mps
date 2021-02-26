@@ -41,7 +41,7 @@ usage()
   exit 1
 }
 
-# kullanıcıya Milis Xfce4 öntanımlı masaüstü ayarlarının kopyalanması
+# kullanıcıya Aylinux Xfce4 öntanımlı masaüstü ayarlarının kopyalanması
 xfce4_ayarla(){
 	if [ $1 ];then
 		_isim=$1
@@ -125,7 +125,7 @@ passwd "$name"
 
 while true; do
 	if [ `pgrep xfce4-session` ];then
-		echo "${name} için Milis-Xfce4 öntanımlı masaüstü ayarları kopyalansın mı?";read -p "e veya h-> " eh
+		echo "${name} için Aylinux-Xfce4 öntanımlı masaüstü ayarları kopyalansın mı?";read -p "e veya h-> " eh
 		case $eh in
 			[Ee]* ) xfce4_ayarla ${name}; break;;
 			[Hh]* ) break;;
