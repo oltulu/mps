@@ -3,10 +3,8 @@
 local mpsconf={
 	repo_dizin="/sources",
 	sunucu={
-		--[1]="https://mls.akdeniz.edu.tr/paketler",
-		--[1]="http://aylinux.kripto.com.tr/dosyalar/Aylinux-2021/depo",
+		[1]="http://aylinux.kripto.com.tr/dosyalar/Aylinux-2021/depo",
 		--[1]="http://localhost:9999",
-		[2]="/home/cihan/Masaüstü/Aylinux-2021/depo",
 	},
 	talimatdepo={
 		-- git repo adres, ilgili düzeye aktarılacak içerik
@@ -25,7 +23,7 @@ local mpsconf={
 		-- ilgili repodan bin/ ayarlar/ gibi betik içeren dizinlerin alınması
 		bin={["https://github.com/oltulu/mps"]="binn"},
 		ayarlar={["https://github.com/oltulu/mps"]="ayarlar"},
-		ayguci={["https://mls.akdeniz.edu.tr/git/milislinux/ayguci"]=""},
+		--ayguci={["https://mls.akdeniz.edu.tr/git/milislinux/ayguci"]=""},
 		mps={["https://github.com/oltulu/mps"]=""},
 	},
 }
