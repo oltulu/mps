@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /home/Aylinux-ISO/opt
+yps.py -p 9999
