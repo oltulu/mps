@@ -8,6 +8,7 @@ then
     echo -e "${KIRMIZI}Bu dosyayı root olarak çalıştırmalısınız .${YOK}"
     exit 1
 fi
+echo -e "${KIRMIZI}Aylinux ISO Hazırlayıcıya Hoş Geldiniz...${YOK}"
 echo -e "${YESIL}Eğer ilk defa iso hazırlayacaksanız ${KIRMIZI}1${YOK} ${YESIL}tuşuna basın...\nDaha önce hazırladığınız kalıbı düzenleyecekseniz ${KIRMIZI}2${YOK} ${YESIL}tuşuna basın...${YOK} "
 select durum in ilk-defa Yeniden
 do
@@ -64,11 +65,6 @@ echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yaz�
 
 
 else
-
-#if [ "$(whoami)" == "root" ]
-#then
-#$masasecimi=(zenity --list --radiolist --text "<b>Lütfen</b> kurmak istediğiniz masaüstünü seçiniz" --hide-header --column "Buy" --column "Item" FALSE "xfce" FALSE "cinnamon" FALSE "mate" FALSE Quit)
-# Dizinleri belirliyoruz
 export MSYS=/home//Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
 export AYLINUX_PATH=$MSYS/usr/aylinux
@@ -76,7 +72,6 @@ export AYLINUX_PATH=$MSYS/usr/aylinux
 cd $MPS_PATH/bin
 chmod +x ./paket
 chmod +x ./mpsd
-#chmod +x ./paket
 chmod +x $MSYS/usr/aylinux/mps/bin/isoyap
 echo "isoyap 2 oluşturuluyor..."
 rm /usr/bin/isoyap2
@@ -103,6 +98,7 @@ if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
 fi
 mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
+
 EOf
 
 chmod +x /usr/bin//isoyap2
