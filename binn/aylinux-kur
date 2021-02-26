@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Milis Linux konsol kurulumu için Void Linux kurulum çatallaması
-# This installer forked from Void Linux installer for Milis Linux terminal based installation
+# Ayinux konsol kurulumu için Void Linux kurulum çatallaması (Milis Linuxtan Alındı)
+# This installer forked from Void Linux installer for Aylinux terminal based installation (From Milis Linux)
 #            	
 #				2018-2020 milisarge <milisarge@gmail.com>.
 #				2018 Aydin <yakar@live.com>
