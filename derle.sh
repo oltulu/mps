@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z $MPS_PATH ];then
-	MPS_PATH="/usr/milis/mps"
+	MPS_PATH="/usr/aylinux/mps"
 fi
 
 if [ ! -z $1 ];then
