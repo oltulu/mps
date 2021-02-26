@@ -1,5 +1,5 @@
 #!/bin/bash
-# Begin /usr/milis/bin/make-ca
+# Begin /usr/aylinux/bin/make-ca
 # Not: url deki cerdata.txt i indir make-ca -f -g komutla
 # Script to create p11-kit anchors, OpenSSL certs directory, GnuTLS certificate
 # bundle, NSS shared DB, and Java cacerts from upstream certdata.txt and local
@@ -61,7 +61,7 @@ function get_args(){
           CERTDATAY="1"
           shift 2
         else
-          echo "Error: ${1} cannot be used with the -r/--rebuild or -g/--get switches."
+          echo "Hata: ${1} cannot be used with the -r/--rebuild or -g/--get switches."
           exit 3
         fi
         if test ! -f "${CERTDATA}" -a "${GET}" == "0"; then
@@ -82,7 +82,7 @@ function get_args(){
         echo "${@}" | grep -e "-a " -e "--anchordir" \
                            -e "-n " -e "--nssdb" > /dev/null
         if test "${?}" == "0"; then
-          echo "Error! ${1} cannot be used with the -a/--anchordir or -n/--nssdb switches."
+          echo "Hata! ${1} cannot be used with the -a/--anchordir or -n/--nssdb switches."
           echo ""
           exit 3
         fi
@@ -95,7 +95,7 @@ function get_args(){
         LOCALDIR="${SSLDIR}/local"
         echo "${@}" | grep -e "-d " -e "--cadir" > /dev/null 2>&1
         if test "${?}" == "0"; then
-          echo "Error! ${1} cannot be used with the -d/--cadir switch."
+          echo "Hata! ${1} cannot be used with the -d/--cadir switch."
           echo ""
           exit 3
         fi
@@ -107,7 +107,7 @@ function get_args(){
         ANCHORDIR="${2}"
         echo "${@}" | grep -e "-P " -e "--pkidir" > /dev/null 2>&1
         if test "${?}" == "0"; then
-          echo "Error! ${1} cannot be used with the -P/--pkidir switch."
+          echo "Hata! ${1} cannot be used with the -P/--pkidir switch."
           echo ""
           exit 3
         fi
@@ -123,7 +123,7 @@ function get_args(){
         CERTDIR="${2}"
         echo "$@" |  grep -e "-S" -e "--ssldir" > /dev/null 2>&1
         if test "${?}" == "0"; then
-          echo "Error! ${1} cannot be used with the -S/--ssldir switch."
+          echo "Hata! ${1} cannot be used with the -S/--ssldir switch."
           echo ""
           exit 3
         fi
@@ -135,7 +135,7 @@ function get_args(){
           CERTDATA="${TEMPDIR}/certdatanew.txt"
           shift 1
         else
-          echo "Error: ${1} cannot be used with the -r/--rebuild or -C/--certdata switches."
+          echo "Hata: ${1} cannot be used with the -r/--rebuild or -C/--certdata switches."
           exit 3
         fi
       ;;
@@ -168,7 +168,7 @@ function get_args(){
           WITH_NSS="1"
           echo "${@}" | grep -e "-P " -e "--pkidir" > /dev/null
           if test "${?}" == "0"; then
-            echo "Error! ${1} cannot be used with both an argument and the -P/--pkidir switch."
+            echo "Hata! ${1} cannot be used with both an argument and the -P/--pkidir switch."
             echo ""
             exit 3
           fi
@@ -186,7 +186,7 @@ function get_args(){
           FORCE="1"
           shift 1
         else
-          echo "Error: ${1} cannot be used with the -C/--certdata or -g/--get switches."
+          echo "Hata: ${1} cannot be used with the -C/--certdata or -g/--get switches."
           exit 3
         fi
       ;;
