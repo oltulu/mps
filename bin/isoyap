@@ -37,8 +37,7 @@ echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
-#rm /etc/lightdm/lightdm-gtk-greeter.conf
-#rm /etc/lightdm/lightdm.conf
+
 
 paket der $sistem-kur
 if [ $sistem = cinnamon ];then
@@ -47,6 +46,12 @@ echo -e "${KIRMIZI}Canlı sistem için${YESIL} Aylinux ${KIRMIZI}kullanıcısı 
 ko Aylinux aylinux 
 cp -R /etc/skel/.[^.]* /home/aylinux/
 fi
+
+echo -e "${KIRMIZI}Iso için Masaüstü Yöneticisi seçiniz...${YOK}"
+select dm in lightdm slim sddm
+do
+echo -e "${YESIL}$dm masaüstü yöneticisini seçtiniz.${YOK}"
+paket kur $dm
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
