@@ -44,13 +44,13 @@ echo -e "${KIRMIZI}Canlı sistem için${YESIL} Aylinux ${KIRMIZI}kullanıcısı 
 ko Aylinux aylinux 
 cp -R /etc/skel/.[^.]* /home/aylinux/
 fi
-
+done
 echo -e "${KIRMIZI}Iso için Masaüstü Yöneticisi seçiniz...${YOK}"
 select dm in lightdm slim sddm
 do
 echo -e "${YESIL}$dm masaüstü yöneticisini seçtiniz.${YOK}"
 paket kur $dm
-
+done
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
 rm /etc/sysconfig/clock
@@ -104,4 +104,4 @@ echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRM
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI} exit ${YOK}${YESIL}yazarak mevcut ortamdan çıkış yapın...${YOK}"
 echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap2${YESIL} yazarak  devam ediniz...${YOK}"
 exit
-done
+
