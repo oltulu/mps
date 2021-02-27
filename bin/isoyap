@@ -45,6 +45,7 @@ if [ $sistem = cinnamon ];then
 echo -e "${KIRMIZI}Cinnamonda nemo-desktop root olarak çalışmadığı için normal kullanıcısı oluşturulacak..${YOK}"
 echo -e "${KIRMIZI}Canlı sistem için${YESIL} Aylinux ${KIRMIZI}kullanıcısı oluşturulacak..${YOK}"
 ko Aylinux aylinux 
+cp -R /etc/skel/.[^.]* /home/aylinux/
 fi
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
