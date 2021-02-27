@@ -12,7 +12,7 @@
 ## Environmental setup
 # Setup default values for environment
 umask 022
-export PATH="/bin:/usr/bin:/sbin:/usr/sbin"
+export PATH="/bin:/usr/bin:/sbin:/usr/sbin:/usr/aylinux/bin:/usr/aylinux/mps/bin"
 
 ## Set color commands, used via echo
 # Please consult `man console_codes for more information
@@ -22,7 +22,7 @@ export PATH="/bin:/usr/bin:/sbin:/usr/sbin"
 # the linux console will reinterpret the bold (1;) to
 # the top 256 glyphs of the 9bit font.  This does
 # not affect framebuffer consoles
-
+klavye tr
 NORMAL="\\033[0;39m"         # Standard console grey
 SUCCESS="\\033[1;32m"        # Success is green
 WARNING="\\033[1;33m"        # Warnings are yellow
