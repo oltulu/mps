@@ -42,7 +42,7 @@ usage()
 }
 
 # kullanıcıya Aylinux Xfce4 öntanımlı masaüstü ayarlarının kopyalanması
-xfce4_ayarla(){
+masa_ayarla(){
 	if [ $1 ];then
 		_isim=$1
 		mkdir -p /home/${_isim}/.config
@@ -124,10 +124,10 @@ fi
 passwd "$name"
 
 while true; do
-	if [ `pgrep xfce4-session` ];then
-		echo "${name} için Aylinux-Xfce4 öntanımlı masaüstü ayarları kopyalansın mı?";read -p "e veya h-> " eh
+	if [ -f usr/bin/xfce4-session ];then
+		echo "${name} için Aylinux öntanımlı masaüstü ayarları kopyalansın mı?";read -p "e veya h-> " eh
 		case $eh in
-			[Ee]* ) xfce4_ayarla ${name}; break;;
+			[Ee]* ) masa_ayarla ${name}; break;;
 			[Hh]* ) break;;
 			* ) echo "e veya h";;
 		esac
