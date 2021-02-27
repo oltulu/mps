@@ -37,8 +37,6 @@ echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
-
-
 paket der $sistem-kur
 if [ $sistem = cinnamon ];then
 echo -e "${KIRMIZI}Cinnamonda nemo-desktop root olarak çalışmadığı için normal kullanıcısı oluşturulacak..${YOK}"
