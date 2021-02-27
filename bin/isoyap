@@ -52,6 +52,10 @@ do
 echo -e "${YESIL}$dm masaüstü yöneticisini seçtiniz.${YOK}"
 paket kur $dm
 
+if [ $dm = lightdm ];then
+paket kur lightdm-gtk-greeter
+fi
+
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
 rm /etc/sysconfig/clock
