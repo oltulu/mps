@@ -534,7 +534,7 @@ install={
 	dosya   = function(t,v) return "set -e \n"..file_content(t.dir.."/"..v).."set +e \n" end,
 	strip   = function(t,v) if v == "yok" or v == "0" then rules.strip.status=false end; end,
 	nostrip = function(t,v) rules.strip.blacklist=v end,
-	servis  = function(t,v) return ("cd /usr/milis/ayarlar/servisler\nmake DESTDIR=$PKG kur-%s\ncd -"):format(v) end,
+	servis  = function(t,v) return ("cd /usr/aylinux/ayarlar/servisler\nmake DESTDIR=$PKG kur-%s\ncd -"):format(v) end,
 },
 
 strip={
