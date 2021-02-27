@@ -10,11 +10,10 @@ python-pyparted
 plymouth-garuda
 librsvg
 gparted
-lightdm
-lightdm-gtk-greeter
 network-manager-applet
 gvfs
 polkit-gnome
 numlockx
 accountsservice
 mintstick
+flameshot
