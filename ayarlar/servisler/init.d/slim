@@ -22,7 +22,7 @@ restart)
 	$0 start
 	;;
 *)
-	echo "usage: $0 [start|stop|restart]"
+	echo "Kullanımı: $0 [start|stop|restart]"
 	;;
 esac
 
