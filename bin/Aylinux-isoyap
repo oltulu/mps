@@ -72,7 +72,7 @@ EOf
 
 chmod +x /usr/bin/isoyap
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
-echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
+#echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
 echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın. \n Daha sonra  ${KIRMIZI} sistemyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
 exit 1
