@@ -68,7 +68,7 @@ if [ ! -f /usr/bin/mintstick ];then
 fi
 mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
 
-EOF
+EOf
 
 chmod +x /usr/bin/isoyap
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
