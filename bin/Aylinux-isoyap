@@ -70,7 +70,7 @@ mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
 
 EOF
 
-chmod +x /usr/bin/isoyap
+chmod +x /usr/bin/sistemyap
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
@@ -114,7 +114,7 @@ mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
 
 EOf
 
-chmod +x /usr/bin//isoyap
+chmod +x /usr/bin//sistemyap
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine çıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
 echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basarak  devam ediniz...${YOK} "
