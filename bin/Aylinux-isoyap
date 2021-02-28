@@ -61,7 +61,7 @@ if [ ! -d /opt/Aylinux-isoyap ];then
 fi
 
 cd /opt/Aylinux-isoyap
-chmod +x MSYS/root/Masaüstü/kurulum.desktop
+chmod +x $MSYS/root/Masaüstü/kurulum.desktop
 bash iso_olustur.sh $MSYS
 if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
@@ -105,7 +105,7 @@ if [ ! -d /opt/Aylinux-isoyap ];then
 fi
 
 cd /opt/Aylinux-isoyap
-chmod +x MSYS/root/Masaüstü/kurulum.desktop
+chmod +x $MSYS/root/Masaüstü/kurulum.desktop
 bash iso_olustur.sh $MSYS
 if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
