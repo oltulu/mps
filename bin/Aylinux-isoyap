@@ -40,7 +40,7 @@ echo -e "${KIRMIZI}Temel paketler yükleniyor..${YOK}"
 #./mps kur temel-kur --kurkos=0 --koskur=0 --kok=$MSYS
 cp -r $MPS_PATH $MSYS/usr/aylinux/mps
 cp -f /etc/hosts $MSYS/etc/
-chmod +x $MSYS/usr/aylinux/bin/isoyap
+chmod +x $MSYS/usr/aylinux/bin/sistemyap
 chmod +x ./enter-chroot
 
 echo "isoyap betiği oluşturuluyor..."
@@ -85,7 +85,7 @@ export AYLINUX_PATH=$MSYS/usr/aylinux
 cd $MPS_PATH/bin
 chmod +x ./paket
 chmod +x ./mpsd
-chmod +x $MSYS/usr/aylinux/bin/isoyap
+chmod +x $MSYS/usr/aylinux/bin/sistemyap
 echo "isoyap betiği oluşturuluyor..."
 rm /usr/bin/isoyap
 cat > /usr/bin/isoyap << "EOf"
