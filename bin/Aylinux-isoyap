@@ -43,25 +43,38 @@ cp -f /etc/hosts $MSYS/etc/
 chmod +x $MSYS/usr/aylinux/mps/bin/isoyap
 chmod +x ./enter-chroot
 
-echo "isoyap 2 oluşturuluyor..."
-cat > /usr/bin/isoyap2 << "EOf"
+echo "isoyap betiği oluşturuluyor..."
+cat > /usr/bin/isoyap << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
 export AYLINUX_PATH=$MSYS/usr/aylinux
 rm -f $MSYS/root/.bash_history
-cd /opt
-git clone https://github.com/oltulu/Aylinux-isoyap
-cd /opt/Aylinux-isoyap
-rm /usr/bin/isoyap2 
-bash iso_olustur.sh $MSYS
-EOf
+if [ ! -f /usr/bin/xorriso ];then
+	paket kur xorriso
+fi
+echo -e "${KIRMIZI}Aylinux-isoyap dizini daha önceden varsa varolan olan dizin kullanılacak..${YOK}"
+if [ ! -d /opt/Aylinux-isoyap ];then
+ cd /opt
+ git clone https://github.com/oltulu/Aylinux-isoyap  
+ 
+fi
 
-chmod +x /usr/bin/isoyap2
+cd /opt/Aylinux-isoyap
+chmod +x MSYS/root/Masaüstü/kurulum.desktop
+bash iso_olustur.sh $MSYS
+if [ ! -f /usr/bin/mintstick ];then
+	paket kur mintstick
+fi
+mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
+
+EOF
+
+chmod +x /usr/bin/isoyap
 echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
-echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın. \n Daha sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
+echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın. \n Daha sonra  ${KIRMIZI} sistemyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
 
 
 else
@@ -73,9 +86,9 @@ cd $MPS_PATH/bin
 chmod +x ./paket
 chmod +x ./mpsd
 chmod +x $MSYS/usr/aylinux/mps/bin/isoyap
-echo "isoyap 2 oluşturuluyor..."
-rm /usr/bin/isoyap2
-cat > /usr/bin/isoyap2 << "EOf"
+echo "isoyap betiği oluşturuluyor..."
+rm /usr/bin/isoyap
+cat > /usr/bin/isoyap << "EOf"
 #!/bin/bash
 export MSYS=/home/Aylinux-ISO 
 export MPS_PATH=/opt/Aylinux-ISO 
@@ -101,12 +114,12 @@ mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
 
 EOf
 
-chmod +x /usr/bin//isoyap2
+chmod +x /usr/bin//isoyap
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine çıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
 echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basarak  devam ediniz...${YOK} "
 echo -e "${YESIL}Yapmak istediğiniz değişiklikleri yaptıktan sonra  ${KIRMIZI} exit  ${YOK} ${YESIL}yazarak  çıkış yapın...${YOK} "
-echo -e "${YESIL}Çıkış yaptıktan sonra  ${KIRMIZI} isoyap2  ${YOK} ${YESIL}yazarak  iso oluşturabilirsiniz...${YOK} "
+echo -e "${YESIL}Çıkış yaptıktan sonra  ${KIRMIZI} isoyap  ${YOK} ${YESIL}yazarak  iso oluşturabilirsiniz...${YOK} "
 chmod +x ./enter-chroot
 
 fi
