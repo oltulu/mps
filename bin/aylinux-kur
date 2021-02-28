@@ -1489,6 +1489,7 @@ menu_install() {
 	rm -rf $HEDEF/etc/canli_kullanici
 	rm -rf $HEDEF/opt/Aylinux-Yukleyici
 	rm -f $HEDEF/root/Desktop/kurulum.desktop
+	rm -f $HEDEF/root/kurulum.desktop
 	rm -f $HEDEF/root/Masaüstü/kurulum.desktop
 	rm -f $HEDEF/home/$USERLOGIN/Desktop/kurulum.desktop
 	rm -f $HEDEF/home/$USERLOGIN/Masaüstü/kurulum.desktop
