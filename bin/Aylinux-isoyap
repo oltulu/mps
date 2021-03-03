@@ -20,8 +20,14 @@ export MSYS=/home/Aylinux-ISO
 export MPS_PATH=/opt/Aylinux-ISO 
 export AYLINUX_PATH=$MSYS/usr/aylinux
 
-rm -r $MPS_PATH
+if [ -d $MSYS ];then
 rm -r $MSYS
+fi
+
+if [ -d $MPS_PATH ];then
+rm -r $MPS_PATH
+fi
+
 echo -e "${YESIL}Varsa önceden oluşmuş dosyalar silindi..${YOK}"
 git clone https://github.com/oltulu/mps  $MPS_PATH
 cd $MPS_PATH
