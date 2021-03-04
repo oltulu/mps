@@ -118,3 +118,4 @@ echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap${Y
 exit
 done
 done
+done
