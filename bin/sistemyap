@@ -39,7 +39,7 @@ paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
 paket der $sistem-kur
-done
+
 #if [ $sistem = cinnamon ];then
 #echo -e "${KIRMIZI}Cinnamonda nemo-desktop root olarak çalışmadığı için normal kullanıcısı oluşturulacak..${YOK}"
 #echo -e "${KIRMIZI}Canlı sistem için${YESIL} Aylinux ${KIRMIZI}kullanıcısı oluşturulacak..${YOK}"
@@ -56,7 +56,6 @@ paket kur $dm
 if [ $dm = lightdm ];then
 paket kur lightdm-gtk-greeter
 fi
-done
 
 echo -e "${KIRMIZI}Iso'da plymouth olsun mu?${YOK}"
 select plymouth in Evet Hayır
@@ -66,7 +65,6 @@ echo -e "${YESIL}$plymouth seçeneğini seçtiniz.${YOK}"
 if [ $plymouth = Evet ];then
 paket kur plymouth-garuda
 fi
-done
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
 echo -e "${KIRMIZI}Çalışan sistem initrd dosyası oluşturuldu..${YOK}"
 rm /etc/sysconfig/clock
@@ -118,3 +116,6 @@ echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRM
 echo -e "${YESIL}Önce klavyeden ${KIRMIZI} exit ${YOK}${YESIL}yazarak mevcut ortamdan çıkış yapın...${YOK}"
 echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap${YESIL} yazarak  devam ediniz...${YOK}"
 exit
+done
+done
+done
