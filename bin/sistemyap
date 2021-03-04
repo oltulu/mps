@@ -62,7 +62,7 @@ do
 echo -e "${YESIL}$plymouth seçeneğini seçtiniz.${YOK}"
 
 if [ $plymouth = Evet ];then
-paket kur plymouth
+paket kur plymouth-garuda
 fi
 
 dracut -N --force --xz --add 'dmsquash-live pollcdrom' --omit systemd /boot/initrd_live `ls /usr/lib/modules`
