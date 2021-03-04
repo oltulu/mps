@@ -1,5 +1,7 @@
 openbox
 obconf
+obmenu
+obmenu-generator
 tint2
 lxappearance
 feh
