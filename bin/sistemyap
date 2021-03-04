@@ -26,6 +26,7 @@ echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/xorg.liste
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 echo -e "${KIRMIZI}Şimdilik sadece xfce4, cinnamon ve openbox çalışıyor...${YOK}"
+
 select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
 do
 echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
