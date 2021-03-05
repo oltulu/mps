@@ -47,13 +47,6 @@ cat > $ROOTDIR/etc/issue << "EOF"
 Aylinux \r (\l)
 EOF
 
-cat > $ROOTDIR/etc/lsb-release << "EOF"
-DISTRIB_ID="Aylinux"
-DISTRIB_RELEASE="2.0"
-DISTRIB_CODENAME="HAN"
-DISTRIB_DESCRIPTION="Aylinux İşletim Sistemi"
-EOF
-
 cat > $ROOTDIR/etc/os-release << "EOF"
 DISTRIB_ID="Aylinux"
 DISTRIB_RELEASE="2.0"
