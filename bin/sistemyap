@@ -47,14 +47,15 @@ paket der $sistem-kur
 #fi
 
 if [ $sistem = xfce4 ];then
+paket kur imagemagick
 rm /usr/share/backgrounds/xfce/xfce-blue.jpg
 rm /usr/share/backgrounds/xfce/xfce-stripes.png
 rm /usr/share/backgrounds/xfce/xfce-teal.jpg
 rm /usr/share/backgrounds/xfce/xfce-verticals.png
-cp /usr/share/backgrounds/arkaplan.png /usr/share/backgrounds/xfce/xfce-blue.jpg
-cp /usr/share/backgrounds/arkaplan.png /usr/share/backgrounds/xfce/xfce-stripes.png
-cp /usr/share/backgrounds/arkaplan.png /usr/share/backgrounds/xfce/xfce-teal.jpg
-cp /usr/share/backgrounds/arkaplan.png /usr/share/backgrounds/xfce/xfce-verticals.png
+convert /usr/share/backgrounds/aylinux/arkaplan.png /usr/share/backgrounds/xfce/xfce-blue.jpg
+cp /usr/share/backgrounds/aylinux/arkaplan.png /usr/share/backgrounds/xfce/xfce-stripes.png
+convert /usr/share/backgrounds/aylinux/arkaplan.png /usr/share/backgrounds/xfce/xfce-teal.jpg
+cp /usr/share/backgrounds/aylinux/arkaplan.png /usr/share/backgrounds/xfce/xfce-verticals.png
 fi
 
 echo -e "${KIRMIZI}Iso için Masaüstü Yöneticisi seçiniz...${YOK}"
