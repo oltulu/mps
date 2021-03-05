@@ -90,3 +90,4 @@ brotli
 busybox
 libssh2
 figlet
+lsb-release
