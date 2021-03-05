@@ -112,8 +112,9 @@ chmod +x /usr/bin/paket
 glib-compile-schemas /usr/share/glib-2.0/schemas/
 echo "Aylinux-2021-${month}.${day}" > /etc/aylinux-surum
 echo -e "${YESIL}Yeni isoda olmasını istediğiniz paketleri bu aşamada ${KIRMIZI}paket kur paket_adı${YESIL} şeklinde kurabilirsiniz ...${YOK}"
-echo -e "${YESIL}Önce klavyeden ${KIRMIZI} exit ${YOK}${YESIL}yazarak mevcut ortamdan çıkış yapın...${YOK}"
-echo -e "${YESIL}Şimdi yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap${YESIL} yazarak  devam ediniz...${YOK}"
+echo -e "${YESIL}Yeni isodan çıkarmak istediğiniz paketleri bu aşamada ${KIRMIZI}paket sil paket_adı${YESIL} şeklinde kaldırabilirsiniz ...${YOK}"
+echo -e "${YESIL}Ekleme ve çıkarma işlemleri tamamlandıktan sonra klavyeden ${KIRMIZI} exit ${YOK}${YESIL}yazarak mevcut ortamdan çıkış yapın...${YOK}"
+echo -e "${YESIL}Çıkış yaptıktan sonra yeni ISO dosyası oluşturmak için ${KIRMIZI} isoyap${YESIL} yazarak  devam ediniz...${YOK}"
 exit
 done
 done
