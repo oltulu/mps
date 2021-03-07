@@ -81,7 +81,7 @@ echo -e "${KIRMIZI}Temel sistem kurulumu tamamlandı...${YOK}"
 #echo -e "${YESIL}Önce klavyeden ${KIRMIZI}ctrl+c ${YOK}${YESIL}tuşlarına basarak mevcut dizine şıkış yapın...${YOK}"
 echo -e "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}"
 echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yazılı komutu yazıp enter tuşuna basın. \n Daha sonra  ${KIRMIZI} sistemyap  ${YOK} ${YESIL}yazarak  devam ediniz...${YOK} "
-echo >> "${KIRMIZI}$MPS_PATH/bin/enter-chroot /home/Aylinux-ISO${YOK}" /root/.bash_history
+#echo >> "/opt/Aylinux-ISO/bin/enter-chroot /home/Aylinux-ISO" /root/.bash_history
 exit 1
 
 else
@@ -128,7 +128,7 @@ echo -e "${YESIL}Şimdi yeni sisteme geçmek için önce üsteki kırmızı yaz�
 echo -e "${YESIL}Yapmak istediğiniz değişiklikleri yaptıktan sonra  ${KIRMIZI} exit  ${YOK} ${YESIL}yazarak  çıkış yapın...${YOK} "
 echo -e "${YESIL}Çıkış yaptıktan sonra  ${KIRMIZI} sistemyap  ${YOK} ${YESIL}yazarak  iso oluşturabilirsiniz...${YOK} "
 chmod +x ./enter-chroot
-echo >> "exit" /root/.bash_history
+#echo >> "exit" /root/.bash_history
 exit 1
 fi
 done
