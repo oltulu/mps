@@ -3,8 +3,8 @@
 local mpsconf={
 	repo_dizin="/sources",
 	sunucu={
-		[1]="http://paketler.aylinux.org",
-		--[2]="http://aylinux.kripto.com.tr/dosyalar/Aylinux-2021/depo",
+		[2]="http://paketler.aylinux.org",
+		[1]="http://aylinux.kripto.com.tr/dosyalar/Aylinux-2021/depo",
 		--[1]="http://localhost:9999",
 	},
 	talimatdepo={
