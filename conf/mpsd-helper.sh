@@ -531,11 +531,11 @@ boyut_hesapla(){
 }
 
 time_start(){
-	echo "started: `date +%x\ %H:%M:%S`"	
+	echo "Başlama: `date +%x\ %H:%M:%S`"	
 }
 
 time_finish(){
-	echo "finished: `date +%x\ %H:%M:%S`"	
+	echo "Bitiş: `date +%x\ %H:%M:%S`"	
 }
 
 komut_kontrol() {
@@ -580,14 +580,14 @@ re_generate(){
 }
 
 display_usage(){
-	echo "valid parameters:"
+	echo "Geçerli parametreler:"
 	echo
-	echo " --download     Only download sources"
-	echo " --extract      download and extract sources"
-	echo " --build        only build package"
-	echo " --generate     generate package"
+	echo " --download     Yalnızca kaynakları indir"
+	echo " --extract      Kaynakları indir ve çıkar"
+	echo " --build        Sadece paket oluştur"
+	echo " --generate     Paket oluştur"
 	echo
-	echo "or just go without parameters, it builds routine steps"
+	echo "veya sadece parametreler olmadan gidin, rutin adımlar oluşturur"
 }
 
 run(){
