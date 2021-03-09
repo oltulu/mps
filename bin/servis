@@ -5,13 +5,13 @@
 
 usage="  Aylinux 2021  kolay servis yönetimi betiği 
  
-  servis baslat|durdur|yenidenbaslat|durum|kur|sil|aktif|pasif <servis_adı>
+  servis baslat|durdur|ybaslat|durum|kur|sil|aktif|pasif <servis_adı>
   
   servis yap <service_daemon_path> - Hizmeti manuel olarak yükle
   
   servis liste  - Mevcut hizmetleri listele
   servis onar   - Servis sistemini onar
-  service ayar  - Hizmet başlatmayı yapılandır
+  servis ayar  - Hizmet başlatmayı yapılandır
 "
 
 _err(){
@@ -50,7 +50,7 @@ case "${1}" in
       evaluate_retval
       ;;
 
-   yenidenbaslat)
+   ybaslat)
       ${0} durdur
       sleep 1
       ${0} baslat
@@ -61,7 +61,7 @@ case "${1}" in
       ;;
 
    *)
-      echo "Kullanımı: ${0} {baslat|durdur|yenidenbaslat|durum}"
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat|durum}"
       exit 1
       ;;
 esac
@@ -73,7 +73,7 @@ exit 0
 '
 }
 
-service_dir="/usr/aylinux/ayarlar/servisler"
+service_dir="/usr/aylinux/ayarlar/servis"
 old_services="checkfs cleanfs console localnet modules mountvirtfs mountfs sysctl udev udev_retry"
 
 [ ! -d $service_dir ] && _err "$service_dir bulunamadı!"
@@ -185,7 +185,7 @@ elif [ $job == "enable" ]; then
 		ln -svf /etc/init.d/${service} "/etc/rc.d/rc5.d/S91${service}"
 	fi
 # service start/stop/status
-elif [ $job == "baslat" ] || [ $job == "prestart" ] || [ $job == "yenidenbaslat" ] || [ $job == "yenidenyukle" ] || [ $job == "durdur" ] || [ $job == "durum" ]; then
+elif [ $job == "baslat" ] || [ $job == "prestart" ] || [ $job == "ybaslat" ] || [ $job == "yyukle" ] || [ $job == "durdur" ] || [ $job == "durum" ]; then
 	[ ! -f /etc/init.d/${service} ] && _err "servis /etc/init.d klasöründe bulunamadı."
 	/etc/init.d/${service} $job
 else
