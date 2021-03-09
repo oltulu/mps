@@ -7,7 +7,7 @@ lvm2
 iproute2
 sysvinit
 grub
-dracut
+dracut49
 intel-ucode
 b43-fwcutter
 linux-firmware
