@@ -105,11 +105,11 @@ function args_handler()
 		if islem[islev] then
 			islem[islev]["handler"](args)
 		else
-			print("not implemented yet")
+			print("henüz uygulanmadı")
 		end
 	--islem[args.command]["handler"](args)
 	else
-		print("not implemented yet")
+		print("henüz uygulanmadı")
 	end
   end
 end
@@ -316,9 +316,9 @@ end
 
 -- talimata ait kaynakların listelenme işlevi
 function islem.kaynak.liste(talimatd)
-	assert(path_exists(talimatd),"talimat dizin not found!")
+	assert(path_exists(talimatd),"talimat dizini bulunamadı!")
 	local talimatf=talimatd.."/talimat"
-	assert(path_exists(talimatf),talimatf.." file not found!")
+	assert(path_exists(talimatf),talimatf.." dosya bulunamadı!")
 	-- talimat dosyasından alınan kaynaklar bash ile yorumlanıp
 	-- açık değerlerine çevirlecektir.
 	local kliste={}
@@ -600,7 +600,7 @@ function islem.derle.job(paket,hedefkur)
 			-- ksd kurulu yol, sadece talimat isim formatı
 			ksd=get_basename(ksd)
 			if tsd ~= ksd then
-				print("kurulu sürümd ile derlenmesi gereken sürüm farklı-derlenecek!")
+				print("kurulu sürüm ile derlenmesi gereken sürüm farklı-derlenecek!")
 				-- paket kurulu sd uyumsuzluğu var
 				-- paketi sildir(onaylı?) ve derlet
 				-- önemli !!!-eski paketi derleme başarılı olursa sildir.
@@ -735,9 +735,9 @@ islem.arsiv={
 -- Aylinux paketi ön kontrolleri
 function islem.arsiv.kontrol(paket)
 	-- kullanıcı hedefli de çıktı verilebilinir.
-	assert(path_exists(paket),"islem.arsiv.kontrol : paket is not found")
-	assert(paket:match("kur"),"islem.arsiv.kontrol : paket suffix is not kur")
-	assert(get_size(paket) ~=0,"islem.arsiv.kontrol : paket size equals zero")
+	assert(path_exists(paket),"islem.arsiv.kontrol : paket bulunamadı")
+	assert(paket:match("kur"),"islem.arsiv.kontrol : paket uzantısı kur değil")
+	assert(get_size(paket) ~=0,"islem.arsiv.kontrol : paket boyutu sıfır KB")
 
 	local isd = get_basename(paket)
 	local isim,surum,devir=isd:match(paket_arsiv_pattern)
@@ -899,8 +899,8 @@ function islem.icbilgi.dosyalar(tempdir)
 	assert(tempdir,"islem.icbilgi.dosyalar : tempdir is nil")
 	-- bu hata kullanıcı tanımlı olabilir.
 	local icdosya=tempdir..islem.icbilgi.dosya
-	assert(path_exists(icdosya),"islem.kur.dosya_kontrol : icbilgi is not found")
-	assert(get_size(icdosya) > 0,"islem.kur.dosya_kontrol : icbilgi size equals zero")
+	assert(path_exists(icdosya),"islem.kur.dosya_kontrol : icbilgi bulunamadı")
+	assert(get_size(icdosya) > 0,"islem.kur.dosya_kontrol : icbilgi boyutu sıfır KB")
 	local tmpdos=shell("mktemp")
 	local komut="zgrep -i './' "..icdosya.."| grep -v 'type=dir' | cut -d' ' -f1 > "..tmpdos
 	shell(komut)
