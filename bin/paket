@@ -2516,11 +2516,11 @@ end
 function islem.guncelle.mps()
 	-- todo!!! paket commit hash tutulacak oradan commit değer değişimi gösterilecek
 	-- değişim yoksa güncelleme yok
-	assert(path_exists(mps_path),"mps_path not exist")
-	assert(path_exists(mps_path.."/.git"),"invalid git directory");
+	assert(path_exists(mps_path),"mps_path yolu yok")
+	assert(path_exists(mps_path.."/.git"),"geçersiz git dizini");
 	("MPS güncelleniyor:"):yaz(2);
 	("------------------------------------"):yaz(2);
-	local komut="cd %s && git reset --hard HEAD && git pull ; chmod +x bin/paket*; chmod +x bin/mps*"
+	local komut="cd %s && git reset --hard HEAD && git pull ;chmod +x bin/* ; chmod +x bin/paket*; chmod +x bin/mps*"
 	local ret=shell(komut:format(mps_path));
 	-- ret=shell(git_kont:format(repo,tmp,tmp))
 	("------------------------------------"):yaz(2)
