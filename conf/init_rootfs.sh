@@ -71,10 +71,12 @@ nobody:x:17367:0:99999:7:::
 EOF
 
 cat > $ROOTDIR/usr/bin/mpsonar << "EOF"
+#!/bin/sh
 chmod +x /usr/aylinux/mps/bin/mpsd.lua
 chmod +x /usr/aylinux/mps/bin/paket
 chmod +x /usr/aylinux/mps/bin/servis
 chmod +x /usr/aylinux/mps/bin/klavye
+
 EOF
 
 chmod +x $ROOTDIR/usr/bin/mpsonar
