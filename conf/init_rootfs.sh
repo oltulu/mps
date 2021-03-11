@@ -70,6 +70,15 @@ messagebus:x:17367:0:99999:7:::
 nobody:x:17367:0:99999:7:::
 EOF
 
+cat > $ROOTDIR/usr/bin/mpsonar << "EOF"
+chmod +x /usr/aylinux/mps/bin/mpsd.lua
+chmod +x /usr/aylinux/mps/bin/paket
+chmod +x /usr/aylinux/mps/bin/servis
+chmod +x /usr/aylinux/bin/klavye
+EOF
+
+chmod +x $ROOTDIR/usr/bin/mpsonar
+
 cat > $ROOTDIR/etc/gshadow << "EOF"
 root:x::
 bin:x::
