@@ -74,7 +74,7 @@ cat > $ROOTDIR/usr/bin/mpsonar << "EOF"
 chmod +x /usr/aylinux/mps/bin/mpsd.lua
 chmod +x /usr/aylinux/mps/bin/paket
 chmod +x /usr/aylinux/mps/bin/servis
-chmod +x /usr/aylinux/bin/klavye
+chmod +x /usr/aylinux/mps/bin/klavye
 EOF
 
 chmod +x $ROOTDIR/usr/bin/mpsonar
