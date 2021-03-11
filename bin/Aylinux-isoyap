@@ -117,7 +117,8 @@ bash iso_olustur.sh $MSYS
 if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
 fi
-mintstick -m iso -i /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso
+mw /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso /home/Aylinux-2021-${month}.${day}.iso
+mintstick -m iso -i /home/Aylinux-2021-${month}.${day}.iso
 
 EOf
 
