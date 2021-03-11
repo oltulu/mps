@@ -85,7 +85,36 @@ case "${1}" in
       start_rfcomm
       ;;
 
+   baslat)
+      log_info_msg "Bluetooth daemon bluetoothd başlatılıyor..."
+      pidlist=`pidofproc $BLUETOOTH`
+
+      if [  "${?}" = "0" ]; then
+        log_info_msg2 " Zaten çalışılıyor"
+        log_success_msg2
+        exit 0;
+      fi
+
+      # Start as background process and assume OK
+      $BLUETOOTH &
+      log_success_msg2
+
+      start_hci_dev
+      run_sdptool
+      start_uarts
+      start_rfcomm
+      ;;
+
    stop)
+      stop_rfcomm
+      stop_uarts
+
+      log_info_msg "Stopping Bluetooth daemon bluetoothd..."
+      killproc $BLUETOOTH
+      evaluate_retval
+      ;;
+
+   durdur)
       stop_rfcomm
       stop_uarts
 
@@ -100,11 +129,23 @@ case "${1}" in
       ${0} start
       ;;
 
+   ybaslat)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
    status)
       statusproc $BLUETOOTH
       ;;
 
+   durum)
+      statusproc $BLUETOOTH
+      ;;
+
+
    *)
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat|durum}"
       echo "Usage: ${0} {start|stop|restart|status}"
       exit 1
       ;;

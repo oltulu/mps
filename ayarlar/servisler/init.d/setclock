@@ -48,6 +48,11 @@ case ${1} in
       [ ! -z $TIMEZONE ] && ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
       hwclock --hctosys ${CLOCKPARAMS} >/dev/null
       ;;
+   baslat)
+      [ ! -z $TZ ]       && TIMEZONE=$TZ
+      [ ! -z $TIMEZONE ] && ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+      hwclock --hctosys ${CLOCKPARAMS} >/dev/null
+      ;;
 
    stop)
       log_info_msg "Donanım saatini ayarlanıyor..."
@@ -55,8 +60,15 @@ case ${1} in
       evaluate_retval
       ;;
 
+   durdur)
+      log_info_msg "Donanım saatini ayarlanıyor..."
+      hwclock --systohc ${CLOCKPARAMS} >/dev/null
+      evaluate_retval
+      ;;
+
    *)
-      echo "Kullanımı: ${0} {start|stop}"
+      echo "Kullanımı: ${0} {baslat|durdur}"
+      echo "Usage: ${0} {start|stop}"
       exit 1
       ;;
 

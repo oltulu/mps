@@ -44,6 +44,24 @@ case "${1}" in
       done
       ;;
 
+   baslat)
+      # Start all network interfaces
+      for file in /etc/sysconfig/ifconfig.*
+      do
+         interface=${file##*/ifconfig.}
+
+         # Skip if $file is * (because nothing was found)
+         if [ "${interface}" = "*" ]
+         then
+            continue
+         fi
+
+         /sbin/ifup ${interface}
+      done
+      ;;
+
+
+
    stop)
       # Unmount any network mounted file systems
        umount --all --force --types nfs,cifs,nfs4 
@@ -70,14 +88,48 @@ case "${1}" in
       done
       ;;
 
+ durdur)
+      # Unmount any network mounted file systems
+       umount --all --force --types nfs,cifs,nfs4 
+
+      # Reverse list
+      net_files=""
+      for file in  /etc/sysconfig/ifconfig.*
+      do
+         net_files="${file} ${net_files}"
+      done
+
+      # Stop all network interfaces
+      for file in ${net_files}
+      do
+         interface=${file##*/ifconfig.}
+
+         # Skip if $file is * (because nothing was found)
+         if [ "${interface}" = "*" ]
+         then
+            continue
+         fi
+
+         /sbin/ifdown ${interface}
+      done
+      ;;
+
+
    restart)
       ${0} stop
       sleep 1
       ${0} start
       ;;
 
+   ybaslat)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
    *)
-      echo "Kullanımı: ${0} {start|stop|restart}"
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat}"
+      echo "Usage: ${0} {start|stop|restart}"
       exit 1
       ;;
 esac

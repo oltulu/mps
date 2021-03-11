@@ -58,7 +58,36 @@ case "${1}" in
       evaluate_retval
       ;;
 
+   baslat)
+
+      if [ "$START" != "yes" ]; then
+         MSG="Configure saslauthd in /etc/sysconfig/saslauthd"
+         log_warning_msg "$MSG and set START to yes"
+         exit 0
+      fi
+
+      if [ -z "$AUTHMECH" ]; then
+         MSG="Kimlik doğrulama mekanizmasını seçmeniz gerekiyor"
+         log_warning_msg "$MSG /etc/sysconfig/saslauthd"
+         exit 0
+      fi
+
+      if [ ! -d /var/run/saslauthd ]; then
+         install -d -o root -g root -m 711 /var/run/saslauthd
+      fi
+
+      log_info_msg "SASL Authentication Daemon saslauthd başlatılıyor"
+      start_daemon /usr/bin/saslauthd -a $AUTHMECH $OPTIONS
+      evaluate_retval
+      ;;
+
+
    stop)
+      log_info_msg "SASL Authentication Daemon saslauthd durduruluyor"
+      killproc /usr/bin/saslauthd
+      evaluate_retval
+      ;;
+   durdur)
       log_info_msg "SASL Authentication Daemon saslauthd durduruluyor"
       killproc /usr/bin/saslauthd
       evaluate_retval
@@ -70,12 +99,23 @@ case "${1}" in
       ${0} start
       ;;
 
+   ybaslat)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
    status)
       statusproc /usr/bin/saslauthd
       ;;
+   durdur)
+      statusproc /usr/bin/saslauthd
+      ;;
+
 
    *)
-      echo "Kullanımı: ${0} {start|stop|restart|status}"
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat|durum}"
+      echo "Usage: ${0} {start|stop|restart|status}"
       exit 1
       ;;
  esac

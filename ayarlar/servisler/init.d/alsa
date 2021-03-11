@@ -35,8 +35,19 @@ case "$1" in
       /usr/sbin/alsactl restore
       evaluate_retval
       ;;
+   baslat)
+      log_info_msg "ALSA başlatılıyor...    Restoring volumes..."
+      /usr/sbin/alsactl restore
+      evaluate_retval
+      ;;
 
    stop)
+      log_info_msg "ALSA durduruluyor...    Saving volumes..."
+      /usr/sbin/alsactl store
+      evaluate_retval
+      ;;
+
+   durdur)
       log_info_msg "ALSA durduruluyor...    Saving volumes..."
       /usr/sbin/alsactl store
       evaluate_retval

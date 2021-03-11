@@ -42,8 +42,27 @@ case "${1}" in
       start_daemon /sbin/klogd
       evaluate_retval
       ;;
+   baslat)
+      log_info_msg "System log daemon başlatılıyor..."
+      parms=${SYSKLOGD_PARMS-'-m 0'}
+      start_daemon /sbin/syslogd $parms
+      evaluate_retval
+
+      log_info_msg "Kernel log daemon başlatılıyor..."
+      start_daemon /sbin/klogd
+      evaluate_retval
+      ;;
 
    stop)
+      log_info_msg "Kernel log daemon durduruluyor..."
+      killproc /sbin/klogd
+      evaluate_retval
+
+      log_info_msg "System log daemon durduruluyor..."
+      killproc /sbin/syslogd
+      evaluate_retval
+      ;;
+   durdur)
       log_info_msg "Kernel log daemon durduruluyor..."
       killproc /sbin/klogd
       evaluate_retval
@@ -60,7 +79,21 @@ case "${1}" in
       evaluate_retval
       ;;
 
+   yyukle)
+      log_info_msg "System log daemon config dosyası yeniden yükleniyor..."
+      pid=`pidofproc syslogd`
+      kill -HUP "${pid}"
+      evaluate_retval
+      ;;
+
+
    restart)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
+   baslat)
       ${0} stop
       sleep 1
       ${0} start
@@ -71,8 +104,14 @@ case "${1}" in
       statusproc klogd
       ;;
 
+  durum)
+      statusproc /sbin/syslogd
+      statusproc klogd
+      ;;
+
    *)
-      echo "Kullanımı: ${0} {start|stop|reload|restart|status}"
+      echo "Kullanımı: ${0} {baslat|durdur|yyukle|ybaslat|durum}"
+      echo "Usage: ${0} {start|stop|reload|restart|status}"
       exit 1
       ;;
 esac

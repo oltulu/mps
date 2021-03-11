@@ -40,14 +40,31 @@ case "$1" in
       evaluate_retval
       ;;
 
+   baslat)
+      log_info_msg "Kernel random number generator ayarlanıyor..."
+      
+      if [ -f /var/tmp/random-seed ]; then
+         /bin/cat /var/tmp/random-seed >/dev/urandom
+      fi
+      
+      /bin/dd if=/dev/urandom of=/var/tmp/random-seed count=1 &>/dev/null
+      evaluate_retval
+      ;;
+
    stop)
+      log_info_msg "Random seed kaydediliyor..."
+      /bin/dd if=/dev/urandom of=/var/tmp/random-seed count=1 &>/dev/null
+      evaluate_retval
+      ;;
+   durdur)
       log_info_msg "Random seed kaydediliyor..."
       /bin/dd if=/dev/urandom of=/var/tmp/random-seed count=1 &>/dev/null
       evaluate_retval
       ;;
 
    *)
-      echo "Kullanımı: $0 {start|stop}"
+      echo "Kullanımı: $0 {baslat|durdur}"
+      echo "Usage: $0 {start|stop}"
       exit 1
       ;;
 esac

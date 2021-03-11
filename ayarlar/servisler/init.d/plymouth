@@ -46,7 +46,42 @@ case "${1}" in
 		esac
 		;;
 
+	baslat)
+		case "${SPLASH}" in
+			true)
+				/usr/bin/plymouth --quit
+				;;
+		esac
+		;;
+
 	stop)
+		case "${SPLASH}" in
+			true)
+				if ! plymouth --ping
+				then
+					/usr/sbin/plymouthd --mode=shutdown --attach-to-session
+				fi
+
+				RUNLEVEL="$(/sbin/runlevel | cut -d " " -f 2)"
+
+				case "${RUNLEVEL}" in
+					0)
+						TEXT="Sistem kapatılıyor..."
+						;;
+
+					6)
+						TEXT="Sistem yeniden başlatılıyor..."
+						;;
+				esac
+
+				/usr/bin/plymouth message --text="${TEXT}"
+
+				/usr/bin/plymouth --show-splash
+				;;
+		esac
+		;;
+
+	durdur)
 		case "${SPLASH}" in
 			true)
 				if ! plymouth --ping
@@ -78,7 +113,8 @@ case "${1}" in
 		;;
 
 	*)
-		echo "Kullanımı: ${0} {start|stop|restart|force-reload}" >&2
+		echo "Kullanımı: ${0} {baslat|durdur|ybaslat|force-reload}" >&2
+		echo "Usage: ${0} {start|stop|restart|force-reload}" >&2
 		exit 1
 		;;
 esac

@@ -35,7 +35,19 @@ case "$1" in
       evaluate_retval
       ;;
 
+   Baslat)
+      log_info_msg "Atd başlatılıyor..."
+      start_daemon /usr/sbin/atd
+      evaluate_retval
+      ;;
+
    stop)
+      log_info_msg "Atd durduruluyor..."
+      killproc /usr/sbin/atd
+      evaluate_retval
+      ;;
+
+   durdur)
       log_info_msg "Atd durduruluyor..."
       killproc /usr/sbin/atd
       evaluate_retval
@@ -47,12 +59,21 @@ case "$1" in
       $0 start
       ;;
 
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
    status)
+      statusproc /usr/sbin/atd
+      ;;
+   durum)
       statusproc /usr/sbin/atd
       ;;
 
    *)
-      echo "Usage: $0 {start|stop|restart|status}"
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
       exit 1
       ;;
 esac

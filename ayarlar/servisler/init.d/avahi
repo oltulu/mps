@@ -37,6 +37,17 @@ case "${1}" in
       evaluate_retval
       ;;
 
+   baslat)
+      log_info_msg "Avahi Daemon başlatılıyor"
+      /usr/bin/avahi-daemon -D
+      evaluate_retval
+
+      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon başlatılıyor"
+      /usr/bin/avahi-dnsconfd -D
+      evaluate_retval
+      ;;
+
+
    stop)
       log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon durduruluyor"
       /usr/bin/avahi-dnsconfd -k
@@ -46,6 +57,17 @@ case "${1}" in
       /usr/bin/avahi-daemon -k
       evaluate_retval
       ;;
+
+   durdur)
+      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon durduruluyor"
+      /usr/bin/avahi-dnsconfd -k
+      evaluate_retval
+
+      log_info_msg "Avahi Daemon durduruluyor"
+      /usr/bin/avahi-daemon -k
+      evaluate_retval
+      ;;
+
 
    reload)
       log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon yeniden yükleniyor"
@@ -57,7 +79,24 @@ case "${1}" in
       evaluate_retval
       ;;
 
+   yyukle)
+      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon yeniden yükleniyor"
+      /usr/bin/avahi-dnsconfd -r
+      evaluate_retval
+
+      log_info_msg "Avahi Daemon Yeniden Yükleniyor"
+      /usr/bin/avahi-daemon -r
+      evaluate_retval
+      ;;
+
+
    restart)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
+   ybaslat)
       ${0} stop
       sleep 1
       ${0} start
@@ -68,8 +107,15 @@ case "${1}" in
       statusproc avahi-dnsconfd
       ;;
 
+   durum)
+      statusproc avahi-daemon
+      statusproc avahi-dnsconfd
+      ;;
+
+
    *)
-      echo "Kullanımı: ${0} {start|stop|reload|restart|status}"
+      echo "Usege: ${0} {start|stop|reload|restart|status}"
+      echo "Kullanımı: ${0} {baslat|durdur|yyukle|ybaslat|durum}"
       exit 1
       ;;
 esac

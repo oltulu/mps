@@ -34,7 +34,21 @@ case "$1" in
       evaluate_retval
       ;;
 
+   baslat)
+      log_info_msg "Starting ACPI event daemon..."
+      start_daemon /usr/bin/acpid
+      sleep 1
+      pidofproc -p "/run/acpid.pid" > /dev/null
+      evaluate_retval
+      ;;
+
    stop)
+      log_info_msg "Stopping ACPI event daemon..."
+      killproc -p "/run/acpid.pid" /usr/bin/acpid
+      evaluate_retval
+      ;;
+
+   durdur)
       log_info_msg "Stopping ACPI event daemon..."
       killproc -p "/run/acpid.pid" /usr/bin/acpid
       evaluate_retval
@@ -46,7 +60,17 @@ case "$1" in
       $0 start
       ;;
 
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
    status)
+      statusproc /usr/bin/acpid
+      ;;
+
+   durum)
       statusproc /usr/bin/acpid
       ;;
 

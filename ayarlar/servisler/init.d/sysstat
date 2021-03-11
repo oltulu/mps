@@ -36,8 +36,15 @@ case "$1" in
       evaluate_retval
       ;;
 
+   baslat)
+      log_info_msg "Sistem etkinliği veri toplayıcısını (sadc) çağrılıyor ..."
+      /usr/lib/sa/sadc -F -L -
+      evaluate_retval
+      ;;
+
    *)
-      echo "Kullanımı: $0 start"
+      echo "Kullanımı: $0 baslat"
+      echo "Usage: $0 start"
       exit 1
       ;;
 esac

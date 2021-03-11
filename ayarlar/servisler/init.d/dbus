@@ -40,7 +40,22 @@ case "$1" in
       evaluate_retval
       ;;
 
+   baslat)
+      log_info_msg "D-Bus Messagebus Daemon başlatılıyor..."
+      mkdir -p /run/dbus
+      /usr/bin/dbus-uuidgen --ensure
+      start_daemon /usr/bin/dbus-daemon --system
+      evaluate_retval
+      ;;
+
    stop)
+      log_info_msg "D-Bus Messagebus Daemon durduruluyor..."
+      killproc /usr/bin/dbus-daemon
+      evaluate_retval
+      rm -f $socket $pidfile
+      ;;
+
+   durdur)
       log_info_msg "D-Bus Messagebus Daemon durduruluyor..."
       killproc /usr/bin/dbus-daemon
       evaluate_retval
@@ -53,12 +68,23 @@ case "$1" in
       $0 start
       ;;
 
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
    status)
       statusproc /usr/bin/dbus-daemon
       ;;
 
+   durdur)
+      statusproc /usr/bin/dbus-daemon
+      ;;
+
    *)
-      echo "Kullanımı: $0 {start|stop|restart|status}"
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
+      echo "Usage: $0 {start|stop|restart|status}"
       exit 1
       ;;
 esac

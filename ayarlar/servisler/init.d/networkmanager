@@ -38,7 +38,23 @@ case "${1}" in
       evaluate_retval
       ;;
 
+   baslat)
+
+      if [ ! -d /var/run/NetworkManager ]; then
+         install -d -o root -g root -m 755 /var/run/NetworkManager
+      fi
+
+      log_info_msg "NetworkManager başlatılıyor"
+      /usr/bin/NetworkManager -n > /dev/null 2>&1 &
+      evaluate_retval
+      ;;
+
    stop)
+      log_info_msg "NetworkManager durduruluyor"
+      killproc /usr/bin/NetworkManager
+      evaluate_retval
+      ;;
+   durdur)
       log_info_msg "NetworkManager durduruluyor"
       killproc /usr/bin/NetworkManager
       evaluate_retval
@@ -50,12 +66,23 @@ case "${1}" in
       ${0} start
       ;;
 
+   ybaslat)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
    status)
       statusproc /usr/bin/NetworkManager
       ;;
 
+   durdur)
+      statusproc /usr/bin/NetworkManager
+      ;;
+
    *)
-      echo "Kullanımı: ${0} {start|stop|restart|status}"
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat|durum}"
+      echo "Usage: ${0} {start|stop|restart|status}"
       exit 1
       ;;
 esac

@@ -33,8 +33,14 @@ case "${1}" in
       reboot -d -f -i
       ;;
 
+   durdur)
+      log_info_msg "Sistem yaniden başlatılıyor..."
+      reboot -d -f -i
+      ;;
+
    *)
-      echo "Kullanımı: ${0} {stop}"
+      echo "Kullanımı: ${0} {durdur}"
+      echo "Usage: ${0} {stop}"
       exit 1
       ;;
 

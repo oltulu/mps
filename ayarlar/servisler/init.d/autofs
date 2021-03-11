@@ -129,6 +129,11 @@ case "$1" in
    start)
       start
       ;;
+
+   baslat)
+      start
+      ;;
+
    forcestart)
       OPTIONS="$OPTIONS --force"
       start
@@ -136,9 +141,19 @@ case "$1" in
    stop)
       stop
       ;;
+
+   durdur)
+      stop
+      ;;
+
    restart)
       restart
       ;;
+
+   ybaslat)
+      restart
+      ;;
+
    forcerestart)
       OPTIONS="$OPTIONS --force"
       restart
@@ -146,6 +161,11 @@ case "$1" in
    reload)
       reload
       ;;
+
+   yyukle)
+      reload
+      ;;
+
    *)
       echo $"Kullanımı: $0 {start|forcestart|stop|restart|forcerestart|reload}"
       exit 1;

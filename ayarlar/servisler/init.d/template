@@ -33,7 +33,17 @@ case "${1}" in
       start_daemon fully_qualified_path
       ;;
 
+   baslat)
+      log_info_msg "Başlatılıyor..."
+      start_daemon fully_qualified_path
+      ;;
+
    stop)
+      log_info_msg "Durduruluyor..."
+      killproc fully_qualified_path
+      ;;
+
+   durdur)
       log_info_msg "Durduruluyor..."
       killproc fully_qualified_path
       ;;
@@ -44,8 +54,15 @@ case "${1}" in
       ${0} start
       ;;
 
+   ybaslat)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
    *)
-      echo "Kullanımı: ${0} {start|stop|restart}"
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat}"
+      echo "Usage: ${0} {start|stop|restart}"
       exit 1
       ;;
 esac

@@ -30,8 +30,14 @@ case "${1}" in
       halt -d -f -i -p
       ;;
 
+   durdur)
+      halt -d -f -i -p
+      ;;
+
+
    *)
-      echo "Kullanımı: {stop}"
+      echo "Kullanımı: {durdur}"
+      echo "Usage: {stop}"
       exit 1
       ;;
 esac

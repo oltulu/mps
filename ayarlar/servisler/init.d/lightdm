@@ -29,11 +29,25 @@ case $1 in
         evaluate_retval
         ;;
 
+   baslat)
+        log_info_msg "Lightdm başlatılıyor..."
+        start_daemon $BIN_FILE &
+        evaluate_retval
+        ;;
+
    stop)
         log_info_msg "Stopping lightdm..."
         killproc $BIN_FILE
         evaluate_retval
         ;;
+
+   durdur)
+        log_info_msg "Lightdm durduruluyor..."
+        killproc $BIN_FILE
+        evaluate_retval
+        ;;
+
+
 
    restart)
         $0 stop
@@ -41,11 +55,24 @@ case $1 in
         $0 start
         ;;
 
+   ybaslat)
+        $0 stop
+        sleep 2
+        $0 start
+        ;;
+
+
    status)
         statusproc ${BIN_FILE}
         ;;
 
+   durum)
+        statusproc ${BIN_FILE}
+        ;;
+
+
    *)
+        echo "Kullanımı: $0 [baslat|durdur|ybaslat|durum]"
         echo "usage: $0 [start|stop|restart|status]"
         exit 1
         ;;
