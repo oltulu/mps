@@ -19,8 +19,8 @@
 # Should-Stop:         $remote_fs
 # Default-Start:       3 4 5
 # Default-Stop:        0 1 2 6
-# Short-Description:   Service discovery on a local network
-# Description:         Service discovery on a local network
+# Short-Description:   Yerel bir ağda hizmet keşfi
+# Description:         Yerel bir ağda hizmet keşfi
 # X-LFS-Provided-By:   BLFS / LFS 7.2
 ### END INIT INFO
 
@@ -32,7 +32,7 @@ case "${1}" in
       /usr/bin/avahi-daemon -D
       evaluate_retval
 
-      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon başlatılıyor"
+      log_info_msg "Avahi mDNS/DNS-SD yapılandırma hizmeti başlatılıyor"
       /usr/bin/avahi-dnsconfd -D
       evaluate_retval
       ;;
@@ -42,14 +42,14 @@ case "${1}" in
       /usr/bin/avahi-daemon -D
       evaluate_retval
 
-      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon başlatılıyor"
+      log_info_msg "Avahi mDNS/DNS-SD yapılandırma hizmeti başlatılıyor"
       /usr/bin/avahi-dnsconfd -D
       evaluate_retval
       ;;
 
 
    stop)
-      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon durduruluyor"
+      log_info_msg "Avahi mDNS/DNS-SD yapılandırma hizmeti durduruluyor"
       /usr/bin/avahi-dnsconfd -k
       evaluate_retval
 
@@ -59,7 +59,7 @@ case "${1}" in
       ;;
 
    durdur)
-      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon durduruluyor"
+      log_info_msg "Avahi mDNS/DNS-SD yapılandırma hizmeti durduruluyor"
       /usr/bin/avahi-dnsconfd -k
       evaluate_retval
 
@@ -70,7 +70,7 @@ case "${1}" in
 
 
    reload)
-      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon yeniden yükleniyor"
+      log_info_msg "Avahi mDNS/DNS-SD yapılandırma hizmeti yeniden yükleniyor"
       /usr/bin/avahi-dnsconfd -r
       evaluate_retval
 
@@ -80,7 +80,7 @@ case "${1}" in
       ;;
 
    yyukle)
-      log_info_msg "Avahi mDNS/DNS-SD Configuration Daemon yeniden yükleniyor"
+      log_info_msg "Avahi mDNS/DNS-SD yapılandırma hizmeti yeniden yükleniyor"
       /usr/bin/avahi-dnsconfd -r
       evaluate_retval
 
@@ -114,8 +114,8 @@ case "${1}" in
 
 
    *)
-      echo "Usege: ${0} {start|stop|reload|restart|status}"
       echo "Kullanımı: ${0} {baslat|durdur|yyukle|ybaslat|durum}"
+      echo "Usege: ${0} {start|stop|reload|restart|status}"
       exit 1
       ;;
 esac
