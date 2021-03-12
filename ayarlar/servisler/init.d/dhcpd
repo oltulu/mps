@@ -36,12 +36,12 @@ case "$1" in
    start)
 
       if [ -z "$INTERFACES" ]; then
-         MSG="You need to configure dhcp server in"
+         MSG="Dhcp sunucusunu yapılandırmanız gerekiyor"
          log_warning_msg "$MSG /etc/sysconfig/dhcpd"
          exit 0
       fi
 
-      log_info_msg "Starting ISC DHCP Server dhcpd"
+      log_info_msg "ISC DHCP Sunucusu dhcpd başlatılıyor"
       start_daemon /usr/sbin/dhcpd -q $INTERFACES $OPTIONS
       evaluate_retval
 
@@ -64,8 +64,39 @@ case "$1" in
    status)
       statusproc /usr/sbin/dhcpd
       ;;
+   baslat)
 
+      if [ -z "$INTERFACES" ]; then
+         MSG="Dhcp sunucusunu yapılandırmanız gerekiyor"
+         log_warning_msg "$MSG /etc/sysconfig/dhcpd"
+         exit 0
+      fi
+
+      log_info_msg "ISC DHCP Sunucusu dhcpd başlatılıyor"
+      start_daemon /usr/sbin/dhcpd -q $INTERFACES $OPTIONS
+      evaluate_retval
+
+      ;;
+
+   durdur)
+
+      log_info_msg "ISC DHCP Server dhcpd durduruluyor"
+      killproc /usr/sbin/dhcpd
+      evaluate_retval
+
+      ;;
+
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
+   durum)
+      statusproc /usr/sbin/dhcpd
+      ;;
    *)
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
       echo "Usage: $0 {start|stop|restart|status}"
       exit 1
       ;;
