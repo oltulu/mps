@@ -12,14 +12,14 @@ start)
 	$SSD --start --exec $PROG -- $OPTS
 	;;
 	
-	baslat)
+baslat)
 	$SSD --start --exec $PROG -- $OPTS
 	;;
 stop)
 	$SSD --stop --retry 10 --exec $PROG
 	;;
 	
-	durdur)
+durdur)
 	$SSD --stop --retry 10 --exec $PROG
 	;;
 restart)
@@ -28,7 +28,7 @@ restart)
 	$0 start
 	;;
 	
-	ybaslat)
+ybaslat)
 	$0 stop
 	sleep 1
 	$0 start
