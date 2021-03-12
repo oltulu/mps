@@ -23,8 +23,30 @@ case "$1" in
       sleep 1
       $0 start
       ;;
+      
+   baslat)
+      log_info_msg "Pcsc event daemon başlatılıyor..."
+      nohup /usr/bin/pcscd </dev/null >> /var/log/pcscd.log 2>&1 &
+      # pcscd --foreground --auto-exit
+      ;;
+
+   durdur)
+      killall -9 pcscd
+      ;;
+	
+   yyukle)
+      /usr/bin/pcscd --hotplug
+      ;;
+      
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+      
    *)
-      echo "Kullanımı: $0 {start|stop|restart|status}"
+      echo "Kullanımı: $0 {baslat|durdur|yyukle|ybaslat|durum}"
+      echo "Usage: $0 {start|stop|restart|reload|status}"
       exit 1
       ;;
 esac
