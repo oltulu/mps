@@ -154,10 +154,11 @@ fi
 if [ -f $MSYS//usr/bin/ukui-session ] ; then
     de="-Ukui"
 fi
-
+ay="$(date -d "$D" '+%m')"
+gun="$(date -d "$D" '+%d')"
 #----------------------------------
-mv /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso /home/Aylinux${de}-2021-${month}.${day}.iso
-mintstick -m iso -i /home/Aylinux${de}-2021-${month}.${day}.iso
+mv /opt/Aylinux-isoyap/Aylinux-2021-${ay}.${gun}.iso /home/Aylinux${de}-2021-${ay}.${gun}.iso
+mintstick -m iso -i /home/Aylinux${de}-2021-${ay}.${gun}.iso
 
 EOf
 
