@@ -54,8 +54,37 @@ case "$1" in
    status)
       statusproc /usr/sbin/dovecot
       ;;
+      
+   baslat)
+      log_info_msg "Dovecot hizmeti başlatılıyor..."
+      start_daemon /usr/sbin/dovecot
+      evaluate_retval
+      ;;
+
+   durdur)
+      log_info_msg "Dovecot hizmeti durduruluyor..."
+      killproc -p "/run/dovecot/master.pid" /usr/sbin/dovecot
+      evaluate_retval
+      ;;
+
+   yyukle)
+      log_info_msg "Dovecot hizmeti yeniden yükleniyor..."
+      killproc -p "/run/dovecot/master.pid" /usr/sbin/dovecot -HUP
+      evaluate_retval
+      ;;
+
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
+   durum)
+      statusproc /usr/sbin/dovecot
+      ;;
 
    *)
+      echo "Kullanımı: $0 {baslat|durdur|yyukle|ybaslat|durum}"
       echo "Usage: $0 {start|stop|reload|restart|status}"
       exit 1
       ;;
