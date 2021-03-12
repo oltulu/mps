@@ -21,7 +21,7 @@
 # Default-Start:       3 4 5
 # Default-Stop:        0 1 2 6
 # Short-Description:   DNS Daemon
-# Description:         Provides a local DNS daemon in a chroot environment
+# Description:         Bir chroot ortamında yerel bir DNS arka plan programı sağlar
 # X-LFS-Provided-By:   BLFS / LFS 7.0
 ### END INIT INFO
 
@@ -36,8 +36,20 @@ case "$1" in
       start_daemon /usr/sbin/named -u named -t /srv/named -c /etc/named.conf
       evaluate_retval
       ;;
+      
+         baslat)
+      log_info_msg "Named başlatılıyor..."
+      start_daemon /usr/sbin/named -u named -t /srv/named -c /etc/named.conf
+      evaluate_retval
+      ;;
 
    stop)
+      log_info_msg "Named durduruluyor..."
+      killproc /usr/sbin/named
+      evaluate_retval
+      ;;
+      
+         durdur)
       log_info_msg "Named durduruluyor..."
       killproc /usr/sbin/named
       evaluate_retval
@@ -48,9 +60,21 @@ case "$1" in
       sleep 1
       $0 start
       ;;
+      
+         ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
 
    reload)
-      log_info_msg "Reloading named..."
+      log_info_msg "Named yeniden yükleniyor..."
+      /usr/sbin/rndc -c /etc/rndc.conf reload
+      evaluate_retval
+      ;;
+      
+   yyukle)
+      log_info_msg "Named yeniden yükleniyor..."
       /usr/sbin/rndc -c /etc/rndc.conf reload
       evaluate_retval
       ;;
@@ -60,6 +84,7 @@ case "$1" in
       ;;
 
    *)
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
       echo "Usage: $0 {start|stop|restart|status}"
       exit 1
       ;;
