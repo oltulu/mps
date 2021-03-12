@@ -78,7 +78,7 @@ case "$1" in
       statusproc /usr/bin/dbus-daemon
       ;;
 
-   durdur)
+   durum)
       statusproc /usr/bin/dbus-daemon
       ;;
 
