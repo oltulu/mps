@@ -10,7 +10,18 @@ case $1 in
 		start_daemon $BIN_FILE
 		evaluate_retval
 		;;
+	baslat)
+		log_info_msg "Connman başlatılıyor...."
+		start_daemon $BIN_FILE
+		evaluate_retval
+		;;
 	stop)
+		log_info_msg "Connamn durduruluyor..."
+		killproc $BIN_FILE
+		killproc $BIN2_FILE
+		evaluate_retval
+		;;
+	durdur)
 		log_info_msg "Connamn durduruluyor..."
 		killproc $BIN_FILE
 		killproc $BIN2_FILE
@@ -21,10 +32,19 @@ case $1 in
 		sleep 2
 		$0 start
 		;;
+	ybaslat)
+		$0 stop
+		sleep 2
+		$0 start
+		;;
 	status)
         statusproc ${BIN_FILE}
         ;;
+	durum)
+        statusproc ${BIN_FILE}
+        ;;
 	*)
+		echo "Kullanımı: $0 [baslat|durdur|ybaslat|durum]"
 		echo "Usage: $0 [start|stop|restart|status]"
 		;;
 esac
