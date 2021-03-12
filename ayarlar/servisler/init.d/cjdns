@@ -127,23 +127,54 @@ case "$1" in
         if [ -z "$PID" ]; then
             cjdns.sh start &> /dev/null
             if [ $? -gt 0 ]; then
-                stat_busy "Unable to start the daemon"
+                stat_busy "Arka plan programı başlatılamıyor"
                 stat_fail
                 exit 1
             else
                 stat_done
             fi
         else
-            stat_busy "The daemon is already running"
+            stat_busy "Hizmet zaten çalışıyor"
+            stat_fail
+            exit 1
+        fi
+    ;;
+    
+    baslat)
+        stat_busy Cjdns başlatılıyor"
+
+        #START CJDNS AND ENABLE THE DAEMON IF IT SUCCEEDS
+        if [ -z "$PID" ]; then
+            cjdns.sh start &> /dev/null
+            if [ $? -gt 0 ]; then
+                stat_busy "Arka plan programı başlatılamıyor"
+                stat_fail
+                exit 1
+            else
+                stat_done
+            fi
+        else
+            stat_busy "Hizmet zaten çalışıyor"
             stat_fail
             exit 1
         fi
     ;;
     stop)
-        stat_busy "Stopping cjdns"
+        stat_busy "Cjdns durduruluyor"
         cjdns.sh stop
         if [ $? -gt 0 ]; then
-            stat_busy "The daemon was not running"
+            stat_busy "Arka plan programı zaten çalışmıyordu"
+            stat_fail
+        else
+            stat_done
+        fi
+    ;;
+    
+     durdur)
+        stat_busy "Cjdns durduruluyor"
+        cjdns.sh stop
+        if [ $? -gt 0 ]; then
+            stat_busy "Arka plan programı zaten çalışmıyordu"
             stat_fail
         else
             stat_done
