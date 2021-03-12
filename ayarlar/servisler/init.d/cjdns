@@ -180,16 +180,31 @@ case "$1" in
             stat_done
         fi
     ;;
+    
+    
     restart)
         $0 stop
         while [ ! -z "$PID" -a -d "/proc/$PID" ]; do sleep 1; done
             $0 start
         ;;
+        
+ybaslat)
+        $0 stop
+        while [ ! -z "$PID" -a -d "/proc/$PID" ]; do sleep 1; done
+            $0 start
+        ;;
     status)
-        stat_busy "The daemon is currently..."
+        stat_busy "Arka plan programı şu anda..."
         if [ $(cjdns.sh status | grep -c not) = 0 ]; then status_started; else status_stopped; fi
         ;;
+        
+    durum)
+        stat_busy "Arka plan programı şu anda..."
+        if [ $(cjdns.sh status | grep -c not) = 0 ]; then status_started; else status_stopped; fi
+        ;; 
+        
     *)
+        echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
         echo "usage: $0 {start|stop|restart|status}"
 esac
 
