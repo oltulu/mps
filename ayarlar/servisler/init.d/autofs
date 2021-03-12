@@ -8,8 +8,8 @@
 #
 # Version     : LFS 7.2
 #
-# Notes       : Updates to autofs distributed start script to make
-#               compatible with BLFS
+# Notes       : BLFS ile uyumlu hale getirmek için autofs dağıtılmış başlangıç 
+#               komut dosyasında yapılan güncellemeler
 #
 ########################################################################
 
@@ -19,8 +19,8 @@
 # Required-Stop: $network ypbind
 # Default-Start: 3 4 5
 # Default-Stop: 0 1 2 6
-# Short-Description: Automounts filesystems on demand
-# Description: Automounts filesystems on demand
+# Short-Description: Automounts dosya sistemlerini talep üzerine
+# Description: Automounts dosya sistemlerini talep üzerine
 ### END INIT INFO
 
 #
@@ -62,7 +62,7 @@ function start() {
    elif ([ -f /proc/modules ] && lsmod) | grep -q autofs[^4]
    then
       # wrong autofs filesystem module loaded
-      log_failure_msg "Error: autofs kernel module is loaded, autofs4 required"
+      log_failure_msg "Hata: autofs çekirdek modülü yüklendi, autofs4 gerekli"
       return 1
    fi
 
@@ -117,7 +117,7 @@ function reload() {
       RETVAL=1
    else
       kill -HUP $pid 2> /dev/null
-      log_success_msg2 $"Reloading maps"
+      log_success_msg2 $"Haritalar yeniden yükleniyor"
       RETVAL=0
    fi
    return $RETVAL
@@ -135,6 +135,10 @@ case "$1" in
       ;;
 
    forcestart)
+      OPTIONS="$OPTIONS --force"
+      start
+      ;;
+   zorlabaslat)
       OPTIONS="$OPTIONS --force"
       start
       ;;
@@ -158,6 +162,10 @@ case "$1" in
       OPTIONS="$OPTIONS --force"
       restart
       ;;
+   zorlaybaslat)
+      OPTIONS="$OPTIONS --force"
+      restart
+      ;;
    reload)
       reload
       ;;
@@ -167,7 +175,8 @@ case "$1" in
       ;;
 
    *)
-      echo $"Kullanımı: $0 {start|forcestart|stop|restart|forcerestart|reload}"
+      echo $"Kullanımı: $0 {baslat|zorlabaslat|durdur|ybaslat|zorlaybaslat|yyukle}"
+      echo $"Usage: $0 {start|forcestart|stop|restart|forcerestart|reload}"
       exit 1;
       ;;
 esac
