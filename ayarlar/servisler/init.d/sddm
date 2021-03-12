@@ -23,13 +23,13 @@ BIN_FILE="/usr/bin/sddm"
 
 case $1 in
    start)
-        log_info_msg "Starting SDDM..."
+        log_info_msg "SDDM başlatılıyor..."
         start_daemon $BIN_FILE &
         evaluate_retval
         ;;
 
    stop)
-        log_info_msg "Stopping SDDM..."
+        log_info_msg "SDDM durduruluyor..."
         killproc $BIN_FILE
         evaluate_retval
         ;;
@@ -43,8 +43,29 @@ case $1 in
    status)
         statusproc ${BIN_FILE}
         ;;
+   baslat)
+        log_info_msg "SDDM başlatılıyor..."
+        start_daemon $BIN_FILE &
+        evaluate_retval
+        ;;
 
+   durdur)
+        log_info_msg "SDDM durduruluyor..."
+        killproc $BIN_FILE
+        evaluate_retval
+        ;;
+
+   ybaslat)
+        $0 stop
+        sleep 2
+        $0 start
+        ;;
+
+   durum)
+        statusproc ${BIN_FILE}
+        ;;
    *)
+        echo "Kullanımı: $0 [baslat|durdur|ybaslat|durum]"
         echo "usage: $0 [start|stop|restart|status]"
         exit 1
         ;;
