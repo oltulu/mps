@@ -4,19 +4,23 @@
 
 case $1 in
    start)
-      log_info_msg "Starting CUPS Printserver..."
+      log_info_msg "CUPS Printserver başlatılıyor..."
       start_daemon /usr/bin/cupsd
       evaluate_retval
       ;;
-
+   baslat)
+      log_info_msg "CUPS Printserver başlatılıyor..."
+      start_daemon /usr/bin/cupsd
+      evaluate_retval
+      ;;
    stop)
-      log_info_msg "Stopping CUPS Printserver..."
+      log_info_msg "CUPS Printserver durduruluyor..."
       killproc /usr/bin/cupsd
       evaluate_retval
       ;;
 
    reload)
-      log_info_msg "Reloading CUPS Printserver..."
+      log_info_msg "CUPS Printserver yeniden yükleniyor..."
       killproc /usr/bin/cupsd -HUP
       evaluate_retval
       ;;
@@ -31,7 +35,29 @@ case $1 in
       statusproc /usr/bin/cupsd
       ;;
 
+   durdur)
+      log_info_msg "CUPS Printserver durduruluyor..."
+      killproc /usr/bin/cupsd
+      evaluate_retval
+      ;;
+
+   yyukle)
+      log_info_msg "CUPS Printserver yeniden yükleniyor..."
+      killproc /usr/bin/cupsd -HUP
+      evaluate_retval
+      ;;
+
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
+   durum)
+      statusproc /usr/bin/cupsd
+      ;;
    *)
+      echo "Kullanımı: $0 {baslat|durdur|yyukle|ybaslat|durum}"
       echo "Usage: $0 {start|stop|reload|restart|status}"
       exit 1
       ;;
