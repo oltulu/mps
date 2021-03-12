@@ -37,7 +37,24 @@ case "$1" in
 	status)
 		statusproc /usr/bin/pulseaudio
 		;;
+        baslat|durdur)
+		pulseaudio_${1}
+		;;
+	ybaslat|zorla-yyukle)
+		pulseaudio_stop
+		pulseaudio_start
+		;;
+	zorla-durdur)
+		pulseaudio_stop
+		killall pulseaudio || true
+		sleep 2
+		killall -9 pulseaudio || true
+		;;
+	durum)
+		statusproc /usr/bin/pulseaudio
+		;;
 	*)
+                echo "Kullanımı: /etc/init.d/pulseaudio {baslat|durdur|zorla-durdur|ybaslat|zorla-yyukle|durum}"
 		echo "Usage: /etc/init.d/pulseaudio {start|stop|force-stop|restart|force-reload|status}"
 		exit 1
 		;;
