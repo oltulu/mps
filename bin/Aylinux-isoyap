@@ -117,8 +117,47 @@ bash iso_olustur.sh $MSYS
 if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
 fi
-mw /opt/Aylinux-isoyap/Aylinux-2021-${month}.${day}.iso /home/Aylinux-2021-${month}.${day}.iso
-mintstick -m iso -i /home/Aylinux-2021-${month}.${day}.iso
+#--------------------------
+if [ -f /usr/bin/cinnamon-session ] ; then
+    de="-Cinnamon"
+fi
+if [ -f /usr/bin/plasmashell ] ; then
+    de="-Kde"
+fi
+if [ -f /usr/bin/gnome-session ] ; then
+    de="-Gnome"
+fi
+if [ -f /usr/bin/xfce4-session ] ; then
+    de="-Xfce"
+fi
+if [ -f /usr/bin/openbox ] ; then
+    de="-Openbox"
+fi
+if [ -f /usr/bin/lxsession ] ; then
+    de="-Lxde"
+fi
+if [ -f /usr/bin/deepin-wm ] ; then
+    de="-Deepin"
+fi
+if [ -f /usr/bin/lxqt-session ] ; then
+    de="-Lxqt"
+fi
+if [ -f /usr/bin/mate-session ] ; then
+    de="-Mate"
+fi
+if [ -f /usr/bin/enlightenment ] ; then
+    de="-Enlightenment"
+fi
+if [ -f /usr/bin/masayok ] ; then
+    de="-Masayok"
+fi
+if [ -f /usr/bin/ukui-session ] ; then
+    de="-Ukui"
+fi
+
+#----------------------------------
+mv /opt/Aylinux-isoyap/Aylinux${de}-2021-${month}.${day}.iso /home/Aylinux${de}-2021-${month}.${day}.iso
+mintstick -m iso -i /home/Aylinux${de}-2021-${month}.${day}.iso
 
 EOf
 
