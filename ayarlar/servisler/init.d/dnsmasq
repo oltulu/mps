@@ -10,13 +10,13 @@ PIDFILE=/var/run/dnsmasq/pid/master.pid
 
 case "$1" in
    start)
-      log_info_msg "Starting Dnsmasq..."
+      log_info_msg "Dnsmasq başlatılıyor..."
       start_daemon -p "${PIDFILE}" ${BINFILE} -k --enable-dbus --user=dnsmasq --pid-file 2> /dev/null
       evaluate_retval 
       ;;
 
    stop)
-      log_info_msg "Stopping dnsmasq..."
+      log_info_msg "Dnsmasq durduruluyor..."
       killproc -p "${PIDFILE}" ${BINFILE} -HUP
       evaluate_retval
       ;;
@@ -31,11 +31,34 @@ case "$1" in
       echo -n "dnsmasq: "
       statusproc  -p "${PIDFILE}" ${BINFILE}
       ;;
+   baslat)
+      log_info_msg "Dnsmasq başlatılıyor..."
+      start_daemon -p "${PIDFILE}" ${BINFILE} -k --enable-dbus --user=dnsmasq --pid-file 2> /dev/null
+      evaluate_retval 
+      ;;
 
+   durdur)
+      log_info_msg "Dnsmasq durduruluyor..."
+      killproc -p "${PIDFILE}" ${BINFILE} -HUP
+      evaluate_retval
+      ;;
+
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+
+   durum)
+      echo -n "dnsmasq: "
+      statusproc  -p "${PIDFILE}" ${BINFILE}
+      ;;
    *)
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
       echo "Usage: $0 {start|stop|restart|status}"
       exit 1
       ;;
+      
 esac
 
 # End /etc/init.d/dnsmasq
