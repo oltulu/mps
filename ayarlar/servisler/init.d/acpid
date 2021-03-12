@@ -16,7 +16,7 @@
 # Required-Stop:       $remote_fs $syslog
 # Default-Start:       2 3 4 5
 # Default-Stop:        0 1 6
-# Short-Description:   Starts Advanced Configuration and Power Interface event daemon
+# Short-Description:   Gelişmiş Yapılandırma ve Güç Arabirimi olay arka planını başlatır
 # X-LFS-Provided-By:   BLFS
 ### END INIT INFO
 
@@ -27,7 +27,7 @@
 
 case "$1" in
    start)
-      log_info_msg "Starting ACPI event daemon..."
+      log_info_msg "ACPI olay arka plan programı başlatılıyor..."
       start_daemon /usr/bin/acpid
       sleep 1
       pidofproc -p "/run/acpid.pid" > /dev/null
@@ -35,7 +35,7 @@ case "$1" in
       ;;
 
    baslat)
-      log_info_msg "Starting ACPI event daemon..."
+      log_info_msg "ACPI olay arka plan programı başlatılıyor..."
       start_daemon /usr/bin/acpid
       sleep 1
       pidofproc -p "/run/acpid.pid" > /dev/null
@@ -43,13 +43,13 @@ case "$1" in
       ;;
 
    stop)
-      log_info_msg "Stopping ACPI event daemon..."
+      log_info_msg "ACPI olay arka plan programı durduruluyor..."
       killproc -p "/run/acpid.pid" /usr/bin/acpid
       evaluate_retval
       ;;
 
    durdur)
-      log_info_msg "Stopping ACPI event daemon..."
+      log_info_msg "ACPI olay arka plan programı durduruluyor..."
       killproc -p "/run/acpid.pid" /usr/bin/acpid
       evaluate_retval
       ;;
@@ -75,6 +75,7 @@ case "$1" in
       ;;
 
    *)
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
       echo "Usage: $0 {start|stop|restart|status}"
       exit 1
       ;;
