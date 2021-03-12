@@ -58,8 +58,40 @@ case "${1}" in
       statusproc /usr/sbin/kadmind
       statusproc /usr/sbin/kpropd
       ;;
+   baslat)
+      log_info_msg "Kerberos KDC krb5kdc başlatılıyor"
+      start_daemon /usr/sbin/krb5kdc
+      log_info_msg "Starting Kerberos administrative server kadmind"
+      start_daemon /usr/sbin/kadmind
+      log_info_msg "Starting Kerberos database propagation server kpropd"
+      start_daemon /usr/sbin/kpropd -S
+      evaluate_retval
+      ;;
+
+   durdur)
+      log_info_msg "Stopping Kerberos database propagation server kpropd"
+      killproc /usr/sbin/kpropd
+      log_info_msg "Stopping Kerberos administrative server kadmind"
+      killproc /usr/sbin/kadmind
+      log_info_msg "Stopping Kerberos KDC krb5kdc"
+      killproc /usr/sbin/krb5kdc
+      evaluate_retval
+      ;;
+
+   ybaslat)
+      ${0} stop
+      sleep 1
+      ${0} start
+      ;;
+
+   durum)
+      statusproc /usr/sbin/krb5kdc
+      statusproc /usr/sbin/kadmind
+      statusproc /usr/sbin/kpropd
+      ;;
 
    *)
+      echo "Kullanımı: ${0} {baslat|durdur|ybaslat|durum}"
       echo "Usage: ${0} {start|stop|restart|status}"
       exit 1
       ;;
