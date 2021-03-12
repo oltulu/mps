@@ -118,25 +118,25 @@ if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
 fi
 #--------------------------
-if [ -f /usr/bin/cinnamon-session ] ; then
+if [ -f $MSYS//usr/bin/cinnamon-session ] ; then
     de="-Cinnamon"
 fi
-if [ -f /usr/bin/plasmashell ] ; then
+if [ -f $MSYS//usr/bin/plasmashell ] ; then
     de="-Kde"
 fi
-if [ -f /usr/bin/gnome-session ] ; then
+if [ -f $MSYS//usr/bin/gnome-session ] ; then
     de="-Gnome"
 fi
-if [ -f /usr/bin/xfce4-session ] ; then
+if [ -f $MSYS//usr/bin/xfce4-session ] ; then
     de="-Xfce"
 fi
-if [ -f /usr/bin/openbox ] ; then
+if [ -f $MSYS//usr/bin/openbox ] ; then
     de="-Openbox"
 fi
-if [ -f /usr/bin/lxsession ] ; then
+if [ -f $MSYS//usr/bin/lxsession ] ; then
     de="-Lxde"
 fi
-if [ -f /usr/bin/deepin-wm ] ; then
+if [ -f $MSYS//usr/bin/deepin-wm ] ; then
     de="-Deepin"
 fi
 if [ -f /usr/bin/lxqt-session ] ; then
@@ -145,13 +145,13 @@ fi
 if [ -f /usr/bin/mate-session ] ; then
     de="-Mate"
 fi
-if [ -f /usr/bin/enlightenment ] ; then
+if [ -f $MSYS//usr/bin/enlightenment ] ; then
     de="-Enlightenment"
 fi
-if [ -f /usr/bin/masayok ] ; then
+if [ -f $MSYS//usr/bin/masayok ] ; then
     de="-Masayok"
 fi
-if [ -f /usr/bin/ukui-session ] ; then
+if [ -f $MSYS//usr/bin/ukui-session ] ; then
     de="-Ukui"
 fi
 
