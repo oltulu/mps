@@ -18,8 +18,8 @@
 # Should-Stop:
 # Default-Start:       S
 # Default-Stop:        0 1 6
-# Short-Description:   Restore and store ALSA mixer settings.
-# Description:         Restores and stores ALSA mixer settings in the default
+# Short-Description:   ALSA karıştırıcı ayarlarını geri yükleyin ve saklayın.
+# Description:         ALSA karıştırıcı ayarlarını varsayılan olarak geri yükler ve saklar
 #                      location: /var/lib/alsa/asound.state.
 # X-LFS-Provided-By:   BLFS
 ### END INIT INFO
@@ -31,30 +31,31 @@
 
 case "$1" in
    start)
-      log_info_msg "ALSA başlatılıyor...    Restoring volumes..."
+      log_info_msg "ALSA başlatılıyor...    Birimler restore ediliyor..."
       /usr/sbin/alsactl restore
       evaluate_retval
       ;;
    baslat)
-      log_info_msg "ALSA başlatılıyor...    Restoring volumes..."
+      log_info_msg "ALSA başlatılıyor...    Birimler restore ediliyor..."
       /usr/sbin/alsactl restore
       evaluate_retval
       ;;
 
    stop)
-      log_info_msg "ALSA durduruluyor...    Saving volumes..."
+      log_info_msg "ALSA durduruluyor...    Birimler kaydediliyor..."
       /usr/sbin/alsactl store
       evaluate_retval
       ;;
 
    durdur)
-      log_info_msg "ALSA durduruluyor...    Saving volumes..."
+      log_info_msg "ALSA durduruluyor...    Birimler kaydediliyor..."
       /usr/sbin/alsactl store
       evaluate_retval
       ;;
 
    *)
-      echo "Kullanımı: $0 {start|stop}"
+      echo "Kullanımı: $0 {baslat|durdur}"
+      echo "Usage: $0 {start|stop}"
       exit 1
       ;;
 esac
