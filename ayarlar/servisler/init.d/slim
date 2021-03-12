@@ -16,7 +16,7 @@ stop)
 	killall /usr/bin/slim
 	;;
 restart)
-	log_info_msg "SLIM yebaşlatılıyor..."
+	log_info_msg "SLIM yeniden başlatılıyor..."
 	$0 stop
 	sleep 2
 	$0 start
@@ -33,7 +33,7 @@ durdur)
 	killall /usr/bin/slim
 	;;
 ybaslat)
-	log_info_msg "SLIM yebaşlatılıyor..."
+	log_info_msg "SLIM yebniden aşlatılıyor..."
 	$0 stop
 	sleep 2
 	$0 start
