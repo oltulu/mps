@@ -13,8 +13,19 @@ case "$1" in
       start_daemon ${BIN_FILE}
       evaluate_retval
       ;;
+   baslat)
+      log_info_msg "Crond başlatılıyor..."
+      start_daemon ${BIN_FILE}
+      evaluate_retval
+      ;;
 
    stop)
+      log_info_msg "Crond durduruluyor..."
+      killproc ${BIN_FILE}
+      evaluate_retval
+      ;;
+      
+   durdur)
       log_info_msg "Crond durduruluyor..."
       killproc ${BIN_FILE}
       evaluate_retval
@@ -25,13 +36,21 @@ case "$1" in
       sleep 1
       $0 start
       ;;
-
+   ybaslat)
+      $0 stop
+      sleep 1
+      $0 start
+      ;;
+      
    status)
       statusproc ${BIN_FILE}
       ;;
-
+   durum)
+      statusproc ${BIN_FILE}
+      ;;
    *)
-      echo "Kullanımı: $0 {start|stop|restart|status}"
+      echo "Usage: $0 {start|stop|restart|status}"
+      echo "Kullanımı: $0 {baslat|durdur|ybaslat|durum}"
       exit 1
       ;;
 esac
