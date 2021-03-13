@@ -38,8 +38,8 @@ case "${1}" in
    start)
 
       if [ "$START" != "yes" ]; then
-         MSG="Configure saslauthd in /etc/sysconfig/saslauthd"
-         log_warning_msg "$MSG and set START to yes"
+         MSG="/etc/sysconfig/saslauthd içinde saslauthd yapılandırın"
+         log_warning_msg "$MSG ve BAŞLAT'ı evet olarak ayarlayın"
          exit 0
       fi
 
@@ -61,8 +61,8 @@ case "${1}" in
    baslat)
 
       if [ "$START" != "yes" ]; then
-         MSG="Configure saslauthd in /etc/sysconfig/saslauthd"
-         log_warning_msg "$MSG and set START to yes"
+        MSG="/etc/sysconfig/saslauthd içinde saslauthd yapılandırın"
+         log_warning_msg "$MSG ve BAŞLAT'ı evet olarak ayarlayın"
          exit 0
       fi
 
