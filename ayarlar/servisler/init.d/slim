@@ -7,7 +7,7 @@
 case $1 in
 start)
 	log_info_msg "Yerel ayarlar eklendi..."
-    yerel_ayar
+#    yerel_ayar
     log_info_msg "SLIM başlatılıyor..."
 	/usr/bin/slim -d
 	;;
@@ -24,7 +24,7 @@ restart)
 	
 baslat)
 	log_info_msg "Yerel ayarlar eklendi..."
-    yerel_ayar
+#    yerel_ayar
     log_info_msg "SLIM başlatılıyor..."
 	/usr/bin/slim -d
 	;;
