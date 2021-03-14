@@ -24,14 +24,14 @@ BIN_FILE="/usr/sbin/lxdm"
 case $1 in
    start)
 	log_info_msg "Yerel ayarlar eklendi..."
-    yerel_ayar
-    log_info_msg "Starting LXDM..."
+#    yerel_ayar
+    log_info_msg "LXDM başlatılıyor..."
 	start_daemon $BIN_FILE -d
 	evaluate_retval
 	;;
 
    stop)
-	log_info_msg "Stopping LXDM..."
+	log_info_msg "LXDM durduruluyor..."
  	killproc $BIN_FILE
 	evaluate_retval
 	;;
@@ -45,8 +45,33 @@ case $1 in
    status)
         statusproc ${BIN_FILE}
         ;;
+	
+   baslat)
+	log_info_msg "Yerel ayarlar eklendi..."
+#    yerel_ayar
+    log_info_msg "LXDM başlatılıyor..."
+	start_daemon $BIN_FILE -d
+	evaluate_retval
+	;;
+
+   durdur)
+	log_info_msg "LXDM durduruluyor..."
+ 	killproc $BIN_FILE
+	evaluate_retval
+	;;
+
+   ybaslat)
+	$0 stop
+	sleep 2
+	$0 start
+	;;
+
+   durum)
+        statusproc ${BIN_FILE}
+        ;;
 
    *)
+   	echo "Kullanımı: $0 [baslat|durdur|ybaslat|durum]"
 	echo "usage: $0 [start|stop|restart|status]"
         exit 1
 	;;
