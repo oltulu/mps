@@ -6,11 +6,13 @@ kactivitymanagerd
 kde-cli-tools
 kde-gtk-config
 kdecoration
+kdesu
 kdeplasma-addons
 khotkeys
 kinfocenter
 kmenuedit
 knetattach
+kparts
 kscreen
 kscreenlocker
 ksshaskpass
