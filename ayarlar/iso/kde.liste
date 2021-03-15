@@ -16,19 +16,17 @@ kinfocenter
 kinit
 konsole
 kmenuedit
-knetattach
 kparts
 krunner
 kscreen
 kscreenlocker
-ksshaskpass
 ksysguard
 kwayland-integration
 kwallet
 kwin
 modemmanager-qt
 networkmanager-qt
-plasman-nm
+plasma-nm
 plasma-pa
 plasma-workspace
 polkit-kde-agent
@@ -41,3 +39,4 @@ plasma-framework
 latte-dock
 beautyline
 qqc2-desktop-style
+kdelibs4support
