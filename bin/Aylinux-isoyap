@@ -59,7 +59,11 @@ rm -f $MSYS/root/.bash_history
 if [ ! -f /usr/bin/xorriso ];then
 	paket kur xorriso
 fi
-echo -e "${KIRMIZI}Aylinux-isoyap dizini daha önceden varsa varolan olan dizin kullanılacak..${YOK}"
+
+if [ -d /opt/Aylinux-isoyap ];then
+echo -e "${KIRMIZI}Aylinux-isoyap dizini daha önceden indirilmiş, varolan olan dizin kullanılacak..${YOK}"
+
+fi
 if [ ! -d /opt/Aylinux-isoyap ];then
  cd /opt
  git clone https://github.com/oltulu/Aylinux-isoyap  
