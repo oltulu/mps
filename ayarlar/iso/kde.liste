@@ -27,6 +27,8 @@ ktexteditor
 kwayland-integration
 kwallet
 kwin
+modemmanager-qt
+networkmanager-qt
 plasman-nm
 plasma-pa
 plasma-workspace
