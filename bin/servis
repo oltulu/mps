@@ -45,7 +45,7 @@ case "${1}" in
       ;;
 
    durdur)
-      log_info_msg "${NAME^} daemon durduruluyor..."
+      log_info_msg "${NAME^} hizmeti durduruluyor..."
       killproc ${DAEMON}
       evaluate_retval
       ;;
@@ -68,12 +68,11 @@ esac
 
 exit 0
 
-# End of service
-
+# Servis
 '
 }
 
-service_dir="/usr/aylinux/ayarlar/servis"
+service_dir="/usr/aylinux/ayarlar/servisler"
 old_services="checkfs cleanfs console localnet modules mountvirtfs mountfs sysctl udev udev_retry"
 
 [ ! -d $service_dir ] && _err "$service_dir bulunamadı!"
