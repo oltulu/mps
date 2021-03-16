@@ -6,6 +6,9 @@ breeze
 dolphin
 kactivitymanagerd
 kate
+kactivities
+kcontacts
+kcoreaddons
 kde-cli-tools
 kde-gtk-config
 kdecoration
@@ -20,11 +23,15 @@ kparts
 krunner
 kscreen
 kscreenlocker
+kwindowsystem
 kwayland-integration
 kwallet
+kwayland
 kwin
+kxmlgui
 modemmanager-qt
 networkmanager-qt
+partitionmanager
 plasma-nm
 plasma-pa
 plasma-workspace
