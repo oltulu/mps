@@ -254,6 +254,22 @@ fi
 # End /etc/profile.d/bash_completion.sh
 
 EOF
+# x ortamında touchpad tıklama için
+
+cat > $ROOTDIR/etc/X11/xorg.conf.d/20-touchpad.conf << "EOF"
+Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+
+        Option "Tapping" "on"
+        Option "NaturalScrolling" "on"
+        Option "MiddleEmulation" "on"
+        Option "DisableWhileTyping" "on"
+EndSection
+EOF
+
 
 cat > $ROOTDIR/etc/profile.d/dircolors.sh << "EOF"
 # Setup for /bin/ls and /bin/grep to support color, the alias is in /etc/bashrc.
