@@ -3,7 +3,7 @@
 # Milis Linux 2.0 easy service management script milisarge 2019-2020
 # todo!!! localization
 
-usage="  Milis Linux 2.0 Service Management Script
+usage="  Aylinux 2021 Service Management Script
  
   service start|stop|restart|status|install|remove|enable|disable <service_name>
   
@@ -31,11 +31,11 @@ OPT=""
 
 case "${1}" in
    start)
-      log_info_msg "Starting  ${NAME^} daemon..."
+      log_info_msg "${NAME^} hizmeti başlatılıyor..."
       pidlist=`pidofproc ${DAEMON}`
 
       if [  "${?}" = "0" ]; then
-        log_info_msg2 " Already running"
+        log_info_msg2 " Zaten çalışıyor"
         log_success_msg2
         exit 0;
       fi
@@ -45,7 +45,7 @@ case "${1}" in
       ;;
 
    stop)
-      log_info_msg "Stopping ${NAME^} daemon..."
+      log_info_msg "${NAME^} hizmeti durduruluyor..."
       killproc ${DAEMON}
       evaluate_retval
       ;;
@@ -165,7 +165,7 @@ elif [ $job == "disable" ]; then
 				_disabled="y"
 			fi
 		done
-		[ "${_disabled}" == "n" ] && echo "service already disabled"
+		[ "${_disabled}" == "n" ] && echo "servis zaten çalışmıyor"
 	fi
 # if service already under /etc/init.d but has not auto-init/close status
 # handle this in two case, first it is already registred service latter is manual service.
