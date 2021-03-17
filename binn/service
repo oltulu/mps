@@ -9,9 +9,9 @@ usage="  Aylinux 2021 Service Management Script
   
   service create <service_daemon_path> - install service manually
   
-  service list  - list available services
-  service fixer - fix service system
-  service setup - configure service initialization
+  service list  - mevcut hizmetleri listele
+  service fixer - servis sistemini düzelt
+  service setup - hizmet başlatmayı yapılandır
 "
 
 _err(){
