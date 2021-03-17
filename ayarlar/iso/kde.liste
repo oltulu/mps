@@ -35,6 +35,7 @@ partitionmanager
 plasma-nm
 plasma-pa
 plasma-workspace
+plasma-wayland-protocols
 polkit-kde-agent
 powerdevil
 sddm-kcm
