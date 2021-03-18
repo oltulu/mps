@@ -3,6 +3,8 @@ attica
 baloo
 bluedevil
 breeze
+breeze-gtk
+breeze-icons
 dolphin
 kactivitymanagerd
 kate
@@ -20,6 +22,7 @@ kdnssd
 khotkeys
 kinfocenter
 kinit
+kjs
 konsole
 kmenuedit
 kparts
