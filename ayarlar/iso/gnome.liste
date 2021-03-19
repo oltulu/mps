@@ -2,6 +2,9 @@ gnome-shell
 gnome-control-center
 gedit
 gnome-terminal
+gnome-disk-utility
+gnome-desktop
+gnome-panel
 beautyline
 flameshot
 file-roller
