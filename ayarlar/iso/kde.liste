@@ -10,19 +10,24 @@ kactivitymanagerd
 kate
 kactivities
 kcalendarcore
+kcalc
 kcontacts
 kcoreaddons
 kdav
 kde-cli-tools
 kde-gtk-config
 kdecoration
+kdeconnect
 kdesu
 kdeplasma-addons
 kdnssd
+kfind
 khotkeys
 kinfocenter
 kinit
+kimageformats
 kjs
+kdialog
 konsole
 kmenuedit
 kparts
@@ -46,6 +51,7 @@ plasma-wayland-protocols
 polkit-kde-agent
 powerdevil
 sddm-kcm
+kcm-grub2
 systemsettings
 xdg-desktop-portal-kde
 plasma-desktop
@@ -59,3 +65,4 @@ plasma5-applets-window-appmenu
 plasma5-applets-window-buttons
 plasma5-applets-window-title
 firefox-extension-plasma-integration
+kwin-effects-sliding-notifications
