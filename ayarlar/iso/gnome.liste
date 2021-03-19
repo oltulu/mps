@@ -7,5 +7,6 @@ gnome-disk-utility
 gnome-desktop
 gnome-panel
 beautyline
-flameshot
+gnome-screenshot
 file-roller
+mutter
