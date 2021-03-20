@@ -255,7 +255,7 @@ fi
 
 EOF
 # x ortamında touchpad tıklama için
-
+mkdir -p $ROOTDIR/etc/X11/xorg.conf.d
 cat > $ROOTDIR/etc/X11/xorg.conf.d/20-touchpad.conf << "EOF"
 Section "InputClass"
         Identifier "libinput touchpad catchall"
