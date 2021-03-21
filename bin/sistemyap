@@ -22,14 +22,14 @@ cd /
 paket gun -GP
 #---------------------------------------------------------------------------
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
-echo -e "${KIRMIZI}Şimdilik kde gnome ve ukui hazır değil...${YOK}"
+echo -e "${KIRMIZI}Şimdilik deepin gnome ve ukui hazır değil...${YOK}"
 
-select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
+select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome deepin masayok
 do
 echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 
 echo -e "${KIRMIZI}Iso için Masaüstü Yöneticisi seçiniz...${YOK}"
-select dm in lightdm slim sddm lxdm gdm
+select dm in lightdm sddm lxdm gdm mdm slim
 do
 echo -e "${YESIL}$dm masaüstü yöneticisini seçtiniz.${YOK}"
 
