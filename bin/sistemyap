@@ -31,6 +31,17 @@ select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome masayok
 do
 echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 
+echo -e "${KIRMIZI}Iso için Masaüstü Yöneticisi seçiniz...${YOK}"
+select dm in lightdm slim sddm lxdm gdm
+do
+echo -e "${YESIL}$dm masaüstü yöneticisini seçtiniz.${YOK}"
+
+echo -e "${KIRMIZI}Iso'da plymouth olsun mu?${YOK}"
+select plymouth in Evet Hayır
+do
+echo -e "${YESIL}$plymouth seçeneğini seçtiniz.${YOK}"
+
+
 if [ ! $sistem = masayok ];then
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/$sistem.liste
@@ -58,20 +69,12 @@ convert /usr/share/backgrounds/aylinux/arkaplan.png /usr/share/backgrounds/xfce/
 cp /usr/share/backgrounds/aylinux/arkaplan.png /usr/share/backgrounds/xfce/xfce-verticals.png
 fi
 
-echo -e "${KIRMIZI}Iso için Masaüstü Yöneticisi seçiniz...${YOK}"
-select dm in lightdm slim sddm lxdm gdm
-do
-echo -e "${YESIL}$dm masaüstü yöneticisini seçtiniz.${YOK}"
+
 paket kur $dm
 
 if [ $dm = lightdm ];then
 paket kur lightdm-gtk-greeter
 fi
-
-echo -e "${KIRMIZI}Iso'da plymouth olsun mu?${YOK}"
-select plymouth in Evet Hayır
-do
-echo -e "${YESIL}$plymouth seçeneğini seçtiniz.${YOK}"
 
 if [ $plymouth = Evet ];then
 paket kur plymouth-garuda
