@@ -20,10 +20,7 @@ update-ca-trust
 
 cd /
 paket gun -GP
-echo -e "${KIRMIZI}Minimal paketler yükleniyor..${YOK}"
-paket kur --dosya=/usr/aylinux/ayarlar/iso/minimal.liste
-echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
-paket kur --dosya=/usr/aylinux/ayarlar/iso/xorg.liste
+#---------------------------------------------------------------------------
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 echo -e "${KIRMIZI}Şimdilik kde gnome ve ukui hazır değil...${YOK}"
 
@@ -40,7 +37,12 @@ echo -e "${KIRMIZI}Iso'da plymouth olsun mu?${YOK}"
 select plymouth in Evet Hayır
 do
 echo -e "${YESIL}$plymouth seçeneğini seçtiniz.${YOK}"
+#---------------------------------------------------------------------------
 
+echo -e "${KIRMIZI}Minimal paketler yükleniyor..${YOK}"
+paket kur --dosya=/usr/aylinux/ayarlar/iso/minimal.liste
+echo -e "${KIRMIZI}Xorg paketleri yükleniyor..${YOK}"
+paket kur --dosya=/usr/aylinux/ayarlar/iso/xorg.liste
 
 if [ ! $sistem = masayok ];then
 echo -e "${KIRMIZI}$sistem paketleri yükleniyor..${YOK}"
