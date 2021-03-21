@@ -24,7 +24,7 @@ paket gun -GP
 echo -e "${KIRMIZI}Kurmak istediğiniz masaüstünün başındaki rakamı yazarak enter tuşuna basınız...${YOK}"
 echo -e "${KIRMIZI}Şimdilik deepin gnome ve ukui hazır değil...${YOK}"
 
-select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome deepin budgie masayok
+select sistem in xfce4 cinnamon mate kde openbox lxde lxqt ukui gnome deepin budgie enlightenment jwm masayok
 do
 echo -e "${YESIL}$sistem masaüstünü seçtiniz.${YOK}"
 
