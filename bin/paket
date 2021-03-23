@@ -2372,6 +2372,7 @@ function islem.guncelle.handler(input)
 	if input.betik then
 		islem.guncelle.gitdepo(sira,islem.guncelle.betikdepo)
 	chmod +x /usr/aylinux/mps/bin/*
+	chmod +x /usr/aylinux/bin/*
 	end
 	-- paketvt depoları güncelleme
 	if input.depo then 
