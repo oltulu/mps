@@ -35,3 +35,4 @@ dconf-editor
 eog
 gjs
 libgnome-keyring
+sysprof
