@@ -13,7 +13,6 @@ gnome-terminal
 gnome-menus
 gnome-music
 gnome-online-accounts
-gnome-panel
 gnome-power-manager
 beautyline
 gnome-screenshot
@@ -28,3 +27,6 @@ nautilus
 gnome-backgrounds
 simple-scan
 polkit-gnome
+gnome-shell-extension-desktop-icons
+gnome-shell-extension-arc-menu
+gnome-shell-extension-dash-to-panel
