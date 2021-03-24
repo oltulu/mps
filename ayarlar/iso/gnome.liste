@@ -2,6 +2,7 @@ alacarte
 evince
 gnome-bluetooth
 gnome-calculator
+gnome-calendar
 gnome-control-center
 gnome-color-manager
 gnome-common
@@ -33,3 +34,4 @@ gnome-shell-extension-dash-to-panel
 dconf-editor
 eog
 gjs
+libgnome-keyring
