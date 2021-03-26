@@ -37,3 +37,5 @@ gjs
 libgnome-keyring
 sysprof
 metacity
+gnome-panel
+gdm3
