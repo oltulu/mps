@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Milis Linux konsol kurulumu için Void Linux kurulum çatallaması
+# Aylinux konsol kurulumu için Milis Linux kurulum çatallaması
 # This installer forked from Void Linux installer for Milis Linux terminal based installation
-#            	
+#                             	2020- Cihan Alkan <cihanalk@gmail.com>.
 #				2018-2020 milisarge <milisarge@gmail.com>.
 #				2018 Aydin <yakar@live.com>
 # 	
@@ -322,9 +322,9 @@ else
 	Aylinux kurulumuna hoş geldiniz. Milis Linux tabanlı hazırlanan, kolay ve \
 	minimal bir Linux dağıtımıdır ve yeni bir alternatif paket sistemi olan \
 	MPS için kullanılabilen kaynak paketlerinden üretilmiştir.\n\n
-	Kurulum oldukça basittir. Eğer yardıma ihtiyacınız olursa %sirc.freenode.org%s \
-	%s#milisarge%s kanalımıza katılabilir veya sitemizdeki %sforumlardan%s yardım alabilirsiniz.\n\n
-	%shttp://www.milislinux.org%s\n\n"
+	Kurulum oldukça basittir. Eğer yardıma ihtiyacınız olursa %swww.aylinux.org%s \
+	sitemizi inceleyebilir veya sitemizdeki %sforumlardan%s yardım alabilirsiniz.\n\n
+	%shttp://forum.aylinux.org%s\n\n"
 
 fi
 
