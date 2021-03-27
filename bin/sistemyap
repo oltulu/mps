@@ -51,7 +51,7 @@ echo -e "${KIRMIZI}Ortak paketler yükleniyor..${YOK}"
 paket kur --dosya=/usr/aylinux/ayarlar/iso/ortak.liste
 fi
 
-paket der $sistem-kur
+#paket der $sistem-kur
 
 #if [ $sistem = cinnamon ];then
 #echo -e "${KIRMIZI}Canlı sistem için${YESIL} Aylinux ${KIRMIZI}kullanıcısı oluşturulacak..${YOK}"
