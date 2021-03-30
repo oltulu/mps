@@ -1490,6 +1490,7 @@ menu_install() {
 	rm -rf $HEDEF/opt/Aylinux-Yukleyici
 	rm -f $HEDEF/root/Desktop/kurulum.desktop
 	rm -f $HEDEF/root/kurulum.desktop
+        rm -f $HEDEF/usr/share/applications/aylinux-kur.desktop
 	rm -f $HEDEF/root/Masaüstü/kurulum.desktop
 	rm -f $HEDEF/usr/share/applications/kurulum.desktop
 	rm -f $HEDEF/home/$USERLOGIN/Desktop/kurulum.desktop
