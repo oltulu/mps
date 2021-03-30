@@ -1,0 +1,27 @@
+#!/bin/bash -e
+### BEGIN INIT INFO
+# Provides:          ideserverplus
+# Required-Start:    $all
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      
+# Short-Description: ideserverplus daemon
+# Description:       ideserverplus.service
+### END INIT INFO
+
+set -e
+
+case $1 in
+start)
+    nohup /opt/makeblock/ideserverplus/ide_server_plus.sh >/dev/null 2>&1 &
+    ;;
+    
+baslat)
+    nohup /opt/makeblock/ideserverplus/ide_server_plus.sh >/dev/null 2>&1 &
+    ;;
+    
+*)
+    ;;
+esac
+
+exit 0
