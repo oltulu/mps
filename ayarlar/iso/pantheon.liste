@@ -3,8 +3,10 @@ pantheon-code
 pantheon-calculator
 pantheon-applications-menu
 pantheon-files
+pantheon-session
 pantheon-photos
 pantheon-polkit-agent
 pantheon-screenshot
 pantheon-terminal
 pantheon-videos
+mutter
