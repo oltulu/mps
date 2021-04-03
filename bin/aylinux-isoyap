@@ -103,6 +103,9 @@ fi
 if [ -f $MSYS//usr/bin/enlightenment ] ; then
     de="-enlightenment"
 fi
+if [ -f $MSYS//usr/bin/gala ] ; then
+    de="-pantheon"
+fi
 if [ -f $MSYS//usr/bin/masayok ] ; then
     de="-masayok"
 fi
