@@ -103,7 +103,7 @@ fi
 if [ -f $MSYS//usr/bin/enlightenment ] ; then
     de="-enlightenment"
 fi
-if [ -f $MSYS//usr/bin/gala ] ; then
+if [ -f /usr/bin/io.elementary.files ] ; then
     de="-pantheon"
 fi
 if [ -f $MSYS//usr/bin/masayok ] ; then
