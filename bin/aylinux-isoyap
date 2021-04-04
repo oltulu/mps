@@ -73,43 +73,43 @@ if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
 fi
 #--------------------------
-if [ -f $MSYS//usr/bin/cinnamon-session ] ; then
+if [ -f $MSYS/usr/bin/cinnamon-session ] ; then
     de="-cinnamon"
 fi
-if [ -f $MSYS//usr/bin/plasmashell ] ; then
+if [ -f $MSYS/usr/bin/plasmashell ] ; then
     de="-kde"
 fi
-if [ -f $MSYS//usr/bin/gnome-session ] ; then
+if [ -f $MSYS/usr/bin/gnome-session ] ; then
     de="-gnome"
 fi
-if [ -f $MSYS//usr/bin/xfce4-session ] ; then
+if [ -f $MSYS/usr/bin/xfce4-session ] ; then
     de="-xfce"
 fi
-if [ -f $MSYS//usr/bin/openbox ] ; then
+if [ -f $MSYS/usr/bin/openbox ] ; then
     de="-openbox"
 fi
-if [ -f $MSYS//usr/bin/lxsession ] ; then
+if [ -f $MSYS/usr/bin/lxsession ] ; then
     de="-lxde"
 fi
-if [ -f $MSYS//usr/bin/deepin-wm ] ; then
+if [ -f $MSYS/usr/bin/deepin-wm ] ; then
     de="-deepin"
 fi
-if [ -f /usr/bin/lxqt-session ] ; then
+if [ -f $MSYS/usr/bin/lxqt-session ] ; then
     de="-lxqt"
 fi
-if [ -f /usr/bin/mate-session ] ; then
-    de="-mate"
-fi
-if [ -f $MSYS//usr/bin/enlightenment ] ; then
-    de="-enlightenment"
-fi
-if [ -f /usr/bin/io.elementary.files ] ; then
+if [ -f $MSYS/usr/bin/io.elementary.files ] ; then
     de="-pantheon"
 fi
-if [ -f $MSYS//usr/bin/masayok ] ; then
+if [ -f $MSYS/usr/bin/mate-control-center ] ; then
+    de="-mate"
+fi
+if [ -f $MSYS/usr/bin/enlightenment ] ; then
+    de="-enlightenment"
+fi
+if [ -f $MSYS/usr/bin/masayok ] ; then
     de="-masayok"
 fi
-if [ -f $MSYS//usr/bin/ukui-session ] ; then
+if [ -f $MSYS/usr/bin/ukui-session ] ; then
     de="-ukui"
 fi
 ay="$(date -d "$D" '+%m')"
@@ -164,41 +164,44 @@ if [ ! -f /usr/bin/mintstick ];then
 	paket kur mintstick
 fi
 #--------------------------
-if [ -f $MSYS//usr/bin/cinnamon-session ] ; then
-    de="-Cinnamon"
+if [ -f $MSYS/usr/bin/cinnamon-session ] ; then
+    de="-cinnamon"
 fi
-if [ -f $MSYS//usr/bin/plasmashell ] ; then
-    de="-Kde"
+if [ -f $MSYS/usr/bin/plasmashell ] ; then
+    de="-kde"
 fi
-if [ -f $MSYS//usr/bin/gnome-session ] ; then
-    de="-Gnome"
+if [ -f $MSYS/usr/bin/gnome-session ] ; then
+    de="-gnome"
 fi
-if [ -f $MSYS//usr/bin/xfce4-session ] ; then
-    de="-Xfce"
+if [ -f $MSYS/usr/bin/xfce4-session ] ; then
+    de="-xfce"
 fi
-if [ -f $MSYS//usr/bin/openbox ] ; then
-    de="-Openbox"
+if [ -f $MSYS/usr/bin/openbox ] ; then
+    de="-openbox"
 fi
-if [ -f $MSYS//usr/bin/lxsession ] ; then
-    de="-Lxde"
+if [ -f $MSYS/usr/bin/lxsession ] ; then
+    de="-lxde"
 fi
-if [ -f $MSYS//usr/bin/deepin-wm ] ; then
-    de="-Deepin"
+if [ -f $MSYS/usr/bin/deepin-wm ] ; then
+    de="-deepin"
 fi
-if [ -f /usr/bin/lxqt-session ] ; then
-    de="-Lxqt"
+if [ -f $MSYS/usr/bin/lxqt-session ] ; then
+    de="-lxqt"
 fi
-if [ -f /usr/bin/mate-session ] ; then
-    de="-Mate"
+if [ -f $MSYS/usr/bin/io.elementary.files ] ; then
+    de="-pantheon"
 fi
-if [ -f $MSYS//usr/bin/enlightenment ] ; then
-    de="-Enlightenment"
+if [ -f $MSYS/usr/bin/mate-control-center ] ; then
+    de="-mate"
 fi
-if [ -f $MSYS//usr/bin/masayok ] ; then
-    de="-Masayok"
+if [ -f $MSYS/usr/bin/enlightenment ] ; then
+    de="-enlightenment"
 fi
-if [ -f $MSYS//usr/bin/ukui-session ] ; then
-    de="-Ukui"
+if [ -f $MSYS/usr/bin/masayok ] ; then
+    de="-masayok"
+fi
+if [ -f $MSYS/usr/bin/ukui-session ] ; then
+    de="-ukui"
 fi
 ay="$(date -d "$D" '+%m')"
 gun="$(date -d "$D" '+%d')"
