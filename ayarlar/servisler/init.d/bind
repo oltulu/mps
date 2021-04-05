@@ -1,8 +1,8 @@
 #!/bin/sh
 
 ########################################################################
+# Berkeley internet adı hizmeti başlatma servisi
 # Begin bind
-#
 # Description : Start Berkeley Internet Name Daemon
 #
 # Author      : DJ Lucas - dj@linuxfromscratch.org
