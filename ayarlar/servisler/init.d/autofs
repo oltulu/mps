@@ -1,7 +1,7 @@
 #!/bin/bash
 ########################################################################
 # Begin autofs
-#
+# Dosya sistemlerini otomatik bağlama servisi
 # Description : Start daemon for automounting file systems
 #
 # Author      : Bruce Dubbs - bdubbs@linuxfromscratch.org
