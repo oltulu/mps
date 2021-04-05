@@ -1,7 +1,7 @@
 #!/bin/sh
 ########################################################################
 # Begin acpid
-#
+# Bilgi : ACPI arka plan önyükleme servisi
 # Description : ACPI event daemon boot script
 #
 # Author      : Igor Živković <contact@igor-zivkovic.from.hr>
