@@ -1,7 +1,7 @@
 #!/bin/sh
 ########################################################################
 # Begin atd
-#
+# Atd artalan sürecini başlatma servisi
 # Description : Atd artalan sürecini başlat
 #
 # Author      : Bruce Dubbs - bdubbs@linuxfromscratch.org
