@@ -11,6 +11,7 @@ local mpsconf={
 		-- git repo adres, ilgili düzeye aktarılacak içerik
 		-- tname düzeylere göre
 		 [1]={["https://github.com/oltulu/Aylinux-2021"]="talimatlar"},
+		[2]={["https://notabug.org/aylinux/aylinux-2021"]="talimatlar"},
                 --  [2]={["https://mls.akdeniz.edu.tr/git/milis-topluluk/mkd"]="talimatname/test"},
 		 -- [3]={
 		 --	["https://notabug.org/abc/aylinux"]="2/xorg",
