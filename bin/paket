@@ -2378,7 +2378,7 @@ function islem.guncelle.handler(input)
         shell("chmod +x /usr/aylinux/mps/bin/paket")
         shell("chmod +x /usr/aylinux/mps/bin/mpsd.lua")
         shell("chmod +x /usr/aylinux/mps/bin/mpsd")
-        shell("chmod +x /usr/aylinux/mps/bin/mps.lua")
+        shell("chmod +x /usr/aylinux/mps/bin/mps.lua")		
 	end
 	-- paketvt depoları güncelleme
 	if input.depo then 
